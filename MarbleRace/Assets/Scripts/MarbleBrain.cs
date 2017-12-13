@@ -8,12 +8,16 @@ public class MarbleBrain : MonoBehaviour {
     public float maximumSpeed;
     public float slopeSpeed;
 
+    [Header("AI Settings")]
     public Transform[] targets;
+    float difficultyMod;
     int targetIndex;
+
     //Shorthands
     [HideInInspector]
     public Rigidbody rb;
     Collider col;
+    AISoundManager soundManager;
 
     //Variables
     [HideInInspector]
@@ -28,17 +32,19 @@ public class MarbleBrain : MonoBehaviour {
         //initialize
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
-        //soundManager = GetComponent<MarbleSoundManager>();
+        soundManager = GetComponent<AISoundManager>();
+        targetIndex = 0;
+        difficultyMod = Random.Range(0.001f, 1);
     }
 	
 	void Update () {
         if (rb.velocity.magnitude < maximumSpeed * 1.5f)
         {
             //Get target direction
-            Vector3 dir = targets[0].position - transform.position;
-            dir = new Vector3(dir.x, 0, dir.z);
+            Vector3 dir = targets[targetIndex].position - transform.position;
+            dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
             //LET THE FORCE FLOW THROUGH YOU
-            rb.AddForce(dir * acceleration * Time.deltaTime);
+            rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
         }
     }
 
@@ -50,6 +56,18 @@ public class MarbleBrain : MonoBehaviour {
     private void OnCollisionEnter(Collision collision)
     {
         colCount++;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "Waypoint")
+        {
+            var index = collision.gameObject.GetComponent<WaypointIndex>().index;
+            if (index >= targetIndex)
+            {
+                targetIndex++;
+            }
+        }
     }
 
         void OnCollisionStay(Collision colInfo)
