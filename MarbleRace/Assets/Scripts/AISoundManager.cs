@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class MarbleSoundManager : MonoBehaviour {
+public class AISoundManager : MonoBehaviour {
     public AudioMixer playerMixer;
-    MarbleController marble;
+    MarbleBrain marble;
 
     AudioSource rollSound;
     AudioSource startSound;
@@ -17,17 +17,19 @@ public class MarbleSoundManager : MonoBehaviour {
     //Variables
     bool stopped;
 
-	void Start () {
-        marble = GetComponent<MarbleController>();
+    void Start()
+    {
+        marble = GetComponent<MarbleBrain>();
 
         AudioSource[] audios = GetComponents<AudioSource>();
         rollSound = audios[0];
         startSound = audios[1];
         dropSound = audios[2];
         clickSound = audios[3];
-	}
-	
-	void Update () {
+    }
+
+    void Update()
+    {
         var rollVolumeMod = marble.mag / (marble.maximumSpeed * 1.5f);
         //Rolling SFX
         if (marble.grounded)
@@ -55,7 +57,7 @@ public class MarbleSoundManager : MonoBehaviour {
                 stopped = false;
             }
         }
-	}
+    }
 
     public void DropSound(float impactStrength)
     {
