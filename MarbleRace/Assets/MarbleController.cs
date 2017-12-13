@@ -43,6 +43,8 @@ public class MarbleController : MonoBehaviour {
         //Assign player ID
         if (playerId == 0) { axisH = "Horizontal_Player1"; axisV = "Vertical_Player1"; }
         else if (playerId == 1) { axisH = "Horizontal_Player2"; axisV = "Vertical_Player2"; }
+        else if (playerId == 2) { axisH = "Horizontal_Player3"; axisV = "Vertical_Player3"; }
+        else if (playerId == 3) { axisH = "Horizontal_Player4"; axisV = "Vertical_Player4"; }
     }
 	
 	void Update () {
