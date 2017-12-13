@@ -1,0 +1,98 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!241 &24100000
+AudioMixerController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: AudioMixer
+  m_OutputGroup: {fileID: 0}
+  m_MasterGroup: {fileID: 24300002}
+  m_Snapshots:
+  - {fileID: 24500006}
+  m_StartSnapshot: {fileID: 24500006}
+  m_SuspendThreshold: -80
+  m_EnableSuspend: 1
+  m_UpdateMode: 0
+  m_ExposedParameters:
+  - guid: e518db49e6e349442968a8d61e2b3391
+    name: rollVol
+  m_AudioMixerGroupViews:
+  - guids:
+    - 4aac2010c4df1d84787b925d4f54d859
+    - a4cfcfe3a563fa34d8fb58ffd08ce9ee
+    name: View
+  m_CurrentViewIndex: 0
+  m_TargetSnapshot: {fileID: 24500006}
+--- !u!243 &24300002
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Master
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: 4aac2010c4df1d84787b925d4f54d859
+  m_Children:
+  - {fileID: 243494653042444768}
+  m_Volume: 8cef4353f5686b549a4c5d814349d33d
+  m_Pitch: 3cbfdea8b5c556d4d8e37636cf81b312
+  m_Effects:
+  - {fileID: 24400004}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &24400004
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: 57d633bb001553f4ca09856c5f0d51d3
+  m_EffectName: Attenuation
+  m_MixLevel: 259a330d5e6deb74cbbbc69323032a62
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
+--- !u!245 &24500006
+AudioMixerSnapshotController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Snapshot
+  m_AudioMixer: {fileID: 24100000}
+  m_SnapshotID: 4b8f3a42be1e6824b881970710454c5b
+  m_FloatValues:
+    e518db49e6e349442968a8d61e2b3391: 0.3945702
+  m_TransitionOverrides: {}
+--- !u!243 &243494653042444768
+AudioMixerGroupController:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Roll
+  m_AudioMixer: {fileID: 24100000}
+  m_GroupID: a4cfcfe3a563fa34d8fb58ffd08ce9ee
+  m_Children: []
+  m_Volume: e518db49e6e349442968a8d61e2b3391
+  m_Pitch: 7d57bebffbba156459c348e38f96b7db
+  m_Effects:
+  - {fileID: 244590249328951502}
+  m_UserColorIndex: 0
+  m_Mute: 0
+  m_Solo: 0
+  m_BypassEffects: 0
+--- !u!244 &244590249328951502
+AudioMixerEffectController:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  m_EffectID: e6320f3e0f4b8ca44b0922033ab9e71d
+  m_EffectName: Attenuation
+  m_MixLevel: 3b4aee47d35f96a44b828ba8425ae1b2
+  m_Parameters: []
+  m_SendTarget: {fileID: 0}
+  m_EnableWetMix: 0
+  m_Bypass: 0
