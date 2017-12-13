@@ -8,8 +8,11 @@ public class MarbleBrain : MonoBehaviour {
     public float maximumSpeed;
     public float slopeSpeed;
 
+    [Header("AI Settings")]
     public Transform[] targets;
-    public int targetIndex;
+    float difficultyMod;
+    int targetIndex;
+
     //Shorthands
     [HideInInspector]
     public Rigidbody rb;
@@ -31,6 +34,7 @@ public class MarbleBrain : MonoBehaviour {
         col = GetComponent<Collider>();
         soundManager = GetComponent<AISoundManager>();
         targetIndex = 0;
+        difficultyMod = Random.Range(0.001f, 1);
     }
 	
 	void Update () {
@@ -40,7 +44,7 @@ public class MarbleBrain : MonoBehaviour {
             Vector3 dir = targets[targetIndex].position - transform.position;
             dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
             //LET THE FORCE FLOW THROUGH YOU
-            rb.AddForce(dir * acceleration * Time.deltaTime);
+            rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
         }
     }
 
