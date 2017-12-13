@@ -29,6 +29,7 @@ public class MarbleController : MonoBehaviour {
     public float mag;
     [HideInInspector]
     public bool grounded;
+    [HideInInspector]
     public bool playDropSound;
     int colCount;
 
