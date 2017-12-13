@@ -11,6 +11,10 @@ public class MarbleBrain : MonoBehaviour {
     [Header("AI Settings")]
     public Transform[] targets;
     float difficultyMod;
+    float massMod;
+    float dragMod;
+    float angularMod;
+
     int targetIndex;
 
     //Shorthands
@@ -34,7 +38,17 @@ public class MarbleBrain : MonoBehaviour {
         col = GetComponent<Collider>();
         soundManager = GetComponent<AISoundManager>();
         targetIndex = 0;
-        difficultyMod = Random.Range(0.001f, 1);
+
+        //Generate personality
+        difficultyMod = Random.Range(0.001f, 1.2f);
+        massMod = Random.Range(0.3f, 3);
+        dragMod = Random.Range(0.5f, 2);
+        angularMod = Random.Range(0.5f, 2);
+
+        //Apply rigidbody individualisms
+        rb.mass *= massMod;
+        rb.drag *= dragMod;
+        rb.angularDrag *= angularMod;
     }
 	
 	void Update () {
