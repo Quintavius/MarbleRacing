@@ -256,11 +256,23 @@ MonoBehaviour:
       m_ZeroValue: 0.5
       m_Range: 1
   lumVsSatCurve:
-    overrideState: 0
+    overrideState: 1
     value:
       curve:
         serializedVersion: 2
-        m_Curve: []
+        m_Curve:
+        - serializedVersion: 2
+          time: 0
+          value: 0.8958333
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 0.7816377
+          value: 0.5208334
+          inSlope: 0
+          outSlope: 0
+          tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 0
@@ -305,13 +317,13 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 0
+    value: 1
   intensity:
     overrideState: 1
-    value: 1.44
+    value: 2.36
   color:
     overrideState: 1
-    value: {r: 0, g: 0, b: 0, a: 1}
+    value: {r: 0.11656574, g: 0.2721453, b: 0.32352942, a: 1}
   ambientOnly:
     overrideState: 1
     value: 1
