@@ -12,6 +12,8 @@ public class MarbleBrain : MonoBehaviour {
     public Transform[] targets;
     float difficultyMod;
     float massMod;
+    float maxSpeedMod;
+    float slopeSpeedMod;
     float dragMod;
     float angularMod;
 
@@ -42,13 +44,17 @@ public class MarbleBrain : MonoBehaviour {
         //Generate personality
         difficultyMod = Random.Range(0.001f, 1.2f);
         massMod = Random.Range(0.3f, 3);
-        dragMod = Random.Range(0.5f, 2);
-        angularMod = Random.Range(0.5f, 2);
+        dragMod = Random.Range(0.75f, 1.5f);
+        angularMod = Random.Range(0.75f, 1.5f);
+        maxSpeedMod = Random.Range(0.75f, 1.5f);
+        slopeSpeedMod = Random.Range(0.75f, 1.5f);
 
         //Apply rigidbody individualisms
         rb.mass *= massMod;
         rb.drag *= dragMod;
         rb.angularDrag *= angularMod;
+        maximumSpeed *= maxSpeedMod;
+        slopeSpeed *= slopeSpeedMod;
     }
 	
 	void Update () {
@@ -79,7 +85,7 @@ public class MarbleBrain : MonoBehaviour {
             var index = collision.gameObject.GetComponent<WaypointIndex>().index;
             if (index >= targetIndex)
             {
-                targetIndex++;
+                targetIndex = index +1;
             }
         }
     }
