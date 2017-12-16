@@ -9,6 +9,7 @@ public class MarbleBrain : MonoBehaviour {
     public float slopeSpeed;
 
     [Header("AI Settings")]
+    public GameObject targetHolder;
     public Transform[] targets;
     float difficultyMod;
     float massMod;
@@ -17,7 +18,7 @@ public class MarbleBrain : MonoBehaviour {
     float dragMod;
     float angularMod;
 
-    int targetIndex;
+    public int targetIndex;
 
     //Shorthands
     [HideInInspector]
@@ -33,6 +34,11 @@ public class MarbleBrain : MonoBehaviour {
     [HideInInspector]
     public bool playDropSound;
     int colCount;
+
+    void Awake()
+    {
+        targets = targetHolder.GetComponentsInChildren<Transform>();
+    }
 
     void Start () {
         //initialize

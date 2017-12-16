@@ -5,8 +5,8 @@ using UnityEngine;
 public class WaypointIndex : MonoBehaviour {
     public int index;
 
-    private void Awake()
+    private void Start()
     {
-        index = int.Parse(gameObject.name);
+        //index = int.Parse(gameObject.name);
     }
 }
