@@ -10,7 +10,7 @@ public class MarbleBrain : MonoBehaviour {
 
     [Header("AI Settings")]
     public GameObject targetHolder;
-    public Transform[] targets;
+    public WaypointIndex[] targets;
     float difficultyMod;
     float massMod;
     float maxSpeedMod;
@@ -37,7 +37,7 @@ public class MarbleBrain : MonoBehaviour {
 
     void Awake()
     {
-        targets = targetHolder.GetComponentsInChildren<Transform>();
+        targets = targetHolder.GetComponentsInChildren<WaypointIndex>();
     }
 
     void Start () {
@@ -67,7 +67,7 @@ public class MarbleBrain : MonoBehaviour {
         if (rb.velocity.magnitude < maximumSpeed * 1.5f)
         {
             //Get target direction
-            Vector3 dir = targets[targetIndex].position - transform.position;
+            Vector3 dir = targets[targetIndex].transform.position - transform.position;
             dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
             //LET THE FORCE FLOW THROUGH YOU
             rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
