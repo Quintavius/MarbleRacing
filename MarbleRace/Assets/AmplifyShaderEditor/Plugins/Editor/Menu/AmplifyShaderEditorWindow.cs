@@ -1285,7 +1285,7 @@ namespace AmplifyShaderEditor
 			}
 
 
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
 			m_customGraph = null;
 			m_cacheSaveOp = false;
@@ -1316,7 +1316,7 @@ namespace AmplifyShaderEditor
 					IOUtils.StartSaveThread( GenerateGraphInfo(), newShader );
 					AssetDatabase.Refresh();
 					LoadFromDisk( newShader );
-					Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+                    System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 					return true;
 				}
 			}
@@ -1330,7 +1330,7 @@ namespace AmplifyShaderEditor
 					Material material = m_mainGraphInstance.CurrentMaterial;
 					m_lastpath = ( material != null ) ? AssetDatabase.GetAssetPath( material ) : AssetDatabase.GetAssetPath( currShader );
 					EditorPrefs.SetString( IOUtils.LAST_OPENED_OBJ_ID, m_lastpath );
-					Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+                    System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 					return true;
 				}
 				else
@@ -1344,7 +1344,7 @@ namespace AmplifyShaderEditor
 						m_mainGraphInstance.FireMasterNode( pathName, true );
 						m_lastpath = pathName;
 						EditorPrefs.SetString( IOUtils.LAST_OPENED_OBJ_ID, pathName );
-						Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+                        System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 						return true;
 					}
 				}
@@ -1385,11 +1385,11 @@ namespace AmplifyShaderEditor
 				AssetDatabase.Refresh();
 				IOUtils.FunctionNodeChanged = true;
 				m_lastpath = AssetDatabase.GetAssetPath( m_mainGraphInstance.CurrentShaderFunction );
-				Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+                System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 				//EditorPrefs.SetString( IOUtils.LAST_OPENED_OBJ_ID, AssetDatabase.GetAssetPath( m_mainGraphInstance.CurrentShaderFunction ) );
 				return true;
 			}
-			Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 			return false;
 		}
 
@@ -2447,6 +2447,7 @@ namespace AmplifyShaderEditor
 				titleContent.text = GenerateTabTitle( shaderFunction.FunctionName );
 				titleContent.image = UIUtils.ShaderFunctionIcon;
 				m_lastpath = assetDatapath;
+				m_nodeParametersWindow.OnShaderFunctionLoad();
 				//EditorPrefs.SetString( IOUtils.LAST_OPENED_OBJ_ID, assetDatapath );
 			}
 			else if( value && shader != null )
@@ -2891,9 +2892,14 @@ namespace AmplifyShaderEditor
 			ForceRepaint();
 		}
 
-		void OnLostFocus()
+		private void OnFocus()
 		{
 			EditorGUI.FocusTextInControl( null );
+		}
+
+		void OnLostFocus()
+		{
+			
 			m_lostFocus = true;
 			m_multipleSelectionActive = false;
 			m_wireReferenceUtils.InvalidateReferences();
@@ -3018,6 +3024,7 @@ namespace AmplifyShaderEditor
 				Undo.RegisterCompleteObjectUndo( this, Constants.UndoPasteNodeId );
 			}
 
+			List<ParentNode> createdNodes = new List<ParentNode>();
 			for( int i = 0; i < m_clipboard.CurrentClipboardStrData.Count; i++ )
 			{
 				ParentNode node = CreateNodeFromClipboardData( i );
@@ -3026,10 +3033,19 @@ namespace AmplifyShaderEditor
 					m_clipboard.CurrentClipboardStrData[ i ].NewNodeId = node.UniqueId;
 					Vector2 pos = node.Vec2Position;
 					node.Vec2Position = pos + deltaPos + m_copyPasteDeltaMul * Constants.CopyPasteDeltaPos;
-					node.RefreshExternalReferences();
+					//node.RefreshExternalReferences();
+					createdNodes.Add( node );
 					m_mainGraphInstance.SelectNode( node, true, false );
 				}
 			}
+
+			// Refresh external references must always be called after all nodes are created
+			for( int i = 0; i < createdNodes.Count; i++ )
+			{
+				createdNodes[ i ].RefreshExternalReferences();
+			}
+			createdNodes.Clear();
+			createdNodes = null;
 
 			if( copyConnections )
 			{
@@ -3235,7 +3251,7 @@ namespace AmplifyShaderEditor
 									}
 									else
 									{
-										//ShowMessage( string.Format( "{0} is not a valid ASE node ", parameters[ IOUtils.NodeTypeId ] ), MessageSeverity.Error );
+										UIUtils.ShowMessage( string.Format( "{0} is not a valid ASE node ", parameters[ IOUtils.NodeTypeId ] ), MessageSeverity.Error );
 									}
 								}
 								break;
@@ -3390,7 +3406,7 @@ namespace AmplifyShaderEditor
 		public ShaderLoadResult LoadFromDisk( string pathname, AmplifyShaderFunction shaderFunction = null )
 		{
 			m_isLoading = true;
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+			System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
 			FullCleanUndoStack();
 			m_performFullUndoRegister = true;
@@ -3766,7 +3782,7 @@ namespace AmplifyShaderEditor
 			m_mainGraphInstance.RefreshExternalReferences();
 			m_mainGraphInstance.LoadedShaderVersion = m_versionInfo.FullNumber;
 
-			Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
 			m_isLoading = false;
 			return loadResult;
@@ -3856,7 +3872,7 @@ namespace AmplifyShaderEditor
 			else
 				m_currentCommandName = string.Empty;
 
-			Thread.CurrentThread.CurrentCulture = CultureInfo.InvariantCulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Globalization.CultureInfo.InvariantCulture;
 
 			MouseInteracted = false;
 
@@ -4339,7 +4355,7 @@ namespace AmplifyShaderEditor
 			if( CheckFunctions )
 				CheckFunctions = false;
 
-			Thread.CurrentThread.CurrentCulture = Thread.CurrentThread.CurrentUICulture;
+            System.Threading.Thread.CurrentThread.CurrentCulture = System.Threading.Thread.CurrentThread.CurrentUICulture;
 
 			UIUtils.CurrentWindow = cacheWindow;
 			if( !m_nodesLoadedCorrectly )

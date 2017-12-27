@@ -130,6 +130,8 @@ namespace AmplifyShaderEditor
 				{
 					dataCollector.AddToInput( UniqueId, SurfaceInputs.INTERNALDATA, addSemiColon: false );
 					result = GeneratorUtils.GenerateWorldReflection( ref dataCollector, UniqueId );
+					if( dataCollector.DirtyNormal )
+						dataCollector.ForceNormal = true;
 				}
 
 				return GetOutputVectorItem( 0, outputId, result );

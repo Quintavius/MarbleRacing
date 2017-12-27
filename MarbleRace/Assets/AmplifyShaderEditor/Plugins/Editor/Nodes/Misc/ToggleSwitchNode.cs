@@ -9,7 +9,7 @@ namespace AmplifyShaderEditor
 	public class ToggleSwitchNode : PropertyNode
 	{
 		private const string InputPortName = "In ";
-		private const string CurrSelectedStr = "Toogle Value";
+		private const string CurrSelectedStr = "Toggle Value";
 		private const string LerpOp = "lerp({0},{1},{2})";
 
 		[SerializeField]
@@ -193,6 +193,11 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_currentSelectedInput );
 		}
 
+		public override void RefreshExternalReferences()
+		{
+			base.RefreshExternalReferences();
+			UpdateConnection();
+		}
 		public override string GetPropertyValue()
 		{
 			return "[Toggle]" + m_propertyName + "(\"" + m_propertyInspectorName + "\", Float) = " + m_currentSelectedInput;

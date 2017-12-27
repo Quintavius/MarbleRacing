@@ -6746,6 +6746,194 @@ MonoBehaviour:
   m_MaximumEffort: 5
   m_Damping: 3.05
   m_OptimalTargetDistance: 0
+--- !u!1 &1074803328
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1074803329}
+  - component: {fileID: 1074803330}
+  m_Layer: 0
+  m_Name: Spline
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1074803329
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1074803328}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1317296827}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1074803330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1074803328}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 598e68924c9f6324bbfd049d3bae754c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  editorPathColor: {r: 1, g: 1, b: 1, a: 1}
+  alwaysDraw: 0
+  drawThinckness: 0
+  billboardThickness: 1
+  is2D: 0
+  spline:
+    points:
+    - _type: 0
+      position: {x: -7.2832994, y: 19.615602, z: 19.096193}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.544057, y: 0.8289886, z: -0.12953737}
+      size: 1
+      tangent: {x: -7.2832994, y: 19.615602, z: 19.096193}
+      tangent2: {x: -7.2832994, y: 19.615602, z: 19.096193}
+    - _type: 0
+      position: {x: -0.797781, y: 16.296638, z: 18.464663}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.4357777, y: 0.89961517, z: 0.02811469}
+      size: 1
+      tangent: {x: -0.797781, y: 16.296638, z: 18.464663}
+      tangent2: {x: -0.797781, y: 16.296638, z: 18.464663}
+    - _type: 0
+      position: {x: -0.7621918, y: 15.529934, z: 15.352484}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.46913287, y: 0.88301975, z: -0.013798025}
+      size: 1
+      tangent: {x: -0.7621918, y: 15.529934, z: 15.352484}
+      tangent2: {x: -0.7621918, y: 15.529934, z: 15.352484}
+    - _type: 0
+      position: {x: 1.2562933, y: 15.245693, z: 13.482128}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.22809896, y: 0.9731629, z: 0.030413195}
+      size: 1
+      tangent: {x: 1.2562933, y: 15.245693, z: 13.482128}
+      tangent2: {x: 1.2562933, y: 15.245693, z: 13.482128}
+    - _type: 0
+      position: {x: -0.020406246, y: 14.906582, z: 10.686394}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.8146715, y: 0.57928663, z: -0.027155718}
+      size: 1
+      tangent: {x: -0.020406246, y: 14.906582, z: 10.686394}
+      tangent2: {x: -0.020406246, y: 14.906582, z: 10.686394}
+    - _type: 0
+      position: {x: 1.3543806, y: 14.669297, z: 9.988432}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: -0.3132609, y: 0.5011869, z: 0.8066469}
+      size: 1
+      tangent: {x: 1.3543806, y: 14.669297, z: 9.988432}
+      tangent2: {x: 1.3543806, y: 14.669297, z: 9.988432}
+    - _type: 0
+      position: {x: 4.9065027, y: 14.36562, z: 12.118383}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.22820453, y: 0.97361326, z: 0}
+      size: 1
+      tangent: {x: 4.9065027, y: 14.36562, z: 12.118383}
+      tangent2: {x: 4.9065027, y: 14.36562, z: 12.118383}
+    - _type: 0
+      position: {x: 7.7966137, y: 13.672581, z: 14.217352}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.3877174, y: 0.91897774, z: 0.07179952}
+      size: 1
+      tangent: {x: 7.7966137, y: 13.672581, z: 14.217352}
+      tangent2: {x: 7.7966137, y: 13.672581, z: 14.217352}
+    - _type: 0
+      position: {x: 13.499415, y: 11.760824, z: 18.584455}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.43595004, y: 0.89997095, z: 0}
+      size: 1
+      tangent: {x: 13.499415, y: 11.760824, z: 18.584455}
+      tangent2: {x: 13.499415, y: 11.760824, z: 18.584455}
+    - _type: 0
+      position: {x: 14.6500225, y: 10.496681, z: 18.404797}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.4244551, y: 0.905449, z: 0}
+      size: 1
+      tangent: {x: 14.6500225, y: 10.496681, z: 18.404797}
+      tangent2: {x: 14.6500225, y: 10.496681, z: 18.404797}
+    - _type: 0
+      position: {x: 16.200184, y: 7.4092197, z: 8.173849}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.14814408, y: 0.94806427, z: 0.28147376}
+      size: 1
+      tangent: {x: 16.200184, y: 7.4092197, z: 8.173849}
+      tangent2: {x: 16.200184, y: 7.4092197, z: 8.173849}
+    - _type: 0
+      position: {x: 13.870599, y: 7.273821, z: 3.4141254}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.38868037, y: 0.92126024, z: 0.014395569}
+      size: 1
+      tangent: {x: 13.870599, y: 7.273821, z: 3.4141254}
+      tangent2: {x: 13.870599, y: 7.273821, z: 3.4141254}
+    - _type: 0
+      position: {x: 13.870599, y: 7.273821, z: 3.4141254}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.38868037, y: 0.92126024, z: 0.014395569}
+      size: 1
+      tangent: {x: 13.870599, y: 7.273821, z: 3.4141254}
+      tangent2: {x: 13.870599, y: 7.273821, z: 3.4141254}
+    - _type: 0
+      position: {x: 13.846662, y: 7.286989, z: 3.3204517}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.37604228, y: 0.92558604, z: 0.04338949}
+      size: 1
+      tangent: {x: 13.846662, y: 7.286989, z: 3.3204517}
+      tangent2: {x: 13.846662, y: 7.286989, z: 3.3204517}
+    - _type: 0
+      position: {x: 13.870599, y: 7.1574497, z: 3.4141254}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.38868037, y: 0.92126024, z: 0.014395569}
+      size: 1
+      tangent: {x: 13.870599, y: 7.1574497, z: 3.4141254}
+      tangent2: {x: 13.870599, y: 7.1574497, z: 3.4141254}
+    - _type: 0
+      position: {x: 12.991021, y: 7.091006, z: 2.2739837}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.32506204, y: 0.9455773, z: -0.014775547}
+      size: 1
+      tangent: {x: 12.991021, y: 7.091006, z: 2.2739837}
+      tangent2: {x: 12.991021, y: 7.091006, z: 2.2739837}
+    - _type: 0
+      position: {x: 12.986951, y: 6.808199, z: 2.285303}
+      color: {r: 1, g: 1, b: 1, a: 1}
+      normal: {x: 0.32506204, y: 0.9455773, z: -0.014775547}
+      size: 1
+      tangent: {x: 12.986951, y: 6.808199, z: 2.285303}
+      tangent2: {x: 12.986951, y: 6.808199, z: 2.285303}
+    closed: 0
+    type: 0
+    customValueInterpolation:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    customNormalInterpolation:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    precision: 0.8999999761581421
+  _morph:
+    computer: {fileID: 0}
+    morphStates: []
+    initialized: 0
+  _space: 0
+  subscribers: []
+  _nodeLinks: []
 --- !u!1 &1134443338
 GameObject:
   m_ObjectHideFlags: 0
@@ -8145,7 +8333,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.3, y: -19.63, z: -18.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1074803329}
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

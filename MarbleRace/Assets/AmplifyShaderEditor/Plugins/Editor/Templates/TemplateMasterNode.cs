@@ -266,7 +266,22 @@ namespace AmplifyShaderEditor
             //	NodeUtils.DrawPropertyGroup( ref m_snippetsFoldout, SnippetsFoldoutStr, DrawSnippetOptions );
             if( GUILayout.Button( OpenTemplateStr ) && m_currentTemplate != null )
             {
-                AssetDatabase.OpenAsset( AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( m_currentTemplate.GUID ) ), 1 );
+				try
+				{
+					string pathname = AssetDatabase.GUIDToAssetPath( m_currentTemplate.GUID );
+					if( !string.IsNullOrEmpty( pathname ) )
+					{
+						Shader selectedTemplate = AssetDatabase.LoadAssetAtPath<Shader>( pathname );
+						if( selectedTemplate != null )
+						{
+							AssetDatabase.OpenAsset( selectedTemplate, 1 );
+						}
+					}
+				}
+				catch( Exception e )
+				{
+					Debug.LogException( e );
+				}
             }
 
 #if SHOW_TEMPLATE_HELP_BOX
