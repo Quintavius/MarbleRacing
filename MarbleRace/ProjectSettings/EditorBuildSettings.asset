@@ -4,4 +4,7 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Marc Tracks/TutorialTrack.unity
+    guid: 8ef958cf4902d45428c51b656ff8b7da

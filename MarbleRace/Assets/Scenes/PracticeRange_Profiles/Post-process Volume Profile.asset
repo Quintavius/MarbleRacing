@@ -15,6 +15,7 @@ MonoBehaviour:
   - {fileID: 114854127688321528}
   - {fileID: 114519990884382622}
   - {fileID: 114359278803058724}
+  - {fileID: 114673250723841066}
 --- !u!114 &114359278803058724
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -32,7 +33,7 @@ MonoBehaviour:
     value: 1
   gradingMode:
     overrideState: 1
-    value: 1
+    value: 0
   externalLut:
     overrideState: 0
     value: {fileID: 0}
@@ -290,7 +291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -300,6 +301,48 @@ MonoBehaviour:
   sampleCount:
     overrideState: 1
     value: 14
+--- !u!114 &114673250723841066
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
+  m_Name: Bloom
+  m_EditorClassIdentifier: 
+  active: 0
+  enabled:
+    overrideState: 1
+    value: 1
+  intensity:
+    overrideState: 1
+    value: 2.6
+  threshold:
+    overrideState: 1
+    value: 0.17
+  softKnee:
+    overrideState: 1
+    value: 0
+  diffusion:
+    overrideState: 1
+    value: 2.1
+  anamorphicRatio:
+    overrideState: 1
+    value: 0
+  color:
+    overrideState: 1
+    value: {r: 1, g: 1, b: 1, a: 1}
+  mobileOptimized:
+    overrideState: 1
+    value: 1
+  dirtTexture:
+    overrideState: 1
+    value: {fileID: 0}
+  dirtIntensity:
+    overrideState: 1
+    value: 0
 --- !u!114 &114854127688321528
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -311,16 +354,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1cb7e9e120078f43bce4f0b1be547a7, type: 3}
   m_Name: AmbientOcclusion
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 2.36
+    value: 3.13
   color:
     overrideState: 1
     value: {r: 0.11656574, g: 0.2721453, b: 0.32352942, a: 1}
@@ -344,7 +387,7 @@ MonoBehaviour:
     value: 0
   radius:
     overrideState: 1
-    value: 1.75
+    value: 1.83
   quality:
     overrideState: 1
-    value: 4
+    value: 0
