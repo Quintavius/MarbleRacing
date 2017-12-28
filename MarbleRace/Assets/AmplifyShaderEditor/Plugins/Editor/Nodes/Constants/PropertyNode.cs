@@ -16,7 +16,13 @@ namespace AmplifyShaderEditor
 		Global
 	}
 
-	[Serializable]
+    public enum VariableMode
+    {
+        Create,
+        Fetch
+    }
+
+    [Serializable]
 	public class PropertyAttributes
 	{
 		public string Name;
@@ -31,7 +37,8 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public class PropertyNode : ParentNode
 	{
-		private const string IsPropertyStr = "Is Property";
+        private const string IgnoreVarDeclarationStr = "Variable Mode";
+        private const string IsPropertyStr = "Is Property";
 		private const string PropertyNameStr = "Property Name";
 		private const string PropertyInspectorStr = "Name";
 		protected const string ParameterTypeStr = "Type";
@@ -40,7 +47,7 @@ namespace AmplifyShaderEditor
 		private const string OrderIndexStr = "Order Index";
 		private const double MaxTimestamp = 2;
 		private const double MaxPropertyTimestamp = 2;
-		private readonly string[] LabelToolbarTitle = { "Material", "Default" };
+		protected readonly string[] LabelToolbarTitle = { "Material", "Default" };
 
 		[SerializeField]
 		protected PropertyType m_currentParameterType;
@@ -60,6 +67,9 @@ namespace AmplifyShaderEditor
 
 		[SerializeField]
 		private int m_orderIndex = -1;
+
+        [SerializeField]
+        protected VariableMode m_variableMode = VariableMode.Create;
 
 		protected bool m_showTitleWhenNotEditing = true;
 
@@ -89,7 +99,7 @@ namespace AmplifyShaderEditor
 		//protected bool m_useCustomPrefix = false;
 		protected string m_customPrefix = null;
 
-		private int m_propertyTab = 0;
+		protected int m_propertyTab = 0;
 
 		public PropertyNode() : base() { }
 		public PropertyNode( int uniqueId, float x, float y, float width, float height ) : base( uniqueId, x, y, width, height ) { }
@@ -371,7 +381,8 @@ namespace AmplifyShaderEditor
 						{
 							ShowPropertyInspectorNameGUI();
 							ShowPropertyNameGUI( true );
-							ShowPrecision();
+                            ShowVariableMode();
+                            ShowPrecision();
 							ShowToolbar();
 						}
 						break;
@@ -379,7 +390,8 @@ namespace AmplifyShaderEditor
 						{
 							ShowPropertyInspectorNameGUI();
 							ShowPropertyNameGUI( false );
-							ShowPrecision();
+                            ShowVariableMode();
+                            ShowPrecision();
 							ShowDefaults();
 						}
 						break;
@@ -457,12 +469,16 @@ namespace AmplifyShaderEditor
 		{
 			if ( m_drawPrecisionUI )
 			{
-				EditorGUI.BeginChangeCheck();
+                bool guiEnabled = GUI.enabled;
+                GUI.enabled = m_currentParameterType == PropertyType.Constant || m_variableMode == VariableMode.Create;
+                EditorGUI.BeginChangeCheck();
 				DrawPrecisionProperty();
 				if ( EditorGUI.EndChangeCheck() )
 					m_precisionString = UIUtils.FinalPrecisionWirePortToCgType( m_currentPrecisionType, m_outputPorts[ 0 ].DataType );
 
-			}
+                GUI.enabled = guiEnabled;
+
+            }
 		}
 
 		public void ShowToolbar()
@@ -478,15 +494,19 @@ namespace AmplifyShaderEditor
 			{
 				default:
 				case 0:
-				EditorGUI.BeginChangeCheck();
-				DrawMaterialProperties();
-				if ( EditorGUI.EndChangeCheck() )
 				{
-					BeginDelayedDirtyProperty();
+					EditorGUI.BeginChangeCheck();
+					DrawMaterialProperties();
+					if( EditorGUI.EndChangeCheck() )
+					{
+						BeginDelayedDirtyProperty();
+					}
 				}
 				break;
 				case 1:
-				ShowDefaults();
+				{
+					ShowDefaults();
+				}
 				break;
 			}
 		}
@@ -520,14 +540,21 @@ namespace AmplifyShaderEditor
 			GUI.enabled = false;
 			m_propertyName = EditorGUILayoutTextField( PropertyNameStr, m_propertyName );
 			GUI.enabled = guiEnabledBuffer;
-		}
+        
+        }
+
+        public void ShowVariableMode()
+        {
+            if( m_freeType )
+                m_variableMode = (VariableMode)EditorGUILayoutEnumPopup( IgnoreVarDeclarationStr, m_variableMode );
+        }
 
 		public virtual string GetPropertyValStr() { return string.Empty; }
 
 		public override bool OnClick( Vector2 currentMousePos2D )
 		{
 			bool singleClick = base.OnClick( currentMousePos2D );
-			m_propertyTab = 0;
+			m_propertyTab = m_materialMode ? 0 : 1;
 			return singleClick;
 		}
 
@@ -733,7 +760,7 @@ namespace AmplifyShaderEditor
 					dataCollector.AddToProperties( UniqueId, GetPropertyValue(), OrderIndex );
 					string dataType = string.Empty;
 					string dataName = string.Empty;
-					if ( GetUniformData( out dataType, out dataName ) )
+					if ( m_variableMode == VariableMode.Create && GetUniformData( out dataType, out dataName ) )
 						dataCollector.AddToUniforms( UniqueId, dataType, dataName );
 					//dataCollector.AddToUniforms( m_uniqueId, GetUniformValue() );
 				}
@@ -749,7 +776,7 @@ namespace AmplifyShaderEditor
 				{
 					string dataType = string.Empty;
 					string dataName = string.Empty;
-					if ( GetUniformData( out dataType, out dataName ) )
+					if ( m_variableMode == VariableMode.Create && GetUniformData( out dataType, out dataName ) )
 						dataCollector.AddToUniforms( UniqueId, dataType, dataName );
 					//dataCollector.AddToUniforms( m_uniqueId, GetUniformValue() );
 				}
@@ -849,8 +876,9 @@ namespace AmplifyShaderEditor
 					IOUtils.AddFieldValueToString( ref nodeInfo, m_availableAttribs[ m_selectedAttribs[ i ] ].Attribute );
 				}
 			}
-			//IOUtils.AddFieldValueToString( ref nodeInfo, m_orderIndexOffset );
-		}
+            IOUtils.AddFieldValueToString( ref nodeInfo, m_variableMode );
+            //IOUtils.AddFieldValueToString( ref nodeInfo, m_orderIndexOffset );
+        }
 
 		int IdForAttrib( string name )
 		{
@@ -910,6 +938,12 @@ namespace AmplifyShaderEditor
 				InitializeAttribsArray();
 			}
 
+
+            if( UIUtils.CurrentShaderVersion() > 14003 )
+            {
+                m_variableMode = (VariableMode)Enum.Parse(typeof(VariableMode), GetCurrentParam( ref nodeParams ) );
+            }
+
 			//if ( UIUtils.CurrentShaderVersion() > 7101 )
 			//{
 			//	m_orderIndexOffset = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
@@ -955,7 +989,7 @@ namespace AmplifyShaderEditor
 		public bool FreeType { get { return m_freeType; } set { m_freeType = value; } }
 		public bool ReRegisterName { get { return m_reRegisterName; } set { m_reRegisterName = value; } }
 		public string CustomPrefix { get { return m_customPrefix; } set { m_customPrefix = value; } }
-		public override void RefreshOnUndo()
+        public override void RefreshOnUndo()
 		{
 			base.RefreshOnUndo();
 			BeginPropertyFromInspectorCheck();

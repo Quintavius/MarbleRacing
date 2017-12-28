@@ -805,7 +805,7 @@ namespace AmplifyShaderEditor
 		public override void UpdateMaterial( Material mat )
 		{
 			base.UpdateMaterial( mat );
-			if( UIUtils.IsProperty( m_currentParameterType ) && !InsideShaderFunction )
+			if( UIUtils.IsProperty( m_currentParameterType ) && !InsideShaderFunction && m_referenceType == TexReferenceType.Object )
 			{
 				OnPropertyNameChanged();
 				if( mat.HasProperty( PropertyName ) )

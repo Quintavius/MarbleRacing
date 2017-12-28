@@ -122,7 +122,7 @@ namespace AmplifyShaderEditor
         {
             base.ReadFromString( ref nodeParams );
             m_viewSpaceInt = Convert.ToInt32( GetCurrentParam( ref nodeParams ) );
-            if( UIUtils.CurrentShaderVersion() > 13803 )
+            if( UIUtils.CurrentShaderVersion() >= 13901 )
             {
                 m_convertToLinear = Convert.ToBoolean( GetCurrentParam( ref nodeParams ) );
             }

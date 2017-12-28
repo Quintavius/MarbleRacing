@@ -1393,7 +1393,7 @@ namespace AmplifyShaderEditor
 			ParentNode outputNode = GetNode( outNodeId );
 			if( outputNode != null )
 			{
-				OutputPort outputPort = outputNode.OutputPorts[ outPortId ];
+				OutputPort outputPort = outputNode.GetOutputPortByUniqueId( outPortId );
 				if( outputPort != null )
 				{
 					ParentNode inputNode = GetNode( inNodeId );

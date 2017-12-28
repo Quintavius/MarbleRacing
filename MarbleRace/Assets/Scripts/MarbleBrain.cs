@@ -9,9 +9,16 @@ public class MarbleBrain : MonoBehaviour {
     public float slopeSpeed;
 
     [Header("AI Settings")]
-    public Transform[] targets;
+    public GameObject targetHolder;
+    public WaypointIndex[] targets;
     float difficultyMod;
-    int targetIndex;
+    float massMod;
+    float maxSpeedMod;
+    float slopeSpeedMod;
+    float dragMod;
+    float angularMod;
+
+    public int targetIndex;
 
     //Shorthands
     [HideInInspector]
@@ -28,20 +35,39 @@ public class MarbleBrain : MonoBehaviour {
     public bool playDropSound;
     int colCount;
 
+    void Awake()
+    {
+        targets = targetHolder.GetComponentsInChildren<WaypointIndex>();
+    }
+
     void Start () {
         //initialize
         rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         soundManager = GetComponent<AISoundManager>();
         targetIndex = 0;
-        difficultyMod = Random.Range(0.001f, 1);
+
+        //Generate personality
+        difficultyMod = Random.Range(0.8f, 1f); //accel mod
+        massMod = Random.Range(0.9f, 1.1f); //mass
+        dragMod = Random.Range(0.9f, 1.1f); //drag
+        angularMod = Random.Range(0.9f, 1.1f); //ang drag
+        maxSpeedMod = Random.Range(0.8f, 1f); //max speed
+        slopeSpeedMod = Random.Range(0.8f, 1f); //slope
+
+        //Apply rigidbody individualisms
+        rb.mass *= massMod;
+        rb.drag *= dragMod;
+        rb.angularDrag *= angularMod;
+        maximumSpeed *= maxSpeedMod;
+        slopeSpeed *= slopeSpeedMod;
     }
 	
 	void Update () {
         if (rb.velocity.magnitude < maximumSpeed * 1.5f)
         {
             //Get target direction
-            Vector3 dir = targets[targetIndex].position - transform.position;
+            Vector3 dir = targets[targetIndex].transform.position - transform.position;
             dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
             //LET THE FORCE FLOW THROUGH YOU
             rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
@@ -65,7 +91,7 @@ public class MarbleBrain : MonoBehaviour {
             var index = collision.gameObject.GetComponent<WaypointIndex>().index;
             if (index >= targetIndex)
             {
-                targetIndex++;
+                targetIndex = index +1;
             }
         }
     }
