@@ -7834,7 +7834,7 @@ GameObject:
   - component: {fileID: 966383530}
   - component: {fileID: 966383529}
   - component: {fileID: 966383528}
-  m_Layer: 0
+  m_Layer: 4
   m_Name: Post-process Volume
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14577,8 +14577,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 100
-  field of view: 14.5
+  far clip plane: 5000
+  field of view: 40
   orthographic: 0
   orthographic size: 10
   m_Depth: -1
@@ -14602,8 +14602,8 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1771753947}
-  m_LocalRotation: {x: 0.18753664, y: 0.80533415, z: -0.45275953, w: 0.33358032}
-  m_LocalPosition: {x: -11.829, y: 28.675999, z: 23.364}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14624,7 +14624,7 @@ MonoBehaviour:
   volumeTrigger: {fileID: 1771753951}
   volumeLayer:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 16
   stopNaNPropagation: 1
   antialiasingMode: 1
   temporalAntialiasing:
@@ -14633,7 +14633,7 @@ MonoBehaviour:
     stationaryBlending: 0.95
     motionBlending: 0.85
   fastApproximateAntialiasing:
-    mobileOptimized: 0
+    mobileOptimized: 1
     keepAlpha: 0
   fog:
     enabled: 1

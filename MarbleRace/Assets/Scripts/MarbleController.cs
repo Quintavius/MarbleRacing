@@ -51,8 +51,8 @@ public class MarbleController : MonoBehaviour {
         //hmove = Input.GetAxis(axisH);
         //vmove = Input.GetAxis(axisV);
 
-        hmove = Input.acceleration.y;
-        vmove = Input.acceleration.x;
+        hmove = Input.acceleration.x;
+        vmove = Input.acceleration.y;
 
         //Check for input
         if (hmove != 0 || vmove != 0) {

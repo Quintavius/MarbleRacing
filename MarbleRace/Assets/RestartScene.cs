@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class RestartScene : MonoBehaviour {
+    private void Start()
+    {
+        Screen.sleepTimeout = (int)0f;
+        Screen.sleepTimeout = SleepTimeout.NeverSleep;
+    }
 
     private void Update()
     {
