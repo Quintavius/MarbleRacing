@@ -48,12 +48,12 @@ public class MarbleBrain : MonoBehaviour {
         targetIndex = 0;
 
         //Generate personality
-        difficultyMod = Random.Range(0.001f, 1.2f);
-        massMod = Random.Range(0.3f, 3);
-        dragMod = Random.Range(0.75f, 1.5f);
-        angularMod = Random.Range(0.75f, 1.5f);
-        maxSpeedMod = Random.Range(0.75f, 1.5f);
-        slopeSpeedMod = Random.Range(0.75f, 1.5f);
+        difficultyMod = Random.Range(0.8f, 1f); //accel mod
+        massMod = Random.Range(0.9f, 1.1f); //mass
+        dragMod = Random.Range(0.9f, 1.1f); //drag
+        angularMod = Random.Range(0.9f, 1.1f); //ang drag
+        maxSpeedMod = Random.Range(0.8f, 1f); //max speed
+        slopeSpeedMod = Random.Range(0.8f, 1f); //slope
 
         //Apply rigidbody individualisms
         rb.mass *= massMod;
