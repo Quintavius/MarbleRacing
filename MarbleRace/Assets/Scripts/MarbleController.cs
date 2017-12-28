@@ -48,8 +48,11 @@ public class MarbleController : MonoBehaviour {
     }
 	
 	void Update () {
-        hmove = Input.GetAxis(axisH);
-        vmove = Input.GetAxis(axisV);
+        //hmove = Input.GetAxis(axisH);
+        //vmove = Input.GetAxis(axisV);
+
+        hmove = Input.acceleration.y;
+        vmove = Input.acceleration.x;
 
         //Check for input
         if (hmove != 0 || vmove != 0) {
