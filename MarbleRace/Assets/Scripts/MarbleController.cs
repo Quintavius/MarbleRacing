@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MarbleController : MonoBehaviour {
     [Header("Player Settings")]
@@ -33,12 +34,21 @@ public class MarbleController : MonoBehaviour {
     public bool playDropSound;
     int colCount;
 
+    //Mobile specifics
+    float xCalibrate;
+    float yCalibrate;
+
+    public Text xText;
+    public Text yText;
+
 	void Start () {
         //initialize
         rb = GetComponent<Rigidbody>();
         cam = Camera.main;
         col = GetComponent<Collider>();
         soundManager = GetComponent<MarbleSoundManager>();
+        //Mobile
+        CalibrateGyro();
 
         //Assign player ID
         if (playerId == 0) { axisH = "Horizontal_Player1"; axisV = "Vertical_Player1"; }
@@ -51,9 +61,12 @@ public class MarbleController : MonoBehaviour {
         //hmove = Input.GetAxis(axisH);
         //vmove = Input.GetAxis(axisV);
 
-        hmove = Input.acceleration.x;
-        vmove = Input.acceleration.y;
+        hmove = Mathf.Clamp((Input.acceleration.x - xCalibrate) * 5,-1f, 1f);
+        vmove = Mathf.Clamp((Input.acceleration.y - yCalibrate) * 5, -1f, 1f);
 
+        xText.text = "hmove: " + hmove;
+        yText.text = "vmove: " + vmove;
+            
         //Check for input
         if (hmove != 0 || vmove != 0) {
             if (rb.velocity.magnitude < maximumSpeed * 1.5f)
@@ -122,5 +135,10 @@ public class MarbleController : MonoBehaviour {
     private void OnCollisionExit(Collision collision)
     {
         colCount--;
+    }
+
+    public void CalibrateGyro() {
+        xCalibrate = Input.acceleration.x;
+        yCalibrate = Input.acceleration.y;
     }
 }
