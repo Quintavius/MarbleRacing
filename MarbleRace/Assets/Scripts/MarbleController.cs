@@ -38,8 +38,8 @@ public class MarbleController : MonoBehaviour {
     float xCalibrate;
     float yCalibrate;
 
-    public Text xText;
-    public Text yText;
+    //public Text xText;
+    //public Text yText;
 
 	void Start () {
         //initialize
@@ -58,14 +58,14 @@ public class MarbleController : MonoBehaviour {
     }
 	
 	void Update () {
-        //hmove = Input.GetAxis(axisH);
-        //vmove = Input.GetAxis(axisV);
+        hmove = Input.GetAxis(axisH);
+        vmove = Input.GetAxis(axisV);
 
-        hmove = Mathf.Clamp((Input.acceleration.x - xCalibrate) * 5,-1f, 1f);
-        vmove = Mathf.Clamp((Input.acceleration.y - yCalibrate) * 5, -1f, 1f);
+        //hmove = Mathf.Clamp((Input.acceleration.x - xCalibrate) * 5,-1f, 1f);
+        //vmove = Mathf.Clamp((Input.acceleration.y - yCalibrate) * 5, -1f, 1f);
 
-        xText.text = "hmove: " + hmove;
-        yText.text = "vmove: " + vmove;
+        //xText.text = "hmove: " + hmove;
+        //yText.text = "vmove: " + vmove;
             
         //Check for input
         if (hmove != 0 || vmove != 0) {
