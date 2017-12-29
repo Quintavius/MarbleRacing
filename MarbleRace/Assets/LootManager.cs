@@ -49,8 +49,8 @@ public class LootManager : MonoBehaviour {
             }
         }
 
-        if (move1) { marble1.position = Vector3.SmoothDamp(marble1.position, target1.position, ref ref1, 0.2f); }
-        if (move2) { marble2.position = Vector3.SmoothDamp(marble2.position, target2.position, ref ref2, 0.2f); }
-        if (move3) { marble3.position = Vector3.SmoothDamp(marble3.position, target3.position, ref ref3, 0.2f); }
+        if (move1) { marble1.position = Vector3.SmoothDamp(marble1.position, target1.position, ref ref1, 0.2f); marble1.Rotate(new Vector3(0, 1, 0), 90 * Time.deltaTime); }
+        if (move2) { marble2.position = Vector3.SmoothDamp(marble2.position, target2.position, ref ref2, 0.2f); marble2.Rotate(new Vector3(0, 1, 0), 90 * Time.deltaTime); }
+        if (move3) { marble3.position = Vector3.SmoothDamp(marble3.position, target3.position, ref ref3, 0.2f); marble3.Rotate(new Vector3(0, 1, 0), 90 * Time.deltaTime); }
     }
 }

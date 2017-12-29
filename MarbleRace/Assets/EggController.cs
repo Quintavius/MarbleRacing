@@ -18,7 +18,7 @@ public class EggController : MonoBehaviour {
             foreach (Transform child in transform)
             {
                 child.GetComponent<Rigidbody>().isKinematic = false;
-                child.GetComponent<Rigidbody>().AddExplosionForce(blastForce, other.transform.position, 5);
+                child.GetComponent<Rigidbody>().AddExplosionForce(blastForce, other.transform.position, 5,2);
             }
             GetComponent<AudioSource>().Play();
             FindObjectOfType<LootManager>().StartCountdown();
