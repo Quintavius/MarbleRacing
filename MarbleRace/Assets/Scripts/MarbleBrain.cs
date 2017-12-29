@@ -38,11 +38,11 @@ public class MarbleBrain : MonoBehaviour {
     void Awake()
     {
         targets = targetHolder.GetComponentsInChildren<WaypointIndex>();
+        rb = GetComponent<Rigidbody>();
     }
 
     void Start () {
         //initialize
-        rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         soundManager = GetComponent<AISoundManager>();
         targetIndex = 0;

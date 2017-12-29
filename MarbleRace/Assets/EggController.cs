@@ -5,6 +5,7 @@ using UnityEngine.Audio;
 
 public class EggController : MonoBehaviour {
     public float blastForce;
+    public MarbleSkin[] loot;
 
 	// Use this for initialization
 	void Start () {
@@ -22,6 +23,12 @@ public class EggController : MonoBehaviour {
             }
             GetComponent<AudioSource>().Play();
             FindObjectOfType<LootManager>().StartCountdown();
+            
+            foreach (MarbleSkin marble in loot)
+            {
+                marble.RandomizeSkin();
+            }
+
             Destroy(transform.GetComponent<Collider>());
         }
     }
