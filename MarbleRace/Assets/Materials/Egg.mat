@@ -142,8 +142,8 @@ Material:
     - _SrcBlend: 1
     - _StartDitheringFade: 0
     - _TessValue: 16
-    - _TransAmbient: 0.04
-    - _TransDirect: 0.617
+    - _TransAmbient: 0.142
+    - _TransDirect: 1
     - _TransNormalDistortion: 0
     - _TransScattering: 19.2
     - _TransShadow: 1

@@ -21,6 +21,7 @@ public class EggController : MonoBehaviour {
                 child.GetComponent<Rigidbody>().AddExplosionForce(blastForce, other.transform.position, 5);
             }
             GetComponent<AudioSource>().Play();
+            FindObjectOfType<LootManager>().StartCountdown();
             Destroy(transform.GetComponent<Collider>());
         }
     }
