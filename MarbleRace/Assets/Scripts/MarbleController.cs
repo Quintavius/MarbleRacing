@@ -61,17 +61,19 @@ public class MarbleController : MonoBehaviour {
         hmove = Input.GetAxis(axisH);
         vmove = Input.GetAxis(axisV);
 
-        if (hmove == 1 && vmove == 1)
+        if (hmove == 1 && vmove == 1) //fix keyboard input
         {
             hmove = 0.5f;
             vmove = 0.5f;
         }
-
+        
+        //Mobile Input
         //hmove = Mathf.Clamp((Input.acceleration.x - xCalibrate) * 5,-1f, 1f);
         //vmove = Mathf.Clamp((Input.acceleration.y - yCalibrate) * 5, -1f, 1f);
 
         //xText.text = "hmove: " + hmove;
         //yText.text = "vmove: " + vmove;
+        // //////////////////////////////
             
         //Check for input
         if (hmove != 0 || vmove != 0) {
