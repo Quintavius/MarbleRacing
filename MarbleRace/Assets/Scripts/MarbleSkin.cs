@@ -42,6 +42,10 @@ public class MarbleSkin : MonoBehaviour {
             case (int)Marble.Skin.RedNumber8: mat = (Material)Resources.Load("Skins/RedNumber8", typeof(Material)); mod = marMirror; break;
             case (int)Marble.Skin.Swampy: mat = (Material)Resources.Load("Skins/Swampy", typeof(Material)); mod = sphere; break;
             case (int)Marble.Skin.WhiteTiger: mat = (Material)Resources.Load("Skins/WhiteTiger", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.BlackMarble: mat = (Material)Resources.Load("Skins/BlackMarble", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.WhiteInnocence: mat = (Material)Resources.Load("Skins/WhiteInnocence", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.FoolsGold: mat = (Material)Resources.Load("Skins/FoolsGold", typeof(Material)); mod = sphere; break;
+
             default: break;
         }
 

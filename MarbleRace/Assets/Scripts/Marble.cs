@@ -11,6 +11,9 @@ public static class Marble {
         RedNumber8,
         OceanGreen,
         Swampy,
-        WhiteTiger
+        WhiteTiger,
+        BlackMarble,
+        WhiteInnocence,
+        FoolsGold
     }
 }

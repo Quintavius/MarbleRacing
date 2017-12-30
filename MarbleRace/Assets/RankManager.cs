@@ -12,9 +12,10 @@ public class RankManager : MonoBehaviour
   public List<MarbleRank> winners;
   [HideInInspector]
   public List<MarbleRank> players;
-  // Use this for initialization
+  int marblesFinished;
   void Start()
   {
+    marblesFinished = 0;
     raceOverCheck = true;
     //Throw all players in a list
     MarbleRank[] tempList = FindObjectsOfType<MarbleRank>();
@@ -72,7 +73,11 @@ public class RankManager : MonoBehaviour
       rankingCanvas.SetActive(true);
       foreach (MarbleRank marble in winners){
         if (!marble.ranked){
-          rankingText.text += marble.gameObject.name + "\n";
+          if (marblesFinished == 0){rankingText.text += "1st " + marble.gameObject.name + "\n";}
+          else if (marblesFinished == 1){rankingText.text += "2nd " + marble.gameObject.name + "\n";}
+          else if (marblesFinished == 2){rankingText.text += "3rd " + marble.gameObject.name + "\n";}
+          else if (marblesFinished >= 3){rankingText.text += (marblesFinished+1) + "th " + marble.gameObject.name + "\n";}
+          marblesFinished++;
           marble.ranked = true;
         }
       }
