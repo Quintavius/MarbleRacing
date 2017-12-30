@@ -1053,6 +1053,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &190330681
 GameObject:
   m_ObjectHideFlags: 0
@@ -1813,6 +1815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec3c56d2064ed9e498e22cdbeead6477, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trackPoints: []
 --- !u!43 &480637263
 Mesh:
   m_ObjectHideFlags: 0
@@ -4327,6 +4330,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &738316833
 GameObject:
   m_ObjectHideFlags: 0
@@ -4806,6 +4811,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &749584047
 GameObject:
   m_ObjectHideFlags: 0
@@ -5584,6 +5591,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &814880164
 GameObject:
   m_ObjectHideFlags: 0
@@ -6160,6 +6169,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &914249385
 GameObject:
   m_ObjectHideFlags: 0
@@ -6639,6 +6650,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &925356542
 GameObject:
   m_ObjectHideFlags: 0
@@ -9980,6 +9993,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &1297190256
 GameObject:
   m_ObjectHideFlags: 0
@@ -10628,6 +10643,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &1346944717
 GameObject:
   m_ObjectHideFlags: 3
@@ -11878,6 +11895,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &1770348795
 GameObject:
   m_ObjectHideFlags: 0
@@ -12357,6 +12376,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &1771753947
 GameObject:
   m_ObjectHideFlags: 0
@@ -12929,6 +12950,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1882190539}
   - component: {fileID: 1882190538}
+  - component: {fileID: 1882190540}
   m_Layer: 0
   m_Name: TargetGroup1
   m_TagString: Untagged
@@ -12969,6 +12991,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1882190540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1882190537}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85df5bd39db6c8140af09ac9535ef7f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tg: {fileID: 1882190538}
 --- !u!1 &1925858261
 GameObject:
   m_ObjectHideFlags: 0
@@ -13580,6 +13614,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastWaypoint: 0
+  nextWaypointDistance: 0
+  isPlayer: 0
 --- !u!1 &1994935326
 GameObject:
   m_ObjectHideFlags: 0
@@ -13632,6 +13668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54e4d8a40919de041947ed12820a1581, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  players: []
 --- !u!1 &2077877645
 GameObject:
   m_ObjectHideFlags: 0

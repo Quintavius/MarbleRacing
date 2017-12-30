@@ -2,12 +2,36 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MarbleRank : MonoBehaviour {
+public class MarbleRank : MonoBehaviour
+{
     [HideInInspector]
-    public int lastWaypoint;
-    private void OnTriggerEnter(Collider col){
-        if (col.gameObject.tag == "Waypoint"){
+    public int lastWaypoint; //Use this for 1st pass sorting
+    [HideInInspector]
+    public float nextWaypointDistance; //Use this for 2nd pass sorting
+    AITrackHolder trackHolder;
+    WaypointIndex nextWaypoint;
+    RankManager ranks;
+    public bool isPlayer;
+    private void Start()
+    {
+        trackHolder = FindObjectOfType<AITrackHolder>();
+        ranks = FindObjectOfType<RankManager>();
+        isPlayer = (GetComponent<MarbleController>() != null) ? true : false; //Am i attached to a player?
+    }
+    private void OnTriggerEnter(Collider col)
+    {
+        if (col.gameObject.tag == "Waypoint")
+        {
             lastWaypoint = col.GetComponent<WaypointIndex>().index;
         }
+    }
+    private void Update()
+    {
+        if (trackHolder.trackPoints[lastWaypoint + 1] != null) //Haven't reached the end yet
+        {
+            nextWaypoint = trackHolder.trackPoints[lastWaypoint + 1];
+            nextWaypointDistance = Vector3.Distance(transform.position, nextWaypoint.transform.position);
+        }
+
     }
 }
