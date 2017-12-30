@@ -72,7 +72,7 @@ public class RankManager : MonoBehaviour
       rankingCanvas.SetActive(true);
       foreach (MarbleRank marble in winners){
         if (!marble.ranked){
-          rankingText.text += marble.gameObject + "\n";
+          rankingText.text += marble.gameObject.name + "\n";
           marble.ranked = true;
         }
       }

@@ -8,7 +8,6 @@ public class MarbleSkin : MonoBehaviour {
 
     Material mat;
     Mesh mod;
-
     Mesh sphere;
     Mesh marMirror;
     Mesh marUnique;
@@ -48,6 +47,7 @@ public class MarbleSkin : MonoBehaviour {
 
         GetComponent<Renderer>().material = mat;
         GetComponent<MeshFilter>().mesh = mod;
+        gameObject.name = mat.name;
     }
 
     public void RandomizeSkin()
