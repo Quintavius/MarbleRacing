@@ -5,12 +5,14 @@ using Cinemachine;
 
 public class UpdateTarget : MonoBehaviour
 {
+    Transform tracker;
     public Cinemachine.CinemachineTargetGroup tg;
     RankManager ranks;
     Transform playerToFollow; //Get this to decide who to follow
     void Start()
     {
         ranks = FindObjectOfType<RankManager>();
+        tracker = GameObject.Find("CameraTracker").transform;
     }
     void Update()
     {
@@ -24,7 +26,8 @@ public class UpdateTarget : MonoBehaviour
             {
 				//This is fucked, change it to parent whatever the group looks at to the furthest player
                 playerToFollow = ranks.players[i].transform;
-                tg.m_Targets[0] = playerToFollow;
+                tracker.SetParent(ranks.players[i].transform);
+                tracker.localPosition = Vector3.zero;
                 break;
             }
         }

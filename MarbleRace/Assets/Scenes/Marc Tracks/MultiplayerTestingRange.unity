@@ -1747,6 +1747,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   index: 0
+--- !u!1 &441759947
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 441759948}
+  m_Layer: 0
+  m_Name: CameraTracker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &441759948
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 441759947}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.7678742, y: 15.955442, z: 14.843013}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 23
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &447811118
 GameObject:
   m_ObjectHideFlags: 0
@@ -2148,7 +2176,6 @@ GameObject:
   - component: {fileID: 601262208}
   - component: {fileID: 601262207}
   - component: {fileID: 601262206}
-  - component: {fileID: 601262205}
   - component: {fileID: 601262204}
   - component: {fileID: 601262203}
   m_Layer: 0
@@ -2225,13 +2252,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!81 &601262205
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 601262202}
-  m_Enabled: 1
 --- !u!124 &601262206
 Behaviour:
   m_ObjectHideFlags: 0
@@ -6662,7 +6682,6 @@ GameObject:
   - component: {fileID: 925356548}
   - component: {fileID: 925356547}
   - component: {fileID: 925356546}
-  - component: {fileID: 925356545}
   - component: {fileID: 925356544}
   - component: {fileID: 925356543}
   m_Layer: 0
@@ -6739,13 +6758,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!81 &925356545
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 925356542}
-  m_Enabled: 1
 --- !u!124 &925356546
 Behaviour:
   m_ObjectHideFlags: 0
@@ -11167,7 +11179,6 @@ GameObject:
   - component: {fileID: 1556112452}
   - component: {fileID: 1556112451}
   - component: {fileID: 1556112450}
-  - component: {fileID: 1556112449}
   - component: {fileID: 1556112454}
   - component: {fileID: 1556112453}
   m_Layer: 0
@@ -11177,13 +11188,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1556112449
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1556112448}
-  m_Enabled: 1
 --- !u!124 &1556112450
 Behaviour:
   m_ObjectHideFlags: 0
@@ -12974,7 +12978,7 @@ MonoBehaviour:
   m_RotationMode: 0
   m_UpdateMethod: 1
   m_Targets:
-  - target: {fileID: 791478444}
+  - target: {fileID: 441759948}
     weight: 1
     radius: 0.2
 --- !u!4 &1882190539
@@ -12985,7 +12989,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1882190537}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -7.829, y: 19.376, z: 19.364}
+  m_LocalPosition: {x: 5.7678742, y: 15.955442, z: 14.843013}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -13850,7 +13854,6 @@ GameObject:
   - component: {fileID: 2145141807}
   - component: {fileID: 2145141806}
   - component: {fileID: 2145141805}
-  - component: {fileID: 2145141804}
   - component: {fileID: 2145141803}
   - component: {fileID: 2145141802}
   m_Layer: 0
@@ -13927,13 +13930,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!81 &2145141804
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 2145141801}
-  m_Enabled: 1
 --- !u!124 &2145141805
 Behaviour:
   m_ObjectHideFlags: 0
