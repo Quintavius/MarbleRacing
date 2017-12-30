@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MarbleSkin : MonoBehaviour {
     public int currentSkin;
+    public bool randomizeOnStart;
 
     Material mat;
     Mesh mod;
@@ -20,6 +21,10 @@ public class MarbleSkin : MonoBehaviour {
         sphere = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
         marUnique = (Mesh)Resources.Load("Marbles/UniqueMarble", typeof(Mesh));
+
+        if (randomizeOnStart){
+            RandomizeSkin();
+        }
 
     }
 	
