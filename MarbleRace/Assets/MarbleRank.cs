@@ -5,13 +5,17 @@ using UnityEngine;
 public class MarbleRank : MonoBehaviour
 {
     [HideInInspector]
+    public bool ranked;
+    [HideInInspector]
     public int lastWaypoint; //Use this for 1st pass sorting
     [HideInInspector]
     public float nextWaypointDistance; //Use this for 2nd pass sorting
     AITrackHolder trackHolder;
     WaypointIndex nextWaypoint;
     RankManager ranks;
+    [HideInInspector]
     public bool isPlayer;
+    [HideInInspector]
     public bool isFinished;
     private void Start()
     {

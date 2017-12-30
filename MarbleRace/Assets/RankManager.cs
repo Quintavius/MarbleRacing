@@ -1,15 +1,21 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RankManager : MonoBehaviour
 {  
+  public GameObject rankingCanvas;
+  public Text rankingText;
+  bool raceOver;
+  bool raceOverCheck;
   public List<MarbleRank> winners;
   [HideInInspector]
   public List<MarbleRank> players;
   // Use this for initialization
   void Start()
   {
+    raceOverCheck = true;
     //Throw all players in a list
     MarbleRank[] tempList = FindObjectsOfType<MarbleRank>();
     foreach (MarbleRank rank in tempList)
@@ -47,5 +53,29 @@ public class RankManager : MonoBehaviour
       }
       return 0;
     });
+
+    //Check if all players are done
+    foreach (MarbleRank marble in players){
+      if (marble.isPlayer){
+        //if ANY player marble has NOT finished, set the check to FALSE
+        if (!marble.isFinished){
+          raceOverCheck = false;
+        }
+      }
+    }
+    //if the snare has been triggered, reset snare
+    if (raceOverCheck == false){ raceOverCheck = true;}
+    //Snare was never triggered, all players are done
+    else if (raceOverCheck == true){raceOver = true;}
+
+    if (raceOver){
+      rankingCanvas.SetActive(true);
+      foreach (MarbleRank marble in winners){
+        if (!marble.ranked){
+          rankingText.text += marble.gameObject + "\n";
+          marble.ranked = true;
+        }
+      }
+    }
   }
 }
