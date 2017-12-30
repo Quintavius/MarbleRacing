@@ -139,12 +139,10 @@ public class MarbleController : MonoBehaviour {
             }
         }
     }
-
     private void OnCollisionExit(Collision collision)
     {
         colCount--;
     }
-
     public void CalibrateGyro() {
         xCalibrate = Input.acceleration.x;
         yCalibrate = Input.acceleration.y;
