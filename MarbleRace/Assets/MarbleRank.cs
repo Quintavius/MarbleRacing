@@ -12,6 +12,7 @@ public class MarbleRank : MonoBehaviour
     WaypointIndex nextWaypoint;
     RankManager ranks;
     public bool isPlayer;
+    public bool isFinished;
     private void Start()
     {
         trackHolder = FindObjectOfType<AITrackHolder>();
@@ -27,10 +28,19 @@ public class MarbleRank : MonoBehaviour
     }
     private void Update()
     {
-        if (trackHolder.trackPoints[lastWaypoint + 1] != null) //Haven't reached the end yet
+        if (!isFinished)
         {
-            nextWaypoint = trackHolder.trackPoints[lastWaypoint + 1];
-            nextWaypointDistance = Vector3.Distance(transform.position, nextWaypoint.transform.position);
+            if (lastWaypoint + 1 < trackHolder.trackPoints.Length) //Haven't reached the end yet
+            {
+                nextWaypoint = trackHolder.trackPoints[lastWaypoint + 1];
+                nextWaypointDistance = Vector3.Distance(transform.position, nextWaypoint.transform.position);
+            }
+            else
+            {
+                //GOOOOAAAAAAAAALLLLL
+                ranks.winners.Add(this);
+                isFinished = true;
+            }
         }
 
     }
