@@ -876,6 +876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &190330681
 GameObject:
@@ -1703,7 +1704,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &601262203
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1852,8 +1853,8 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 612218546}
   m_LocalRotation: {x: -0, y: 0.2673323, z: -0, w: -0.96360445}
-  m_LocalPosition: {x: -7.482, y: -13.833, z: 4.131}
-  m_LocalScale: {x: 2.0386734, y: 1.3141718, z: 0.03462}
+  m_LocalPosition: {x: -7.846, y: -13.432, z: 3.912}
+  m_LocalScale: {x: 2.888749, y: 2.1160407, z: 0.05747215}
   m_Children: []
   m_Father: {fileID: 447811119}
   m_RootOrder: 15
@@ -4273,6 +4274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &749584047
 GameObject:
@@ -5649,6 +5651,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &914249385
 GameObject:
@@ -6146,6 +6149,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &925356542
 GameObject:
@@ -10002,6 +10006,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &1346944717
 GameObject:
@@ -10756,7 +10761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1654944373
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11722,6 +11727,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &1771753947
 GameObject:
@@ -12782,6 +12788,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentSkin: 0
+  newSkin: 0
   randomizeOnStart: 1
 --- !u!1 &1994935326
 GameObject:
