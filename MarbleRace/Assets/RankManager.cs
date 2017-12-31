@@ -11,7 +11,7 @@ public class RankManager : MonoBehaviour
   bool raceOverCheck;
   public List<MarbleRank> winners;
   [HideInInspector]
-  public List<MarbleRank> players;
+  public List<MarbleRank> players; //this is ALL marbles not just humans
   int marblesFinished;
   void Start()
   {
