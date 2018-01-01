@@ -12,4 +12,5 @@ public static class LevelSettings {
 	static Marble.Skin player2Skin;
 	static Marble.Skin player3Skin;
 	static Marble.Skin player4Skin;
+
 }
