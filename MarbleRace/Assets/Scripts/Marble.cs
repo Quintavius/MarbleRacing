@@ -14,6 +14,6 @@ public static class Marble {
         WhiteTiger,
         BlackMarble,
         WhiteInnocence,
-        FoolsGold
+        FoolishGold
     }
 }

@@ -40,15 +40,15 @@ public class MarbleSkin : MonoBehaviour {
     {
         switch (currentSkin)
         {
-            case (int)Marble.Skin.DarkCaustic: mat = (Material)Resources.Load("Skins/DarkCaustic", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.FlowerPower: mat = (Material)Resources.Load("Skins/FlowerPower", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.OceanGreen: mat = (Material)Resources.Load("Skins/OceanGreen", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.RedNumber8: mat = (Material)Resources.Load("Skins/RedNumber8", typeof(Material)); mod = marMirror; break;
+            case (int)Marble.Skin.DarkCaustic: mat = (Material)Resources.Load("Skins/Dark Caustic", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.FlowerPower: mat = (Material)Resources.Load("Skins/Flower Power", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.OceanGreen: mat = (Material)Resources.Load("Skins/Ocean Green", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.RedNumber8: mat = (Material)Resources.Load("Skins/Red Number 8", typeof(Material)); mod = marMirror; break;
             case (int)Marble.Skin.Swampy: mat = (Material)Resources.Load("Skins/Swampy", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.WhiteTiger: mat = (Material)Resources.Load("Skins/WhiteTiger", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.BlackMarble: mat = (Material)Resources.Load("Skins/BlackMarble", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.WhiteInnocence: mat = (Material)Resources.Load("Skins/WhiteInnocence", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.FoolsGold: mat = (Material)Resources.Load("Skins/FoolsGold", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.WhiteTiger: mat = (Material)Resources.Load("Skins/White Tiger", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.BlackMarble: mat = (Material)Resources.Load("Skins/Black Marble", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.WhiteInnocence: mat = (Material)Resources.Load("Skins/White Innocence", typeof(Material)); mod = sphere; break;
+            case (int)Marble.Skin.FoolishGold: mat = (Material)Resources.Load("Skins/Foolish Gold", typeof(Material)); mod = sphere; break;
 
             default: break;
         }
