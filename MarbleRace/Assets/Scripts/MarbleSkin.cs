@@ -16,7 +16,7 @@ public class MarbleSkin : MonoBehaviour {
     Mesh marUnique;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         allSkins = FindObjectsOfType<MarbleSkin>();
         mat = GetComponent<Renderer>().material;
         mod = GetComponent<MeshFilter>().mesh;
