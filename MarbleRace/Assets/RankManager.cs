@@ -21,7 +21,9 @@ public class RankManager : MonoBehaviour
     MarbleRank[] tempList = FindObjectsOfType<MarbleRank>();
     foreach (MarbleRank rank in tempList)
     {
-        players.Add(rank);
+      if (rank.isActiveAndEnabled){
+      players.Add(rank);
+      }
     }
   }
   void Update()

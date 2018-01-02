@@ -32,8 +32,9 @@ public class MarbleSkin : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
+	public void SetSkin (Marble.Skin skin) {
+		currentSkin = (int)skin;
+        UpdateSkin();
 	}
 
     void UpdateSkin()
