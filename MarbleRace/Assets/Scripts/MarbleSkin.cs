@@ -15,6 +15,7 @@ public class MarbleSkin : MonoBehaviour {
     Mesh marMirror;
     Mesh marUnique;
     MarbleSkinDefinitions def;
+    SkinUnlockManager unlock; 
 
 	// Use this for initialization
 	void Awake () {
@@ -22,6 +23,7 @@ public class MarbleSkin : MonoBehaviour {
         allSkins = FindObjectsOfType<MarbleSkin>();
         mat = GetComponent<Renderer>().material;
         mod = GetComponent<MeshFilter>().mesh;
+        unlock = FindObjectOfType<SkinUnlockManager>();
 
         sphere = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
@@ -46,12 +48,49 @@ public class MarbleSkin : MonoBehaviour {
         GetComponent<MeshFilter>().mesh = sdef.skinMesh;
         gameObject.name = mat.name;
     }
+    public void GenerateLootSkin(){
+        var enumLength = System.Enum.GetValues(typeof (Marble.Skin)).Length;
 
+        var tierChance = Random.Range(0, 100);
+        if (tierChance > 95){
+            //Generate a legendary
+            LegendaryStart:
+                newSkin = Random.Range(0, enumLength); //generate skin
+                if (def.definition[(Marble.Skin)newSkin].skinRarity == Marble.Rarity.Legendary){
+                    goto Outer;
+                }else{
+                    goto LegendaryStart;
+                }
+        }else if (tierChance > 60){
+            //Generate a rare
+            RareStart:
+                newSkin = Random.Range(0, enumLength); //generate skin
+                if (def.definition[(Marble.Skin)newSkin].skinRarity == Marble.Rarity.Rare){
+                    goto Outer;
+                }else{
+                    goto RareStart;
+                }
+        }else{
+            //Generate a filthy common
+            CommonStart:
+                newSkin = Random.Range(0, enumLength); //generate skin
+                if (def.definition[(Marble.Skin)newSkin].skinRarity == Marble.Rarity.Common){
+                    goto Outer;
+                }else{
+                    goto CommonStart;
+                }
+        }
+        //Finish up
+        Outer:
+        currentSkin = newSkin;
+        unlock.UnlockSkin((Marble.Skin)currentSkin);
+        UpdateSkin();
+       
+    }
     public void RandomizeSkin()
     {
         //Going to add tiers to this later, probably through multiple enums
-        var enumLength = System.Enum.GetValues(typeof (Marble.Skin)).Length;
-
+        var enumLength = System.Enum.GetValues(typeof (Marble.Skin)).Length; 
         //This means i'm an NPC, so we gotta make sure skins don't show twice
         //WARNING!!! WITH THIS METHOD IF THERE ARE MORE MARBLES THAN SKINS EVERYTHING EXPLODES
         if (randomizeOnStart){

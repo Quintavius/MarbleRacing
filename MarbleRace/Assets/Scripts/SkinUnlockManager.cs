@@ -8,8 +8,6 @@ public class SkinUnlockManager : MonoBehaviour {
 	void Awake(){
 		DontDestroyOnLoad(this.gameObject);
 
-	}
-	void Start () {
 		System.Array templist = System.Enum.GetValues(typeof(Marble.Skin));
 		if (ES2.Exists("Unlocks.gsw?tag=UnlockState") && !forceRefresh){
 			//If dictionary is same size as marble skin enum, will need to append to ensure updates don't wipe unlocks

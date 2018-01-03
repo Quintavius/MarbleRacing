@@ -26,7 +26,7 @@ public class EggController : MonoBehaviour {
             
             foreach (MarbleSkin marble in loot)
             {
-                marble.RandomizeSkin();
+                marble.GenerateLootSkin();
             }
 
             Destroy(transform.GetComponent<Collider>());

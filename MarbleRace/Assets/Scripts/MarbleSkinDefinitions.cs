@@ -50,7 +50,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 
 		Marble.SkinClass FoolishGold = new Marble.SkinClass();
 		FoolishGold.skinIndex = Marble.Skin.FoolishGold;
-		FoolishGold.skinRarity = Marble.Rarity.Common;
+		FoolishGold.skinRarity = Marble.Rarity.Rare;
 		FoolishGold.skinMat = (Material)Resources.Load("Skins/Foolish Gold", typeof(Material));
 		FoolishGold.skinMesh = sphere;
 		FoolishGold.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.FoolishGold);
@@ -58,7 +58,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 
 		Marble.SkinClass OceanGreen = new Marble.SkinClass();
 		OceanGreen.skinIndex = Marble.Skin.OceanGreen;
-		OceanGreen.skinRarity = Marble.Rarity.Common;
+		OceanGreen.skinRarity = Marble.Rarity.Legendary;
 		OceanGreen.skinMat = (Material)Resources.Load("Skins/Ocean Green", typeof(Material));
 		OceanGreen.skinMesh = sphere;
 		OceanGreen.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.OceanGreen);
