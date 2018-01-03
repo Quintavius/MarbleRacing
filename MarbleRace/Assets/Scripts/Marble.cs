@@ -11,6 +11,22 @@ public static class Marble {
         RedNumber8,
         OceanGreen,
         Swampy,
-        WhiteTiger
+        WhiteTiger,
+        BlackMarble,
+        WhiteInnocence,
+        FoolishGold
+    }
+    public enum Rarity{
+        Common,
+        Rare,
+        Legendary
+    }
+
+    public class SkinClass{
+        public Skin skinIndex;
+        public Rarity skinRarity;
+        public Material skinMat;
+        public Mesh skinMesh;
+        public bool unlocked;
     }
 }

@@ -3,17 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MarbleSkin : MonoBehaviour {
+    [HideInInspector]
     public int currentSkin;
-
+    [HideInInspector]
+    public int newSkin;
+    public bool randomizeOnStart;
+    MarbleSkin[] allSkins;
     Material mat;
     Mesh mod;
-
     Mesh sphere;
     Mesh marMirror;
     Mesh marUnique;
+    MarbleSkinDefinitions def;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
+        def = FindObjectOfType<MarbleSkinDefinitions>();
+        allSkins = FindObjectsOfType<MarbleSkin>();
         mat = GetComponent<Renderer>().material;
         mod = GetComponent<MeshFilter>().mesh;
 
@@ -21,37 +27,48 @@ public class MarbleSkin : MonoBehaviour {
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
         marUnique = (Mesh)Resources.Load("Marbles/UniqueMarble", typeof(Mesh));
 
+        if (randomizeOnStart){
+            RandomizeSkin();
+        }
+
     }
 	
 	// Update is called once per frame
-	void Update () {
-		
+	public void SetSkin (Marble.Skin skin) {
+		currentSkin = (int)skin;
+        UpdateSkin();
 	}
 
     void UpdateSkin()
     {
-        switch (currentSkin)
-        {
-            case (int)Marble.Skin.DarkCaustic: mat = (Material)Resources.Load("Skins/DarkCaustic", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.FlowerPower: mat = (Material)Resources.Load("Skins/FlowerPower", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.OceanGreen: mat = (Material)Resources.Load("Skins/OceanGreen", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.RedNumber8: mat = (Material)Resources.Load("Skins/RedNumber8", typeof(Material)); mod = marMirror; break;
-            case (int)Marble.Skin.Swampy: mat = (Material)Resources.Load("Skins/Swampy", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.WhiteTiger: mat = (Material)Resources.Load("Skins/WhiteTiger", typeof(Material)); mod = sphere; break;
-            default: break;
-        }
-
-        GetComponent<Renderer>().material = mat;
-        GetComponent<MeshFilter>().mesh = mod;
+        Marble.SkinClass sdef = def.definition[(Marble.Skin)currentSkin];
+        GetComponent<Renderer>().material = sdef.skinMat;
+        GetComponent<MeshFilter>().mesh = sdef.skinMesh;
+        gameObject.name = mat.name;
     }
 
     public void RandomizeSkin()
     {
         //Going to add tiers to this later, probably through multiple enums
         var enumLength = System.Enum.GetValues(typeof (Marble.Skin)).Length;
-        var newSkin = Random.Range(0, enumLength);
-        currentSkin = newSkin;
-        UpdateSkin();
-    }
 
+        //This means i'm an NPC, so we gotta make sure skins don't show twice
+        //WARNING!!! WITH THIS METHOD IF THERE ARE MORE MARBLES THAN SKINS EVERYTHING EXPLODES
+        if (randomizeOnStart){
+            Start:
+                newSkin = Random.Range(0, enumLength); //Generate value, as normal
+                foreach (MarbleSkin ms in allSkins){
+                    if (ms.currentSkin == newSkin){ //Skin is already taken, go back
+                        goto Start;
+                    }
+                }goto Outer;
+            Outer:
+                currentSkin = newSkin; //Apply skin, as normal
+                UpdateSkin();
+        }else{
+            newSkin = Random.Range(0, enumLength);
+            currentSkin = newSkin;
+            UpdateSkin();
+        }
+    }
 }

@@ -62,15 +62,20 @@ public class MarbleBrain : MonoBehaviour {
         maximumSpeed *= maxSpeedMod;
         slopeSpeed *= slopeSpeedMod;
     }
-	
-	void Update () {
-        if (rb.velocity.magnitude < maximumSpeed * 1.5f)
+
+    void Update()
+    {
+        //Ride like the wind, but only if you haven't finished yet you marble brained moron
+        if (targetIndex < targets.Length)
         {
-            //Get target direction
-            Vector3 dir = targets[targetIndex].transform.position - transform.position;
-            dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
-            //LET THE FORCE FLOW THROUGH YOU
-            rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
+            if (rb.velocity.magnitude < maximumSpeed * 1.5f)
+            {
+                //Get target direction
+                Vector3 dir = targets[targetIndex].transform.position - transform.position;
+                dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
+                //LET THE FORCE FLOW THROUGH YOU
+                rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
+            }
         }
     }
 

@@ -67,8 +67,8 @@ MonoBehaviour:
   optimizeMode: 0
   PCDataPath: 
   MacDataPath: 
-  encrypt: 0
-  encryptionPassword: myPassword
+  encrypt: 1
+  encryptionPassword: garbage
   encryptionType: 0
   webUsername: webUsername
   webPassword: webPassword

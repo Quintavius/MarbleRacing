@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class AITrackHolder : MonoBehaviour {
-    WaypointIndex[] trackPoints;
+    [HideInInspector]
+    public WaypointIndex[] trackPoints;
 	// Use this for initialization
 	void Awake () {
         trackPoints = GetComponentsInChildren<WaypointIndex>();
