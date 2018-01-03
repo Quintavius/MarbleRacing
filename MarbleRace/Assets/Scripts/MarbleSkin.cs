@@ -14,9 +14,11 @@ public class MarbleSkin : MonoBehaviour {
     Mesh sphere;
     Mesh marMirror;
     Mesh marUnique;
+    MarbleSkinDefinitions def;
 
 	// Use this for initialization
 	void Awake () {
+        def = FindObjectOfType<MarbleSkinDefinitions>();
         allSkins = FindObjectsOfType<MarbleSkin>();
         mat = GetComponent<Renderer>().material;
         mod = GetComponent<MeshFilter>().mesh;
@@ -39,23 +41,9 @@ public class MarbleSkin : MonoBehaviour {
 
     void UpdateSkin()
     {
-        switch (currentSkin)
-        {
-            case (int)Marble.Skin.DarkCaustic: mat = (Material)Resources.Load("Skins/Dark Caustic", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.FlowerPower: mat = (Material)Resources.Load("Skins/Flower Power", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.OceanGreen: mat = (Material)Resources.Load("Skins/Ocean Green", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.RedNumber8: mat = (Material)Resources.Load("Skins/Red Number 8", typeof(Material)); mod = marMirror; break;
-            case (int)Marble.Skin.Swampy: mat = (Material)Resources.Load("Skins/Swampy", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.WhiteTiger: mat = (Material)Resources.Load("Skins/White Tiger", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.BlackMarble: mat = (Material)Resources.Load("Skins/Black Marble", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.WhiteInnocence: mat = (Material)Resources.Load("Skins/White Innocence", typeof(Material)); mod = sphere; break;
-            case (int)Marble.Skin.FoolishGold: mat = (Material)Resources.Load("Skins/Foolish Gold", typeof(Material)); mod = sphere; break;
-
-            default: break;
-        }
-
-        GetComponent<Renderer>().material = mat;
-        GetComponent<MeshFilter>().mesh = mod;
+        Marble.SkinClass sdef = def.definition[(Marble.Skin)currentSkin];
+        GetComponent<Renderer>().material = sdef.skinMat;
+        GetComponent<MeshFilter>().mesh = sdef.skinMesh;
         gameObject.name = mat.name;
     }
 
