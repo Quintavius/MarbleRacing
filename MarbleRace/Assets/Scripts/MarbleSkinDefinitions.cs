@@ -8,8 +8,18 @@ public class MarbleSkinDefinitions : MonoBehaviour {
     Mesh marUnique;
 	SkinUnlockManager unlocks;
 	public Dictionary<Marble.Skin, Marble.SkinClass> definition;
-	void Awake(){
-		DontDestroyOnLoad(this.gameObject);
+	static bool created = false;
+    void Awake()
+    {
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
 	}
 	void Start () {
 		unlocks = FindObjectOfType<SkinUnlockManager>();
