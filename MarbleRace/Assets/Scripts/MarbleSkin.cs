@@ -28,9 +28,10 @@ public class MarbleSkin : MonoBehaviour {
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
         marUnique = (Mesh)Resources.Load("Marbles/UniqueMarble", typeof(Mesh));
     }
-    void Start(){
+    void LateUpdate(){
         if (randomizeOnStart){
             RandomizeSkin();
+            randomizeOnStart = false;
         }
     }
 
