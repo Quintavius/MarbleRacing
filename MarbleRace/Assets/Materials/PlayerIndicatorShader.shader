@@ -12,6 +12,7 @@ Shader "PlayerIndicator"
 	{
 		Tags{ "RenderType" = "Opaque"  "Queue" = "Overlay+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
 		Cull Back
+		ZTest Always
 		Stencil
 		{
 			Ref 255
@@ -46,9 +47,9 @@ Shader "PlayerIndicator"
 }
 /*ASEBEGIN
 Version=14201
-523;99;1906;1004;672.8477;292.0498;1.154483;True;True
+571;27;1906;1004;1208.339;441.893;1.154483;True;True
 Node;AmplifyShaderEditor.ColorNode;1;-422,-61;Float;False;Property;_PlayerColor;PlayerColor;1;0;Create;0,0,0,0;0.1985293,0.4362067,1,1;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Unlit;PlayerIndicator;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Back;0;0;False;50;0;Custom;0.5;True;False;0;False;Opaque;Overlay;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;255;255;255;6;2;1;0;8;2;2;2;False;2;15;10;25;False;0.5;False;0;One;OneMinusSrcAlpha;0;Zero;Zero;OFF;OFF;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Unlit;PlayerIndicator;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Back;0;7;False;50;0;Custom;0.5;True;False;0;False;Opaque;Overlay;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;255;255;255;6;2;1;0;8;2;2;2;False;2;15;10;25;False;0.5;False;0;One;OneMinusSrcAlpha;0;Zero;Zero;OFF;OFF;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;0;2;1;0
 ASEEND*/
-//CHKSM=7A13B48AA0A5893B6EFBA88554DE9D644EBCDDE1
+//CHKSM=94779DCEF7D6FF5DCC66748F7401E97876E75528
