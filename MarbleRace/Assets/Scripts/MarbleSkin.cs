@@ -28,11 +28,11 @@ public class MarbleSkin : MonoBehaviour {
         sphere = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
         marUnique = (Mesh)Resources.Load("Marbles/UniqueMarble", typeof(Mesh));
-
+    }
+    void Start(){
         if (randomizeOnStart){
             RandomizeSkin();
         }
-
     }
 	
 	// Update is called once per frame

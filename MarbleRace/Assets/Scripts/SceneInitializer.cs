@@ -4,14 +4,22 @@ using UnityEngine;
 
 public class SceneInitializer : MonoBehaviour
 {
-    public int DebugPlayerNumber;
+    public bool DebugPlayers;
+    public bool[] DebugPlayersActive;
     public GameObject p1;
     public GameObject p2;
     public GameObject p3;
     public GameObject p4;
-    void Awake()
+    void Start()
     {
-        LevelSettings.numberOfPlayers = DebugPlayerNumber;
+        //Debug
+        if (DebugPlayers)
+        {
+            LevelSettings.player1active = DebugPlayersActive[0];
+            LevelSettings.player2active = DebugPlayersActive[1];
+            LevelSettings.player3active = DebugPlayersActive[2];
+            LevelSettings.player4active = DebugPlayersActive[3];
+        }
 		//Set skins and names
         p4.GetComponent<MarbleSkin>().SetSkin(LevelSettings.player4Skin);
         p4.name = LevelSettings.player4Name;
@@ -22,9 +30,10 @@ public class SceneInitializer : MonoBehaviour
         p1.GetComponent<MarbleSkin>().SetSkin(LevelSettings.player1Skin);
         p1.name = LevelSettings.player1Name;
         //Delete players as necessary, name and skin remainders
-        if (LevelSettings.numberOfPlayers <= 3){ p4.SetActive(false); GameObject.Find("P4Cam").SetActive(false);}
-        if (LevelSettings.numberOfPlayers <= 2){ p3.SetActive(false); GameObject.Find("P3Cam").SetActive(false);}
-        if (LevelSettings.numberOfPlayers <= 1){ p2.SetActive(false); GameObject.Find("P2Cam").SetActive(false);}
+        if (!LevelSettings.player4active){ p4.SetActive(false); GameObject.Find("P4Cam").SetActive(false);}
+        if (!LevelSettings.player3active){ p3.SetActive(false); GameObject.Find("P3Cam").SetActive(false);}
+        if (!LevelSettings.player2active){ p2.SetActive(false); GameObject.Find("P2Cam").SetActive(false);}
+        if (!LevelSettings.player1active){ p1.SetActive(false); GameObject.Find("P1Cam").SetActive(false);}
     }
 
     // Update is called once per frame
