@@ -14,7 +14,11 @@ public static class Marble {
         WhiteTiger,
         BlackMarble,
         WhiteInnocence,
-        FoolishGold
+        FoolishGold,
+        Amnesia,
+        Flux,
+        Spirit,
+        VanillaGrape
     }
     public enum Rarity{
         Common,

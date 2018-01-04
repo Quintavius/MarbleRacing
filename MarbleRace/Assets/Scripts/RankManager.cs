@@ -62,7 +62,6 @@ public class RankManager : MonoBehaviour
         //if ANY player marble has NOT finished, set the check to FALSE
         if (!players[i].isFinished){
           raceOverCheck = false;
-          Debug.Log("not done");
         }
       }
       players[i].currentRank = i+1;

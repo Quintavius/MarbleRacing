@@ -20,8 +20,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
         {
             Destroy(this.gameObject);
         }
-	}
-	void Start () {
+		
 		unlocks = FindObjectOfType<SkinUnlockManager>();
 		sphere = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
@@ -106,5 +105,36 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 		WhiteTiger.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.WhiteTiger);
 		definition.Add(Marble.Skin.WhiteTiger, WhiteTiger);
 
+		Marble.SkinClass Amnesia = new Marble.SkinClass();
+		Amnesia.skinIndex = Marble.Skin.Amnesia;
+		Amnesia.skinRarity = Marble.Rarity.Legendary;
+		Amnesia.skinMat = (Material)Resources.Load("Skins/Amnesia", typeof(Material));
+		Amnesia.skinMesh = sphere;
+		Amnesia.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.Amnesia);
+		definition.Add(Marble.Skin.Amnesia, Amnesia);
+
+		Marble.SkinClass Flux = new Marble.SkinClass();
+		Flux.skinIndex = Marble.Skin.Flux;
+		Flux.skinRarity = Marble.Rarity.Rare;
+		Flux.skinMat = (Material)Resources.Load("Skins/Flux", typeof(Material));
+		Flux.skinMesh = sphere;
+		Flux.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.Flux);
+		definition.Add(Marble.Skin.Flux, Flux);
+
+		Marble.SkinClass Spirit = new Marble.SkinClass();
+		Spirit.skinIndex = Marble.Skin.Spirit;
+		Spirit.skinRarity = Marble.Rarity.Legendary;
+		Spirit.skinMat = (Material)Resources.Load("Skins/Spirit", typeof(Material));
+		Spirit.skinMesh = sphere;
+		Spirit.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.Spirit);
+		definition.Add(Marble.Skin.Spirit, Spirit);
+
+		Marble.SkinClass VanillaGrape = new Marble.SkinClass();
+		VanillaGrape.skinIndex = Marble.Skin.VanillaGrape;
+		VanillaGrape.skinRarity = Marble.Rarity.Common;
+		VanillaGrape.skinMat = (Material)Resources.Load("Skins/Vanilla Grape", typeof(Material));
+		VanillaGrape.skinMesh = sphere;
+		VanillaGrape.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.VanillaGrape);
+		definition.Add(Marble.Skin.VanillaGrape, VanillaGrape);
 	}
 }
