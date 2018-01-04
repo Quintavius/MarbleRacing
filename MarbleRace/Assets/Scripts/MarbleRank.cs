@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class MarbleRank : MonoBehaviour
 {
+    public int currentRank;
     [HideInInspector]
     public bool ranked;
     [HideInInspector]
-    public int lastWaypoint; //Use this for 1st pass sorting
+    public int lastWaypoint = 0; //Use this for 1st pass sorting
     [HideInInspector]
     public float nextWaypointDistance; //Use this for 2nd pass sorting
     AITrackHolder trackHolder;

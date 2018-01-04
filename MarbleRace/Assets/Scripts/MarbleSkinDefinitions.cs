@@ -78,7 +78,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 		RedNumber8.skinIndex = Marble.Skin.RedNumber8;
 		RedNumber8.skinRarity = Marble.Rarity.Common;
 		RedNumber8.skinMat = (Material)Resources.Load("Skins/Red Number 8", typeof(Material));
-		RedNumber8.skinMesh = sphere;
+		RedNumber8.skinMesh = marMirror;
 		RedNumber8.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.RedNumber8);
 		definition.Add(Marble.Skin.RedNumber8, RedNumber8);
 

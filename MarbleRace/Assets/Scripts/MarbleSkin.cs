@@ -46,7 +46,7 @@ public class MarbleSkin : MonoBehaviour {
         Marble.SkinClass sdef = def.definition[(Marble.Skin)currentSkin];
         GetComponent<Renderer>().material = sdef.skinMat;
         GetComponent<MeshFilter>().mesh = sdef.skinMesh;
-        gameObject.name = mat.name;
+        gameObject.name = sdef.skinMat.name;
     }
     public void GenerateLootSkin(){
         var enumLength = System.Enum.GetValues(typeof (Marble.Skin)).Length;

@@ -57,15 +57,17 @@ public class RankManager : MonoBehaviour
       return 0;
     });
 
-    //Check if all players are done
-    foreach (MarbleRank marble in players){
-      if (marble.isPlayer){
+    for (int i = 0; i < players.Count; i++){
+      if (players[i].isPlayer && players[i].isActiveAndEnabled){
         //if ANY player marble has NOT finished, set the check to FALSE
-        if (!marble.isFinished){
+        if (!players[i].isFinished){
           raceOverCheck = false;
+          Debug.Log("not done");
         }
       }
+      players[i].currentRank = i+1;
     }
+
     //if the snare has been triggered, reset snare
     if (raceOverCheck == false){ raceOverCheck = true;}
     //Snare was never triggered, all players are done

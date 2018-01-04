@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class MarbleSelector : MonoBehaviour {
 	[HideInInspector]
 	public bool selected = false;
-	public bool ready = true;
+	[HideInInspector]
+	public bool ready = false;
 	public Text nameText;
 	public GameObject arrows;
 	public GameObject joinText;
