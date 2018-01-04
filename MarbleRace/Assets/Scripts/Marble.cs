@@ -14,7 +14,11 @@ public static class Marble {
         WhiteTiger,
         BlackMarble,
         WhiteInnocence,
-        FoolishGold
+        FoolishGold,
+        Amnesia,
+        Flux,
+        Spirit,
+        VanillaGrape
     }
     public enum Rarity{
         Common,
@@ -28,5 +32,9 @@ public static class Marble {
         public Material skinMat;
         public Mesh skinMesh;
         public bool unlocked;
+    }
+    public enum Selection{
+        Up,
+        Down
     }
 }

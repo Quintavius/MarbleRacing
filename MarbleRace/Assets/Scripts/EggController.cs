@@ -3,33 +3,36 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 
-public class EggController : MonoBehaviour {
+public class EggController : MonoBehaviour
+{
     public float blastForce;
     public MarbleSkin[] loot;
-
-	// Use this for initialization
-	void Start () {
-
-    }
-
+    bool triggered;
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.name == "Player")
+        if (!triggered)
         {
-            foreach (Transform child in transform)
+            if (other.transform.name == "Player")
             {
-                child.GetComponent<Rigidbody>().isKinematic = false;
-                child.GetComponent<Rigidbody>().AddExplosionForce(blastForce, other.transform.position, 5,2);
-            }
-            GetComponent<AudioSource>().Play();
-            FindObjectOfType<LootManager>().StartCountdown();
-            
-            foreach (MarbleSkin marble in loot)
-            {
-                marble.RandomizeSkin();
-            }
+                foreach (Transform child in transform)
+                {
+                    child.GetComponent<Rigidbody>().isKinematic = false;
+                    child.GetComponent<Rigidbody>().AddExplosionForce(blastForce, other.transform.position, 5, 2);
+                }
+                GetComponent<AudioSource>().Play();
+                FindObjectOfType<LootManager>().StartCountdown();
 
-            Destroy(transform.GetComponent<Collider>());
+                foreach (MarbleSkin marble in loot)
+                {
+                    marble.GenerateLootSkin();
+                }
+
+                Destroy(transform.GetComponent<Collider>());
+            }
+        }
+        else
+        {
+            triggered = true;
         }
     }
 }

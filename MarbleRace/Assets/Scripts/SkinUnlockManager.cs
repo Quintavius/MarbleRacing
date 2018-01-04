@@ -5,11 +5,19 @@ using UnityEngine;
 public class SkinUnlockManager : MonoBehaviour {
 	public Dictionary<Marble.Skin, bool> UnlockState;
 	public bool forceRefresh;
-	void Awake(){
-		DontDestroyOnLoad(this.gameObject);
+	static bool created = false;
+    void Awake()
+    {
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
 
-	}
-	void Start () {
 		System.Array templist = System.Enum.GetValues(typeof(Marble.Skin));
 		if (ES2.Exists("Unlocks.gsw?tag=UnlockState") && !forceRefresh){
 			//If dictionary is same size as marble skin enum, will need to append to ensure updates don't wipe unlocks

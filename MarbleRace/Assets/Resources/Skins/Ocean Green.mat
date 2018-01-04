@@ -71,8 +71,8 @@ Material:
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
-    - _TransAmbient: 0.01
-    - _TransDirect: 0.239
+    - _TransAmbient: 0.022
+    - _TransDirect: 0.432
     - _TransNormalDistortion: 0
     - _TransScattering: 32.5
     - _TransShadow: 0.576

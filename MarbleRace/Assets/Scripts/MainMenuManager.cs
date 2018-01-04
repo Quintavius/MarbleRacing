@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MenuManager : MonoBehaviour {
+public class MainMenuManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {

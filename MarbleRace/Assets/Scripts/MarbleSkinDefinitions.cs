@@ -8,10 +8,19 @@ public class MarbleSkinDefinitions : MonoBehaviour {
     Mesh marUnique;
 	SkinUnlockManager unlocks;
 	public Dictionary<Marble.Skin, Marble.SkinClass> definition;
-	void Awake(){
-		DontDestroyOnLoad(this.gameObject);
-	}
-	void Start () {
+	static bool created = false;
+    void Awake()
+    {
+        if (!created)
+        {
+            DontDestroyOnLoad(this.gameObject);
+            created = true;
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+		
 		unlocks = FindObjectOfType<SkinUnlockManager>();
 		sphere = PrimitiveHelper.GetPrimitiveMesh(PrimitiveType.Sphere);
         marMirror = (Mesh)Resources.Load("Marbles/MirroredMarble", typeof(Mesh));
@@ -50,7 +59,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 
 		Marble.SkinClass FoolishGold = new Marble.SkinClass();
 		FoolishGold.skinIndex = Marble.Skin.FoolishGold;
-		FoolishGold.skinRarity = Marble.Rarity.Common;
+		FoolishGold.skinRarity = Marble.Rarity.Rare;
 		FoolishGold.skinMat = (Material)Resources.Load("Skins/Foolish Gold", typeof(Material));
 		FoolishGold.skinMesh = sphere;
 		FoolishGold.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.FoolishGold);
@@ -58,7 +67,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 
 		Marble.SkinClass OceanGreen = new Marble.SkinClass();
 		OceanGreen.skinIndex = Marble.Skin.OceanGreen;
-		OceanGreen.skinRarity = Marble.Rarity.Common;
+		OceanGreen.skinRarity = Marble.Rarity.Legendary;
 		OceanGreen.skinMat = (Material)Resources.Load("Skins/Ocean Green", typeof(Material));
 		OceanGreen.skinMesh = sphere;
 		OceanGreen.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.OceanGreen);
@@ -68,7 +77,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 		RedNumber8.skinIndex = Marble.Skin.RedNumber8;
 		RedNumber8.skinRarity = Marble.Rarity.Common;
 		RedNumber8.skinMat = (Material)Resources.Load("Skins/Red Number 8", typeof(Material));
-		RedNumber8.skinMesh = sphere;
+		RedNumber8.skinMesh = marMirror;
 		RedNumber8.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.RedNumber8);
 		definition.Add(Marble.Skin.RedNumber8, RedNumber8);
 
@@ -96,5 +105,36 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 		WhiteTiger.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.WhiteTiger);
 		definition.Add(Marble.Skin.WhiteTiger, WhiteTiger);
 
+		Marble.SkinClass Amnesia = new Marble.SkinClass();
+		Amnesia.skinIndex = Marble.Skin.Amnesia;
+		Amnesia.skinRarity = Marble.Rarity.Legendary;
+		Amnesia.skinMat = (Material)Resources.Load("Skins/Amnesia", typeof(Material));
+		Amnesia.skinMesh = sphere;
+		Amnesia.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.Amnesia);
+		definition.Add(Marble.Skin.Amnesia, Amnesia);
+
+		Marble.SkinClass Flux = new Marble.SkinClass();
+		Flux.skinIndex = Marble.Skin.Flux;
+		Flux.skinRarity = Marble.Rarity.Rare;
+		Flux.skinMat = (Material)Resources.Load("Skins/Flux", typeof(Material));
+		Flux.skinMesh = sphere;
+		Flux.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.Flux);
+		definition.Add(Marble.Skin.Flux, Flux);
+
+		Marble.SkinClass Spirit = new Marble.SkinClass();
+		Spirit.skinIndex = Marble.Skin.Spirit;
+		Spirit.skinRarity = Marble.Rarity.Legendary;
+		Spirit.skinMat = (Material)Resources.Load("Skins/Spirit", typeof(Material));
+		Spirit.skinMesh = sphere;
+		Spirit.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.Spirit);
+		definition.Add(Marble.Skin.Spirit, Spirit);
+
+		Marble.SkinClass VanillaGrape = new Marble.SkinClass();
+		VanillaGrape.skinIndex = Marble.Skin.VanillaGrape;
+		VanillaGrape.skinRarity = Marble.Rarity.Common;
+		VanillaGrape.skinMat = (Material)Resources.Load("Skins/Vanilla Grape", typeof(Material));
+		VanillaGrape.skinMesh = sphere;
+		VanillaGrape.unlocked = unlocks.CheckSkinUnlock(Marble.Skin.VanillaGrape);
+		definition.Add(Marble.Skin.VanillaGrape, VanillaGrape);
 	}
 }
