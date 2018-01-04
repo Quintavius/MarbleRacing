@@ -10,8 +10,20 @@ Shader "PlayerIndicator"
 
 	SubShader
 	{
-		Tags{ "RenderType" = "Opaque"  "Queue" = "Transparent+0" "IsEmissive" = "true"  }
-		Cull Front
+		Tags{ "RenderType" = "Opaque"  "Queue" = "Geometry+0" "IgnoreProjector" = "True" "IsEmissive" = "true"  }
+		Cull Off
+		Stencil
+		{
+			Ref 250
+			CompFront Always
+			PassFront Zero
+			FailFront Zero
+			CompBack Never
+			PassBack Zero
+			FailBack Zero
+			ZFailBack Zero
+		}
+		Blend One OneMinusSrcAlpha
 		CGPROGRAM
 		#pragma target 3.0
 		#pragma surface surf Unlit keepalpha noshadow 
@@ -39,9 +51,9 @@ Shader "PlayerIndicator"
 }
 /*ASEBEGIN
 Version=14201
-0;92;1200;652;786;188;1;True;True
-Node;AmplifyShaderEditor.ColorNode;1;-422,-61;Float;False;Property;_PlayerColor;PlayerColor;0;0;Create;0,0,0,0;0,0,0,0;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
-Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Unlit;PlayerIndicator;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;False;Front;0;0;False;0;0;Translucent;0.5;True;False;0;False;Opaque;Transparent;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;False;0;255;255;0;0;0;0;0;0;0;0;False;2;15;10;25;False;0.5;False;0;Zero;Zero;0;Zero;Zero;OFF;OFF;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;-1;-1;-1;-1;0;0;0;False;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
+737;71;1906;1004;1084;468;1;True;True
+Node;AmplifyShaderEditor.ColorNode;1;-422,-61;Float;False;Property;_PlayerColor;PlayerColor;0;0;Create;0,0,0,0;0.1985294,0.4362068,1,1;0;5;COLOR;0;FLOAT;1;FLOAT;2;FLOAT;3;FLOAT;4
+Node;AmplifyShaderEditor.StandardSurfaceOutputNode;0;0,0;Float;False;True;2;Float;ASEMaterialInspector;0;0;Unlit;PlayerIndicator;False;False;False;False;False;False;False;False;False;False;False;False;False;False;True;False;False;Off;0;0;False;50;0;Opaque;0.5;True;False;0;False;Opaque;Geometry;All;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;True;250;255;255;7;2;2;0;8;2;2;2;False;2;15;10;25;False;0.5;False;3;One;OneMinusSrcAlpha;0;Zero;Zero;OFF;OFF;0;False;0;0,0,0,0;VertexOffset;True;False;Cylindrical;False;Relative;0;;0;-1;-1;-1;0;0;0;False;0;0;15;0;FLOAT3;0,0,0;False;1;FLOAT3;0,0,0;False;2;FLOAT3;0,0,0;False;3;FLOAT;0.0;False;4;FLOAT;0.0;False;6;FLOAT3;0,0,0;False;7;FLOAT3;0,0,0;False;8;FLOAT;0.0;False;9;FLOAT;0.0;False;10;FLOAT;0.0;False;13;FLOAT3;0,0,0;False;11;FLOAT3;0,0,0;False;12;FLOAT3;0,0,0;False;14;FLOAT4;0,0,0,0;False;15;FLOAT3;0,0,0;False;0
 WireConnection;0;2;1;0
 ASEEND*/
-//CHKSM=3AE638BCE109330BB8D6B0152AAAF01158764DBB
+//CHKSM=2C3E3E5299839E21934C5D99521268AD0873D862

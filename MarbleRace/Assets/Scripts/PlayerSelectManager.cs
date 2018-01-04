@@ -1,0 +1,45 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerSelectManager : MonoBehaviour {
+	public Transform p1;
+	MarbleSelector p1sel;
+	public Transform p2;
+	MarbleSelector p2sel;
+	public Transform p3;
+	MarbleSelector p3sel;
+	public Transform p4;
+	MarbleSelector p4sel;
+	void Start () {
+		LevelSettings.numberOfPlayers = 0;
+		p1sel = p1.GetComponent<MarbleSelector>();
+		p2sel = p2.GetComponent<MarbleSelector>();
+		p3sel = p3.GetComponent<MarbleSelector>();
+		p4sel = p4.GetComponent<MarbleSelector>();
+	}
+	
+	// Update is called once per frame
+	void Update () {
+		//Player 1
+		if (Input.GetButtonDown("Submit_Player1") && p1sel.selected) {p1sel.SetReady();}
+		else if (Input.GetButtonDown("Cancel_Player1") && p1sel.ready) {p1sel.SetNotReady();}
+		else if (Input.GetButtonDown("Submit_Player1") && !p1sel.selected) {p1sel.Select(); LevelSettings.numberOfPlayers++;}
+		else if (Input.GetButtonDown("Cancel_Player1") && p1sel.selected) {p1sel.Deselect();	LevelSettings.numberOfPlayers--;}
+		//Player 2
+		if (Input.GetButtonDown("Submit_Player2") && p2sel.selected) {p2sel.SetReady();}
+		else if (Input.GetButtonDown("Cancel_Player2") && p2sel.ready) {p2sel.SetNotReady();}
+		else if (Input.GetButtonDown("Submit_Player2") && !p2sel.selected) {p2sel.Select(); LevelSettings.numberOfPlayers++;}
+		else if (Input.GetButtonDown("Cancel_Player2") && p2sel.selected) {p2sel.Deselect();	LevelSettings.numberOfPlayers--;}
+		//Player 3
+		if (Input.GetButtonDown("Submit_Player3") && p3sel.selected) {p3sel.SetReady();}
+		else if (Input.GetButtonDown("Cancel_Player3") && p3sel.ready) {p3sel.SetNotReady();}
+		else if (Input.GetButtonDown("Submit_Player3") && !p3sel.selected) {p3sel.Select(); LevelSettings.numberOfPlayers++;}
+		else if (Input.GetButtonDown("Cancel_Player3") && p3sel.selected) {p3sel.Deselect();	LevelSettings.numberOfPlayers--;}
+		//Player 4
+		if (Input.GetButtonDown("Submit_Player4") && p4sel.selected) {p4sel.SetReady();}
+		else if (Input.GetButtonDown("Cancel_Player4") && p4sel.ready) {p4sel.SetNotReady();}
+		else if (Input.GetButtonDown("Submit_Player4") && !p4sel.selected) {p4sel.Select(); LevelSettings.numberOfPlayers++;}
+		else if (Input.GetButtonDown("Cancel_Player4") && p4sel.selected) {p4sel.Deselect();	LevelSettings.numberOfPlayers--;}
+	}
+}
