@@ -303,6 +303,7 @@ namespace AmplifyShaderEditor
 		public static Shader Vector3Shader = null;
 		public static Shader Vector4Shader = null;
 		public static Shader ColorShader = null;
+		public static Shader Texture2DShader = null;
 		public static Shader MaskingShader = null;
 
 		public static bool InhibitMessages = false;
@@ -321,7 +322,7 @@ namespace AmplifyShaderEditor
 		private static FontStyle m_fontStyle;
 
 
-		private static TextInfo m_textInfo;
+		private static System.Globalization.TextInfo m_textInfo;
 		private static string m_latestOpenedFolder = string.Empty;
 		private static Dictionary<int, UndoParentNode> m_undoHelper = new Dictionary<int, UndoParentNode>();
 
@@ -687,6 +688,7 @@ namespace AmplifyShaderEditor
 			Vector3Shader = null;
 			Vector4Shader = null;
 			ColorShader = null;
+			Texture2DShader = null;
 
 			MaskingShader = null;
 
@@ -798,7 +800,7 @@ namespace AmplifyShaderEditor
 			MiniObjectFieldThumbOverlay = new GUIStyle( (GUIStyle)"ObjectFieldThumbOverlay" );
 			MiniSamplerButton = new GUIStyle( MainSkin.customStyles[ (int)CustomStyle.SamplerButton ] );
 
-			m_textInfo = new CultureInfo( "en-US", false ).TextInfo;
+			m_textInfo = new System.Globalization.CultureInfo( "en-US", false ).TextInfo;
 			RangedFloatSliderStyle = new GUIStyle( GUI.skin.horizontalSlider );
 			RangedFloatSliderThumbStyle = new GUIStyle( GUI.skin.horizontalSliderThumb );
 			RangedFloatSliderThumbStyle.normal.background = SliderButton;
@@ -879,6 +881,8 @@ namespace AmplifyShaderEditor
 				ColorShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "6cf365ccc7ae776488ae8960d6d134c3" ) ); //color node
 			if( MaskingShader == null )
 				MaskingShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "9c34f18ebe2be3e48b201b748c73dec0" ) ); //masking shader
+			if( Texture2DShader == null )
+				Texture2DShader = AssetDatabase.LoadAssetAtPath<Shader>( AssetDatabase.GUIDToAssetPath( "13bd295c44d04e1419f20f792d331e33" ) ); //texture2d shader
 		}
 
 		private static void FetchMenuItemStyles()
@@ -1065,10 +1069,33 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				return m_dataTypeToColor[ dataType ];
+				if ( m_dataTypeToColor.ContainsKey( dataType ) )
+					return m_dataTypeToColor[ dataType ];
 			}
+			return m_dataTypeToColor[ WirePortDataType.OBJECT ];
 		}
 
+		public static bool IsValidType( WirePortDataType type )
+		{
+			switch ( type )
+			{
+				case WirePortDataType.OBJECT:
+				case WirePortDataType.FLOAT:
+				case WirePortDataType.FLOAT2:
+				case WirePortDataType.FLOAT3:
+				case WirePortDataType.FLOAT4:
+				case WirePortDataType.FLOAT3x3:
+				case WirePortDataType.FLOAT4x4:
+				case WirePortDataType.COLOR:
+				case WirePortDataType.INT:
+				case WirePortDataType.SAMPLER1D:
+				case WirePortDataType.SAMPLER2D:
+				case WirePortDataType.SAMPLER3D:
+				case WirePortDataType.SAMPLERCUBE:
+				return true;
+			}
+			return false;
+		}
 		public static string GetNameForDataType( WirePortDataType dataType ) { return m_dataTypeToName[ dataType ]; }
 
 		public static string GetInputDeclarationFromType( PrecisionType precision, SurfaceInputs inputType )

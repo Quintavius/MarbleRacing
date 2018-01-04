@@ -19,6 +19,8 @@ namespace AmplifyShaderEditor
 		public const string VertexBitangentStr = "ase_vertexBitangent";
 		public const string ScreenPositionStr = "ase_screenPos";
 		public const string ScreenPositionNormalizedStr = "ase_screenPosNorm";
+		public const string GrabScreenPositionStr = "ase_grabScreenPos";
+		public const string GrabScreenPositionNormalizedStr = "ase_grabScreenPosNorm";
 		public const string WorldPositionStr = "ase_worldPos";
 		public const string WorldLightDirStr = "ase_worldlightDir";
 		public const string ObjectLightDirStr = "ase_objectlightDir";
@@ -27,8 +29,23 @@ namespace AmplifyShaderEditor
 		public const string WorldTangentStr = "ase_worldTangent";
 		public const string WorldBitangentStr = "ase_worldBitangent";
 		public const string WorldToTangentStr = "ase_worldToTangent";
-		private const string Float3Format = "float3 {0} = {1};";
+        public const string TangentToWorldStr = "ase_tangentToWorld";
+
+        private const string Float3Format = "float3 {0} = {1};";
 		private const string Float4Format = "float4 {0} = {1};";
+		private const string GrabFunctionHeader = "inline float4 ASE_ComputeGrabScreenPos( float4 pos )";
+		private const string GrabFunctionCall = "ASE_ComputeGrabScreenPos( {0} )";
+		private static readonly string[] GrabFunctionBody = {
+			"#if UNITY_UV_STARTS_AT_TOP",
+			"float scale = -1.0;",
+			"#else",
+			"float scale = 1.0;",
+			"#endif",
+			"float4 o = pos;",
+			"o.y = pos.w * 0.5f;",
+			"o.y = ( pos.y - o.y ) * _ProjectionParams.x * scale + o.y;",
+			"return o;"
+		};
 
 		// OBJECT SCALE
 		static public string GenerateObjectScale( ref MasterNodeDataCollector dataCollector, int uniqueId )
@@ -143,8 +160,20 @@ namespace AmplifyShaderEditor
 			return WorldToTangentStr;
 		}
 
-		// AUTOMATIC UVS
-		static public string GenerateAutoUVs( ref MasterNodeDataCollector dataCollector, int uniqueId, int index, string propertyName = null, WirePortDataType size = WirePortDataType.FLOAT2, string scale = null, string offset = null, string outputId = null)
+        // TANGENT TO WORLD
+        static public string GenerateTangentToWorldMatrix( ref MasterNodeDataCollector dataCollector, int uniqueId, PrecisionType precision )
+        {
+            string worldNormal = GenerateWorldNormal( ref dataCollector, uniqueId );
+            string worldTangent = GenerateWorldTangent( ref dataCollector, uniqueId );
+            string worldBitangent = GenerateWorldBitangent( ref dataCollector, uniqueId );
+
+            string.Format( "{0}.x,{1}.x,{2}.x,{0}.y,{1}.y,{2}.y,{0}.z,{1}.z,{2}.z" );
+            dataCollector.AddLocalVariable( uniqueId, precision, WirePortDataType.FLOAT3x3, TangentToWorldStr, "float3x3( " + worldTangent + ", " + worldBitangent + ", " + worldNormal + " )" );
+            return TangentToWorldStr;
+        }
+
+        // AUTOMATIC UVS
+        static public string GenerateAutoUVs( ref MasterNodeDataCollector dataCollector, int uniqueId, int index, string propertyName = null, WirePortDataType size = WirePortDataType.FLOAT2, string scale = null, string offset = null, string outputId = null)
 		{
 			string result = string.Empty;
 			string varName = string.Empty;
@@ -261,6 +290,35 @@ namespace AmplifyShaderEditor
 			dataCollector.AddLocalVariable( uniqueId, string.Format( "float4 {0} = float4( {1}.xyz , {1}.w + 0.00000000001 );", ScreenPositionStr, result ) );
 
 			return ScreenPositionStr;
+		}
+
+		// GRAB SCREEN POSITION
+		static public string GenerateGrabScreenPosition( ref MasterNodeDataCollector dataCollector, int uniqueId, PrecisionType precision, bool addInput = true, string customScreenPos = null )
+		{
+			string screenPos = string.Empty;
+			if( string.IsNullOrEmpty( customScreenPos ) )
+				screenPos = GenerateScreenPosition( ref dataCollector, uniqueId, precision, addInput );
+			else
+				screenPos = customScreenPos;
+
+			string computeBody = string.Empty;
+			IOUtils.AddFunctionHeader( ref computeBody, GrabFunctionHeader );
+			foreach( string line in GrabFunctionBody )
+				IOUtils.AddFunctionLine( ref computeBody, line );
+			IOUtils.CloseFunctionBody( ref computeBody );
+			string functionResult = dataCollector.AddFunctions( GrabFunctionCall, computeBody, screenPos );
+
+			dataCollector.AddLocalVariable( uniqueId, precision, WirePortDataType.FLOAT4, GrabScreenPositionStr, functionResult );
+			return GrabScreenPositionStr;
+		}
+
+		// GRAB SCREEN POSITION NORMALIZED
+		static public string GenerateGrabScreenPositionNormalized( ref MasterNodeDataCollector dataCollector, int uniqueId, PrecisionType precision, bool addInput = true, string customScreenPos = null )
+		{
+			string stringPosVar = GenerateGrabScreenPosition( ref dataCollector, uniqueId, precision, addInput, customScreenPos );
+
+			dataCollector.AddLocalVariable( uniqueId, string.Format( "float4 {0} = {1} / {1}.w;", GrabScreenPositionNormalizedStr, stringPosVar ) );
+			return GrabScreenPositionNormalizedStr;
 		}
 
 		// SCREEN POSITION ON VERT

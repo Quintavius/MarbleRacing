@@ -72,6 +72,7 @@ namespace AmplifyShaderEditor
 		public Color m_frameColor = Color.white;
 
 		private List<int> m_nodesIds = new List<int>();
+		private bool m_checkContents = false;
 
 		private bool m_isEditing;
 		private bool m_stopEditing;
@@ -206,6 +207,9 @@ namespace AmplifyShaderEditor
 
 		public void AddNodeToCommentary( ParentNode node )
 		{
+			if( node.UniqueId == UniqueId )
+				return;
+
 			if ( !m_nodesOnCommentaryDict.ContainsKey( node.UniqueId ) )
 			{
 				bool addToNode = false;
@@ -635,6 +639,23 @@ namespace AmplifyShaderEditor
 		{
 			base.ResetNodeData();
 			m_graphDepthAnalized = false;
+		}
+
+		public override void ReadAdditionalClipboardData( ref string[] nodeParams )
+		{
+			base.ReadAdditionalClipboardData( ref nodeParams );
+			m_nodesIds.Clear();
+			m_checkContents = true;
+		}
+
+		public override void RefreshExternalReferences()
+		{
+			base.RefreshExternalReferences();
+			if( m_checkContents )
+			{
+				m_checkContents = false;
+				OnSelfStoppedMovingEvent();
+			}
 		}
 
 		public override void CalculateCustomGraphDepth()

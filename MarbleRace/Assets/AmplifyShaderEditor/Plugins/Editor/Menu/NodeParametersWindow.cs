@@ -36,6 +36,12 @@ namespace AmplifyShaderEditor
 			SetMinimizedArea( -225, 0, 260, 0 );
 		}
 
+		public void OnShaderFunctionLoad()
+		{
+			m_functionInputsReordableList = null;
+			m_functionOutputsReordableList = null;
+		}
+
 		public bool Draw( Rect parentPosition, ParentNode selectedNode, Vector2 mousePosition, int mouseButtonId, bool hasKeyboardFocus )
 		{
 			bool changeCheck = false;
@@ -159,7 +165,10 @@ namespace AmplifyShaderEditor
 							EditorVariablesManager.ExpandedGeneralShaderOptions.Value = generalIsVisible;
 							AmplifyShaderFunction function = ParentWindow.CurrentGraph.CurrentShaderFunction;
 							if( function != null )
+							{
 								function.AdditionalIncludes.Draw( ParentWindow.CurrentGraph.CurrentOutputNode );
+								function.AdditionalPragmas.Draw( ParentWindow.CurrentGraph.CurrentOutputNode );
+							}
 
 							bool inputIsVisible = EditorVariablesManager.ExpandedFunctionInputs.Value;
 							NodeUtils.DrawPropertyGroup( ref inputIsVisible, " Function Inputs", DrawFunctionInputs );

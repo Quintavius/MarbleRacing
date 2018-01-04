@@ -14,8 +14,9 @@ internal class ASEMaterialInspector : ShaderGUI
 	private const string PreviewModelPref = "ASEMI_PREVIEWMODEL";
 
 	private static MaterialEditor m_instance = null;
+    private static bool m_refreshOnUndo = false;
 
-	private bool m_initialized = false;
+    private bool m_initialized = false;
 	private double m_lastRenderedTime;
 	private PreviewRenderUtility m_previewRenderUtility;
 	private Mesh m_targetMesh;
@@ -30,8 +31,18 @@ internal class ASEMaterialInspector : ShaderGUI
 	private MethodInfo m_dragMethod = null;
 	private FieldInfo m_selectedField = null;
 	private FieldInfo m_infoField = null;
+    
 
-	public override void OnGUI( MaterialEditor materialEditor, MaterialProperty[] properties )
+    void UndoRedoPerformed()
+    {
+        m_refreshOnUndo = true;
+    }
+    
+    ~ASEMaterialInspector()
+    {
+        Undo.undoRedoPerformed -= UndoRedoPerformed;
+    }
+    public override void OnGUI( MaterialEditor materialEditor, MaterialProperty[] properties )
 	{
 		IOUtils.Init();
 		Material mat = materialEditor.target as Material;
@@ -45,7 +56,8 @@ internal class ASEMaterialInspector : ShaderGUI
 		{
 			Init();
 			m_initialized = true;
-		}
+            Undo.undoRedoPerformed += UndoRedoPerformed;
+        }
 
 		if( Event.current.type == EventType.repaint &&
 			mat.HasProperty( IOUtils.DefaultASEDirtyCheckId ) &&
@@ -278,9 +290,11 @@ internal class ASEMaterialInspector : ShaderGUI
 		materialEditor.DoubleSidedGIField();
 #endif
 		materialEditor.LightmapEmissionProperty();
-		if( EditorGUI.EndChangeCheck() )
+		if( m_refreshOnUndo || EditorGUI.EndChangeCheck() )
 		{
-			string isEmissive = mat.GetTag( "IsEmissive", false, "false" );
+            m_refreshOnUndo = false;
+
+            string isEmissive = mat.GetTag( "IsEmissive", false, "false" );
 			if( isEmissive.Equals( "true" ) )
 			{
 				mat.globalIlluminationFlags &= (MaterialGlobalIlluminationFlags)3;

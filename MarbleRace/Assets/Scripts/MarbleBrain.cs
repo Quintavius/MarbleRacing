@@ -9,7 +9,8 @@ public class MarbleBrain : MonoBehaviour {
     public float slopeSpeed;
 
     [Header("AI Settings")]
-    public Transform[] targets;
+    public GameObject targetHolder;
+    public WaypointIndex[] targets;
     float difficultyMod;
     float massMod;
     float maxSpeedMod;
@@ -17,7 +18,7 @@ public class MarbleBrain : MonoBehaviour {
     float dragMod;
     float angularMod;
 
-    int targetIndex;
+    public int targetIndex;
 
     //Shorthands
     [HideInInspector]
@@ -34,20 +35,25 @@ public class MarbleBrain : MonoBehaviour {
     public bool playDropSound;
     int colCount;
 
+    void Awake()
+    {
+        targets = targetHolder.GetComponentsInChildren<WaypointIndex>();
+        rb = GetComponent<Rigidbody>();
+    }
+
     void Start () {
         //initialize
-        rb = GetComponent<Rigidbody>();
         col = GetComponent<Collider>();
         soundManager = GetComponent<AISoundManager>();
         targetIndex = 0;
 
         //Generate personality
-        difficultyMod = Random.Range(0.001f, 1.2f);
-        massMod = Random.Range(0.3f, 3);
-        dragMod = Random.Range(0.75f, 1.5f);
-        angularMod = Random.Range(0.75f, 1.5f);
-        maxSpeedMod = Random.Range(0.75f, 1.5f);
-        slopeSpeedMod = Random.Range(0.75f, 1.5f);
+        difficultyMod = Random.Range(0.8f, 1f); //accel mod
+        massMod = Random.Range(0.9f, 1.1f); //mass
+        dragMod = Random.Range(0.9f, 1.1f); //drag
+        angularMod = Random.Range(0.9f, 1.1f); //ang drag
+        maxSpeedMod = Random.Range(0.8f, 1f); //max speed
+        slopeSpeedMod = Random.Range(0.8f, 1f); //slope
 
         //Apply rigidbody individualisms
         rb.mass *= massMod;
@@ -56,15 +62,20 @@ public class MarbleBrain : MonoBehaviour {
         maximumSpeed *= maxSpeedMod;
         slopeSpeed *= slopeSpeedMod;
     }
-	
-	void Update () {
-        if (rb.velocity.magnitude < maximumSpeed * 1.5f)
+
+    void Update()
+    {
+        //Ride like the wind, but only if you haven't finished yet you marble brained moron
+        if (targetIndex < targets.Length)
         {
-            //Get target direction
-            Vector3 dir = targets[targetIndex].position - transform.position;
-            dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
-            //LET THE FORCE FLOW THROUGH YOU
-            rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
+            if (rb.velocity.magnitude < maximumSpeed * 1.5f)
+            {
+                //Get target direction
+                Vector3 dir = targets[targetIndex].transform.position - transform.position;
+                dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
+                //LET THE FORCE FLOW THROUGH YOU
+                rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
+            }
         }
     }
 

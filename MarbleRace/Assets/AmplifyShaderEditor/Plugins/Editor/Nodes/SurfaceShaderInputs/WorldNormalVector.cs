@@ -93,7 +93,10 @@ namespace AmplifyShaderEditor
 					{
 						dataCollector.AddToInput( UniqueId, SurfaceInputs.INTERNALDATA, addSemiColon: false );
 						result = GeneratorUtils.GenerateWorldNormal( ref dataCollector, UniqueId );
+						dataCollector.ForceNormal = true;
 					}
+
+
 				}
 
 				return GetOutputVectorItem( 0, outputId, result );

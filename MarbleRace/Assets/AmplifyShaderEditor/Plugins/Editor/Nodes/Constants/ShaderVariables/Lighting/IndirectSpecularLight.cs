@@ -107,7 +107,14 @@ namespace AmplifyShaderEditor
 			else
 			{
 				if( dataCollector.IsFragmentCategory )
+				{
 					dataCollector.AddToInput( UniqueId, SurfaceInputs.WORLD_NORMAL, m_currentPrecisionType );
+					if( dataCollector.DirtyNormal )
+					{
+						dataCollector.AddToInput( UniqueId, SurfaceInputs.INTERNALDATA, addSemiColon: false );
+						dataCollector.ForceNormal = true;
+					}
+				}
 
 				normal = GeneratorUtils.GenerateWorldNormal( ref dataCollector, UniqueId );
 			}

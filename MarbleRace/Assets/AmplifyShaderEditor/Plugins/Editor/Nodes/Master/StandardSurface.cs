@@ -268,13 +268,16 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private AdditionalPragmasHelper m_additionalPragmas = new AdditionalPragmasHelper();
 
-		[SerializeField]
+        [SerializeField]
+        private AdditionalDefinesHelper m_additionalDefines = new AdditionalDefinesHelper();
+
+        [SerializeField]
 		private CustomTagsHelper m_customTagsHelper = new CustomTagsHelper();
 
         [SerializeField]
         private DependenciesHelper m_dependenciesHelper = new DependenciesHelper();
 
-        [ SerializeField]
+        [SerializeField]
 		private StandardShaderLightModel m_currentLightModel;
 
 		[SerializeField]
@@ -880,7 +883,8 @@ namespace AmplifyShaderEditor
 				m_zBufferHelper.Draw( this, m_inspectorToolbarStyle, m_customBlendAvailable );
 				m_renderingOptionsOpHelper.Draw( this );
 				m_renderingPlatformOpHelper.Draw( this );
-				m_additionalIncludes.Draw( this );
+                m_additionalDefines.Draw( this );
+                m_additionalIncludes.Draw( this );
 				m_additionalPragmas.Draw( this );
 				m_customTagsHelper.Draw( this );
                 m_dependenciesHelper.Draw( this );
@@ -1208,6 +1212,8 @@ namespace AmplifyShaderEditor
 		public override Shader Execute( string pathname, bool isFullPath )
 		{
 			ForcePortType();
+			ForceReordering();
+			UpdateFromBlendMode();
 			base.Execute( pathname, isFullPath );
 
 			bool isInstancedShader = m_renderingOptionsOpHelper.EnableInstancing || UIUtils.IsInstancedShader();
@@ -1238,6 +1244,20 @@ namespace AmplifyShaderEditor
 			{
 				m_currentDataCollector.AddToPragmas( UniqueId, IOUtils.InstancedPropertiesHeader );
 			}
+
+			if( m_renderingOptionsOpHelper.SpecularHighlightToggle || m_renderingOptionsOpHelper.ReflectionsToggle )
+				m_currentDataCollector.AddToProperties( UniqueId, "[Header(Forward Rendering Options)]", 10001 );
+			if( m_renderingOptionsOpHelper.SpecularHighlightToggle )
+			{
+				m_currentDataCollector.AddToProperties( UniqueId, "[ToggleOff] _SpecularHighlights(\"Specular Highlights\", Float) = 1.0", 10002);
+				m_currentDataCollector.AddToPragmas( UniqueId, "shader_feature _SPECULARHIGHLIGHTS_OFF" );
+			}
+			if( m_renderingOptionsOpHelper.ReflectionsToggle )
+			{
+				m_currentDataCollector.AddToProperties( UniqueId, "[ToggleOff] _GlossyReflections(\"Reflections\", Float) = 1.0", 10003 );
+				m_currentDataCollector.AddToPragmas( UniqueId, "shader_feature _GLOSSYREFLECTIONS_OFF" );
+			}
+
 
 			// See if each node is being used on frag and/or vert ports
 			SetupNodeCategories();
@@ -1650,7 +1670,7 @@ namespace AmplifyShaderEditor
 				}
 			}
 
-			if ( m_outlineHelper.EnableOutline )
+			if( m_outlineHelper.EnableOutline || ( m_currentDataCollector.UsingCustomOutlineColor || m_currentDataCollector.UsingCustomOutlineWidth ) )
 			{
 				m_outlineHelper.AddToDataCollector( ref m_currentDataCollector );
 			}
@@ -1666,9 +1686,10 @@ namespace AmplifyShaderEditor
 #endif
 			m_additionalIncludes.AddToDataCollector( ref m_currentDataCollector );
 			m_additionalPragmas.AddToDataCollector( ref m_currentDataCollector );
+            m_additionalDefines.AddToDataCollector( ref m_currentDataCollector );
 
-			m_currentDataCollector.CloseInputs();
-			m_currentDataCollector.CloseCustomInputs();
+            //m_currentDataCollector.CloseInputs();
+            m_currentDataCollector.CloseCustomInputs();
 			m_currentDataCollector.CloseProperties();
 			m_currentDataCollector.ClosePerVertexHeader();
 
@@ -1685,9 +1706,9 @@ namespace AmplifyShaderEditor
 				OpenSubShaderBody( ref ShaderBody );
 				{
 					// Add optionalPasses
-					if ( m_outlineHelper.EnableOutline )
+					if( m_outlineHelper.EnableOutline || ( m_currentDataCollector.UsingCustomOutlineColor || m_currentDataCollector.UsingCustomOutlineWidth ) )
 					{
-						AddMultilineBody( ref ShaderBody, m_outlineHelper.OutlineFunctionBody( isInstancedShader, m_customShadowCaster, UIUtils.RemoveInvalidCharacters( ShaderName ), ( m_billboardOpHelper.IsBillboard ? m_billboardOpHelper.GetInternalMultilineInstructions() : null ) ) );
+						AddMultilineBody( ref ShaderBody, m_outlineHelper.OutlineFunctionBody( ref m_currentDataCollector, isInstancedShader, m_customShadowCaster, UIUtils.RemoveInvalidCharacters( ShaderName ), ( m_billboardOpHelper.IsBillboard ? m_billboardOpHelper.GetInternalMultilineInstructions() : null ), ref m_tessOpHelper, ShaderModelTypeArr[ m_shaderModelIdx ] ) );
 					}
 
 					//Add SubShader tags
@@ -1748,6 +1769,10 @@ namespace AmplifyShaderEditor
 					else
 						OpenCGProgram( ref ShaderBody );
 					{
+                        //Add Defines
+                        if( m_currentDataCollector.DirtyDefines )
+                            ShaderBody += m_currentDataCollector.Defines;
+
 						//Add Includes
 						if ( m_customShadowCaster )
 						{
@@ -1895,12 +1920,12 @@ namespace AmplifyShaderEditor
 
 						// Add Input struct
 						if ( m_currentDataCollector.DirtyInputs )
-							ShaderBody += m_currentDataCollector.Inputs + "\n\n";
+							ShaderBody += "\t\t"+ m_currentDataCollector.Inputs + "\t\t};" + "\n\n";
 
-						if ( m_tessOpHelper.EnableTesselation )
-						{
-							ShaderBody += TessellationOpHelper.CustomAppData;
-						}
+						//if ( m_tessOpHelper.EnableTesselation )
+						//{
+						//	ShaderBody += TessellationOpHelper.CustomAppData;
+						//}
 
 						// Add Custom Lighting struct
 						if ( m_currentDataCollector.DirtyCustomInput )
@@ -2447,7 +2472,10 @@ namespace AmplifyShaderEditor
 			m_additionalPragmas.Destroy();
 			m_additionalPragmas = null;
 
-			m_customTagsHelper.Destroy();
+            m_additionalDefines.Destroy();
+            m_additionalDefines = null;
+
+            m_customTagsHelper.Destroy();
 			m_customTagsHelper = null;
 
             m_dependenciesHelper.Destroy();
@@ -2755,6 +2783,10 @@ namespace AmplifyShaderEditor
                     m_dependenciesHelper.ReadFromString( ref m_currentReadParamIdx, ref nodeParams );
                 }
 
+                if( UIUtils.CurrentShaderVersion() > 14005 )
+                {
+                    m_additionalDefines.ReadFromString( ref m_currentReadParamIdx, ref nodeParams );
+                }
 				m_lastLightModel = m_currentLightModel;
 				DeleteAllInputConnections( true );
 				AddMasterPorts();
@@ -2822,6 +2854,7 @@ namespace AmplifyShaderEditor
             m_additionalPragmas.WriteToString( ref nodeInfo );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_alphaToCoverage );
             m_dependenciesHelper.WriteToString( ref nodeInfo );
+            m_additionalDefines.WriteToString( ref nodeInfo );
         }
 
 		private bool TestCustomBlendMode()
@@ -2916,11 +2949,14 @@ namespace AmplifyShaderEditor
 				break;
 			}
 
-			m_blendOpsHelper.SetBlendOpsFromBlendMode( m_alphaMode );
+			m_blendOpsHelper.SetBlendOpsFromBlendMode( m_alphaMode, ( m_alphaMode == AlphaMode.Custom || m_alphaMode == AlphaMode.Opaque ) );
 		}
 
 		public StandardShaderLightModel CurrentLightingModel { get { return m_currentLightModel; } }
 		public CullMode CurrentCullMode { get { return m_cullMode; } }
 		public AdditionalIncludesHelper AdditionalIncludes { get { return m_additionalIncludes; } set { m_additionalIncludes = value; } }
+		public AdditionalPragmasHelper AdditionalPragmas { get { return m_additionalPragmas; } set { m_additionalPragmas = value; } }
+        public AdditionalDefinesHelper AdditionalDefines { get { return m_additionalDefines; }set { m_additionalDefines = value; } }
+		public OutlineOpHelper OutlineHelper { get { return m_outlineHelper; } }
 	}
 }
