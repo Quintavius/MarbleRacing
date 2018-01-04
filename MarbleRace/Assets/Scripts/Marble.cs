@@ -33,4 +33,8 @@ public static class Marble {
         public Mesh skinMesh;
         public bool unlocked;
     }
+    public enum Selection{
+        Up,
+        Down
+    }
 }

@@ -13,8 +13,10 @@ public class RankManager : MonoBehaviour
   [HideInInspector]
   public List<MarbleRank> players; //this is ALL marbles not just humans
   int marblesFinished;
+  SceneInitializer initializer;
   void Start()
   {
+    initializer = GameObject.FindObjectOfType<SceneInitializer>();
     marblesFinished = 0;
     raceOverCheck = true;
     //Throw all players in a list
@@ -75,11 +77,18 @@ public class RankManager : MonoBehaviour
     if (raceOver){
       rankingCanvas.SetActive(true);
       foreach (MarbleRank marble in winners){
+        var marbleName = marble.gameObject.name;
+        if (marble.isPlayer){
+          if (marble.gameObject == initializer.p1){marbleName = "<color=#336FFFFF>"+marbleName+"</color>";}
+          else if (marble.gameObject == initializer.p2){marbleName = "<color=#CE4444FF>"+marbleName+"</color>";}
+          else if (marble.gameObject == initializer.p3){marbleName = "<color=#FFCA40FF>"+marbleName+"</color>";}
+          else if (marble.gameObject == initializer.p4){marbleName = "<color=#1EBF1FFF>"+marbleName+"</color>";}
+        }
         if (!marble.ranked){
-          if (marblesFinished == 0){rankingText.text += "1st " + marble.gameObject.name + "\n";}
-          else if (marblesFinished == 1){rankingText.text += "2nd " + marble.gameObject.name + "\n";}
-          else if (marblesFinished == 2){rankingText.text += "3rd " + marble.gameObject.name + "\n";}
-          else if (marblesFinished >= 3){rankingText.text += (marblesFinished+1) + "th " + marble.gameObject.name + "\n";}
+          if (marblesFinished == 0){rankingText.text += "1st " + marbleName + "\n";}
+          else if (marblesFinished == 1){rankingText.text += "2nd " + marbleName + "\n";}
+          else if (marblesFinished == 2){rankingText.text += "3rd " + marbleName + "\n";}
+          else if (marblesFinished >= 3){rankingText.text += (marblesFinished+1) + "th " + marbleName + "\n";}
           marblesFinished++;
           marble.ranked = true;
         }

@@ -17,7 +17,6 @@ public class MarbleSkin : MonoBehaviour {
     MarbleSkinDefinitions def;
     SkinUnlockManager unlock; 
 
-	// Use this for initialization
 	void Awake () {
         def = FindObjectOfType<MarbleSkinDefinitions>();
         allSkins = FindObjectsOfType<MarbleSkin>();
@@ -34,7 +33,22 @@ public class MarbleSkin : MonoBehaviour {
             RandomizeSkin();
         }
     }
-	
+
+    public void SelectSkin(Marble.Selection selection, int player){
+        if (selection == Marble.Selection.Up){
+            //Gonna need to add a check to see if it's unlocked here
+            if (currentSkin != System.Enum.GetValues(typeof (Marble.Skin)).Length -1) {currentSkin++;}
+            else {currentSkin = 0;}
+        }else if (selection == Marble.Selection.Down){
+            if (currentSkin != 0) {currentSkin--;}
+            else {currentSkin = System.Enum.GetValues(typeof (Marble.Skin)).Length -1;}
+        }
+        if (player == 1){LevelSettings.player1Skin = (Marble.Skin)currentSkin;}
+        else if (player == 2){LevelSettings.player2Skin = (Marble.Skin)currentSkin;}
+        else if (player == 3){LevelSettings.player3Skin = (Marble.Skin)currentSkin;}
+        else if (player == 4){LevelSettings.player4Skin = (Marble.Skin)currentSkin;}
+        UpdateSkin();
+    }
 	// Update is called once per frame
 	public void SetSkin (Marble.Skin skin) {
 		currentSkin = (int)skin;

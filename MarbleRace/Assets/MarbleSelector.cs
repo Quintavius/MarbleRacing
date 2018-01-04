@@ -22,6 +22,9 @@ public class MarbleSelector : MonoBehaviour {
 			arrows.SetActive(false);
 		}
 	}
+	private void Update(){
+		nameText.text = gameObject.name;
+	}
 	public void Select(){
 		nameText.gameObject.SetActive(true);
 		arrows.SetActive(true);
