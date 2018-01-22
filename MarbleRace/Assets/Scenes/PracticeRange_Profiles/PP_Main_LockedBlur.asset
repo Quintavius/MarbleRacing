@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: PP_Main
+  m_Name: PP_Main_LockedBlur
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114854127688321528}
@@ -413,7 +413,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 1.2
+    value: 1.89
   color:
     overrideState: 1
     value: {r: 0.4666667, g: 0.21960786, b: 1, a: 1}
@@ -431,7 +431,7 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 2.95
+    value: 4.39
   directLightingStrength:
     overrideState: 1
     value: 0
@@ -458,13 +458,13 @@ MonoBehaviour:
     value: 1
   focusDistance:
     overrideState: 1
-    value: 5.5
+    value: 10.8
   aperture:
     overrideState: 1
-    value: 0.5
+    value: 0.8
   focalLength:
     overrideState: 1
-    value: 65
+    value: 100
   kernelSize:
     overrideState: 1
     value: 1
