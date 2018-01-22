@@ -341,16 +341,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 298
+    value: 100
   sampleCount:
     overrideState: 1
-    value: 14
+    value: 10
 --- !u!114 &114673250723841066
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -410,13 +410,13 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 1.89
+    value: 2.52
   color:
     overrideState: 1
-    value: {r: 0.4666667, g: 0.21960786, b: 1, a: 1}
+    value: {r: 0.50980395, g: 0.3411765, b: 1, a: 1}
   ambientOnly:
     overrideState: 1
     value: 1
@@ -431,16 +431,16 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 4.39
+    value: 3.68
   directLightingStrength:
     overrideState: 1
     value: 0
   radius:
     overrideState: 1
-    value: 1.83
+    value: 3.86
   quality:
     overrideState: 1
-    value: 0
+    value: 4
 --- !u!114 &114955987044092632
 MonoBehaviour:
   m_ObjectHideFlags: 3
