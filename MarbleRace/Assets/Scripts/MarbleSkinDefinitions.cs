@@ -9,7 +9,7 @@ public class MarbleSkinDefinitions : MonoBehaviour {
 	SkinUnlockManager unlocks;
 	public Dictionary<Marble.Skin, Marble.SkinClass> definition;
 	static bool created = false;
-    void Awake()
+    void Start()
     {
         if (!created)
         {

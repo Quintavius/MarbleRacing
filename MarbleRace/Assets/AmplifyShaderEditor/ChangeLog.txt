@@ -1,4 +1,94 @@
 Release Notes:
+v1.4.3 dev 01:
+* New Samples:
+    * Orientation Based Sprite
+    * UI Sprite FX
+
+* New Shader Function:
+    * Box Mask
+
+* Fixes:
+    * Fixed issue on attempting to deactivate destroyed nodes
+
+* Improvements:
+    * Updated Sprite and UI templates to better support normal maps
+    * Changed way logic is updated in some nodes to be more consistent and work inside shader functions
+
+v1.4.2 dev 06:
+* Fixes:
+    * Fixed incorrect wire highlighting caused by 'Register Local Var' node
+    * Fixed issue with 'Texture Sample' node not generating proper UVs in specific cases when using templates
+    * Minor UI and refresh fixes to 'Function Switch' node
+    * Fixed issue on incorrectly loading SimpleTerrain sample
+    * Fixed issue on unnecessary loading when opening a changed shader or function
+
+* Improvements:
+    * Added compatibility with Unity 2018
+        * For now 'Substance Sample' node is unavailable on this version
+        * Substance example is now inside a unity package to prevent sbsar importing error
+    * Removed Substance and API update warnings on Unity 2017
+    * Added new Vertex Position input port into 'Surface Depth' and 'Camera Depth Fade' nodes
+        * Can now take custom vertex positions into account
+    * Added some minor improvements into 'Register Local Var'/'Get Local Var' node usage
+        * 'Register Local Var' node is now highlighted if one of its 'Get Local Var' nodes are selected
+        * 'Register Local Var' node now lists and can focus each 'Get Local Var' which uses it
+    * Added reference capabilities to 'Function Switch' 
+        * One node can now control different paths of a shader function graph
+
+v1.4.2 dev 05:
+* Fixes:
+    * Fixed Undo issues with connections created/deleted by drag + Alt
+    * Fixed issue on templates vertex local variables when using 'Vertex To Fragment' node
+    * Fixed bug where 'Function Switch' node options were being incorrectly saved which caused a crash on load
+    * Fixed shader 'Function Switch' node options not being correctly ordered all the time 
+    * Fixed connection signal detection to make 'Function Switch' nodes know when to turn on
+
+v1.4.2 dev 04:
+* New Node:
+    * Function Switch
+        * Node specific to shader functions which allows switching options at compile time on them
+
+* New Shader Function:
+    * Flipbook
+
+* Improvements:
+    * Changed switch type nodes port order to match 'Function Switch' and maintain consistency
+
+* Fixes:
+    * Fixed issue on duplicated functions when both outline and shadow caster passes are active
+    * Fixed issue with calculating label size for nodes
+    * Fixed UI issue when not being able to read depth info from template
+
+v1.4.2 dev 03:
+* Improvements:
+    * Added Depth module into templates
+    * Minor improvement on Four Splats First Pass Terrain shader function
+    * Minor improvement on TerrainSnowCoverage and SimpleTerrain samples
+    * Added preview and access to internal data into 'HSV To RGB' and 'RGB To HSV' nodes
+    * Added preview to 'If' node
+    * Added new Normalize option into 'World Normal' and 'World Reflection' nodes
+    * 'Outline' node now supports transparency and mask operations through the new Alpha Mode option
+    * An additional depth pass can be added via the new Extra Depth Pass option on the Output Node properties
+    * Property nodes can now register its properties/global variables without being connected to Output node
+        * Done via the new Auto-Register option
+
+* Fixes:
+    * Fixed minor issue on 'Rotate About Axis' node UI
+    * Fixed issue with 'World Reflection' node on templates
+
+v1.4.2 dev 02:
+* Improvements:
+    * 'Toggle Switch' node can now share properties
+    *  Added lock button to property name on property type nodes
+        * Allows to customize the internal variable name used
+    * Added support for 'View Dir' node on templates
+    * Added preview position selection to shader functions to further customize function nodes
+
+* Fixes:
+    * Fixed issue where custom shadows were ignoring vertex colors
+    * Fixed issue on 'Fresnel' node using a non-normalized normal vector
+    * Small fix on 'Static Switch' node getting and setting values from the material
+
 v1.4.2 dev 01:
 * Improvements:
     * Lowered Shader Model target of Custom Lighting Toon example to be compatible with MacOs

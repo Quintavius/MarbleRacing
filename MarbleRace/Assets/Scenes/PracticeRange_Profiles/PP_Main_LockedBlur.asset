@@ -9,13 +9,57 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8e6292b2c06870d4495f009f912b9600, type: 3}
-  m_Name: Post-process Volume Profile
+  m_Name: PP_Main_LockedBlur
   m_EditorClassIdentifier: 
   settings:
   - {fileID: 114854127688321528}
   - {fileID: 114519990884382622}
   - {fileID: 114359278803058724}
   - {fileID: 114673250723841066}
+  - {fileID: 114955987044092632}
+  - {fileID: 114320525323671810}
+--- !u!114 &114320525323671810
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b924e2dad56384a8df2a1e111bb675, type: 3}
+  m_Name: Vignette
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  mode:
+    overrideState: 1
+    value: 0
+  color:
+    overrideState: 1
+    value: {r: 0.644788, g: 0.9852941, b: 0.73167574, a: 1}
+  center:
+    overrideState: 1
+    value: {x: 0.5, y: 0.5}
+  intensity:
+    overrideState: 1
+    value: 0.342
+  smoothness:
+    overrideState: 1
+    value: 0.482
+  roundness:
+    overrideState: 1
+    value: 0.966
+  rounded:
+    overrideState: 1
+    value: 0
+  mask:
+    overrideState: 1
+    value: {fileID: 0}
+  opacity:
+    overrideState: 1
+    value: 1
 --- !u!114 &114359278803058724
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -42,22 +86,22 @@ MonoBehaviour:
     value: 3
   toneCurveToeStrength:
     overrideState: 1
-    value: 0.07
+    value: 0.057
   toneCurveToeLength:
     overrideState: 1
-    value: 0.225
+    value: 0.518
   toneCurveShoulderStrength:
     overrideState: 1
-    value: 1
+    value: 0.375
   toneCurveShoulderLength:
     overrideState: 1
-    value: 0.79
+    value: 0.42
   toneCurveShoulderAngle:
     overrideState: 1
-    value: 0.687
+    value: 0.789
   toneCurveGamma:
     overrideState: 1
-    value: 1.08
+    value: 1
   logLut:
     overrideState: 0
     value: {fileID: 0}
@@ -78,16 +122,16 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 9
+    value: 4
   brightness:
     overrideState: 0
     value: 0
   postExposure:
     overrideState: 1
-    value: 0.48
+    value: 0.36
   contrast:
     overrideState: 1
-    value: 11
+    value: 29
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -116,14 +160,14 @@ MonoBehaviour:
     overrideState: 0
     value: 100
   lift:
-    overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    overrideState: 1
+    value: {x: 0.77639884, y: 1, z: 0.74350864, w: -0.047393467}
   gamma:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 0.26907864, y: 0.14464706, z: 1, w: -0.33175352}
   gain:
     overrideState: 0
-    value: {x: 1, y: 1, z: 1, w: 0}
+    value: {x: 1, y: 1, z: 1, w: -0.36679545}
   masterCurve:
     overrideState: 0
     value:
@@ -264,15 +308,21 @@ MonoBehaviour:
         m_Curve:
         - serializedVersion: 2
           time: 0
-          value: 0.8958333
-          inSlope: 0
-          outSlope: 0
+          value: 0.8148148
+          inSlope: -0.10084033
+          outSlope: -0.10084033
           tangentMode: 0
         - serializedVersion: 2
-          time: 0.7816377
-          value: 0.5208334
-          inSlope: 0
-          outSlope: 0
+          time: 0.59683794
+          value: 0.63374484
+          inSlope: -0.09207115
+          outSlope: -0.09207115
+          tangentMode: 0
+        - serializedVersion: 2
+          time: 1
+          value: 0.46090537
+          inSlope: -3.880659
+          outSlope: -3.880659
           tangentMode: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -291,16 +341,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b94fcd11afffcb142908bfcb1e261fba, type: 3}
   m_Name: MotionBlur
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   shutterAngle:
     overrideState: 1
-    value: 298
+    value: 100
   sampleCount:
     overrideState: 1
-    value: 14
+    value: 10
 --- !u!114 &114673250723841066
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -312,37 +362,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a79b01ea5641d4aa6daa2e23605641, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   enabled:
     overrideState: 1
     value: 1
   intensity:
     overrideState: 1
-    value: 2.6
+    value: 2.7
   threshold:
     overrideState: 1
-    value: 0.17
+    value: 0.69
   softKnee:
     overrideState: 1
     value: 0
   diffusion:
     overrideState: 1
-    value: 2.1
+    value: 3.02
   anamorphicRatio:
     overrideState: 1
-    value: 0
+    value: 0.08
   color:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
   mobileOptimized:
     overrideState: 1
-    value: 1
+    value: 0
   dirtTexture:
     overrideState: 1
-    value: {fileID: 0}
+    value: {fileID: 2800000, guid: 69e847bbff1cf5449a4ee0bbd045dbc9, type: 3}
   dirtIntensity:
     overrideState: 1
-    value: 0
+    value: 1
 --- !u!114 &114854127688321528
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -360,13 +410,13 @@ MonoBehaviour:
     value: 1
   mode:
     overrideState: 1
-    value: 1
+    value: 0
   intensity:
     overrideState: 1
-    value: 1.35
+    value: 2.52
   color:
     overrideState: 1
-    value: {r: 0.11656574, g: 0.2721453, b: 0.32352942, a: 1}
+    value: {r: 0.50980395, g: 0.3411765, b: 1, a: 1}
   ambientOnly:
     overrideState: 1
     value: 1
@@ -381,13 +431,40 @@ MonoBehaviour:
     value: -12
   thicknessModifier:
     overrideState: 1
-    value: 1
+    value: 3.68
   directLightingStrength:
     overrideState: 1
     value: 0
   radius:
     overrideState: 1
-    value: 1.83
+    value: 3.86
   quality:
     overrideState: 1
-    value: 0
+    value: 4
+--- !u!114 &114955987044092632
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
+  m_Name: DepthOfField
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    overrideState: 1
+    value: 1
+  focusDistance:
+    overrideState: 1
+    value: 10.8
+  aperture:
+    overrideState: 1
+    value: 0.8
+  focalLength:
+    overrideState: 1
+    value: 100
+  kernelSize:
+    overrideState: 1
+    value: 1

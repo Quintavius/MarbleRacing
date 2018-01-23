@@ -59,7 +59,7 @@ internal class ASEMaterialInspector : ShaderGUI
             Undo.undoRedoPerformed += UndoRedoPerformed;
         }
 
-		if( Event.current.type == EventType.repaint &&
+		if( Event.current.type == EventType.Repaint &&
 			mat.HasProperty( IOUtils.DefaultASEDirtyCheckId ) &&
 			mat.GetInt( IOUtils.DefaultASEDirtyCheckId ) == 1 )
 		{
@@ -388,7 +388,11 @@ internal class ASEMaterialInspector : ShaderGUI
 		if( m_previewRenderUtility == null )
 		{
 			m_previewRenderUtility = new PreviewRenderUtility();
+#if UNITY_2017_1_OR_NEWER
 			m_previewRenderUtility.cameraFieldOfView = 30f;
+#else
+			m_previewRenderUtility.m_CameraFieldOfView = 30f;
+#endif
 		}
 
 		if( m_previewGUIType == null )

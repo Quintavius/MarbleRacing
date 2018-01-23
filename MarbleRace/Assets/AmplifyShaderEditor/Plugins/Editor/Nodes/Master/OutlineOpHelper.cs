@@ -16,12 +16,29 @@ namespace AmplifyShaderEditor
 	[Serializable]
 	public sealed class OutlineOpHelper
 	{
-		private readonly string[] OutlineBodyBegin = {  "Tags{ }",
+
+		private string[] ModeTags =
+		{
+			"Tags{ }",
+			"Tags{ \"RenderType\" = \"TransparentCutout\"  \"Queue\" = \"AlphaTest+0\"}",
+			"Tags{ \"RenderType\" = \"Transparent\"  \"Queue\" = \"Transparent+0\"}",
+			"Tags{ \"RenderType\" = \"Transparent\"  \"Queue\" = \"Transparent+0\" }"
+		};
+
+		private string[] ModePragma =
+		{
+			string.Empty,
+			string.Empty,
+			"alpha:fade ",
+			"alpha:premul "
+		};
+
+		private readonly string[] OutlineBodyBegin = {
 														"Cull Front",
 														"CGPROGRAM"
 														};
 
-		private readonly string OutlineSurfaceConfig = "#pragma surface outlineSurf Outline {0}keepalpha noshadow noambient novertexlights nolightmap nodynlightmap nodirlightmap nometa noforwardadd vertex:outlineVertexDataFunc ";
+		private readonly string OutlineSurfaceConfig = "#pragma surface outlineSurf Outline {0} keepalpha noshadow noambient novertexlights nolightmap nodynlightmap nodirlightmap nometa noforwardadd vertex:outlineVertexDataFunc ";
 
 		private readonly string OutlineBodyStructBegin = "struct Input {";
 		private readonly string OutlineBodyStructDefault = "\tfixed filler;";
@@ -114,6 +131,7 @@ namespace AmplifyShaderEditor
 		private string m_includes = string.Empty;
 		private string m_pragmas = string.Empty;
 		private string m_vertexData = string.Empty;
+		private Dictionary<string, string> m_localFunctions;
 
 		//private OutlineMode m_customMode = OutlineMode.VertexOffset;
 		private int m_offsetMode = 0;
@@ -246,6 +264,7 @@ namespace AmplifyShaderEditor
 		public string[] OutlineFunctionBody( ref MasterNodeDataCollector dataCollector, bool instanced, bool isShadowCaster, string shaderName, string[] billboardInfo, ref TessellationOpHelper tessOpHelper, string target )
 		{
 			List<string> body = new List<string>();
+			body.Add( ModeTags[ dataCollector.CustomOutlineSelectedAlpha ] );
 			for( int i = 0; i < OutlineBodyBegin.Length; i++ )
 			{
 				body.Add( OutlineBodyBegin[ i ] );
@@ -262,8 +281,13 @@ namespace AmplifyShaderEditor
 
 			bool customOutline = dataCollector.UsingCustomOutlineColor || dataCollector.UsingCustomOutlineWidth;
 			int outlineMode = customOutline ? m_offsetMode : ( m_mode == OutlineMode.VertexOffset ? 0 : 1 );
+			string extraOptions = ( customOutline ? m_customNoFog : m_noFog ) ? "nofog " : string.Empty;
+			if( dataCollector.CustomOutlineSelectedAlpha > 0 )
+			{
+				extraOptions += ModePragma[ dataCollector.CustomOutlineSelectedAlpha ];
+			}
 
-			string surfConfig = string.Format( OutlineSurfaceConfig, ( customOutline ? m_customNoFog : m_noFog ) ? "nofog " : string.Empty );
+			string surfConfig = string.Format( OutlineSurfaceConfig, extraOptions );
 
 			if( tessOpHelper.EnableTesselation )
 				tessOpHelper.WriteToOptionalParams( ref surfConfig );
@@ -340,6 +364,11 @@ namespace AmplifyShaderEditor
 						{
 							dataCollector.AddToUniforms( UniformList[ i ].NodeId, UniformList[ i ].PropertyName );
 						}
+
+						foreach( KeyValuePair<string, string> kvp in m_localFunctions )
+						{
+							dataCollector.AddFunction( kvp.Key, kvp.Value );
+						}
 					}
 					else
 					{
@@ -350,11 +379,12 @@ namespace AmplifyShaderEditor
 
 				if( !dataCollector.UsingCustomOutlineColor )
 					body.Add( OutlineDefaultUniformColor );
+
 				if( !dataCollector.UsingCustomOutlineWidth )
 					body.Add( OutlineDefaultUniformWidth );
 
 				//Functions
-				if( customOutline )
+				if( customOutline && !isShadowCaster)
 					body.Add( Functions );
 
 				if( tessOpHelper.EnableTesselation && !isShadowCaster )
@@ -397,7 +427,7 @@ namespace AmplifyShaderEditor
 				{
 					body.Add( OutlineBodyDefaultSurfBegin[ i ] );
 				}
-				if( dataCollector.UsingCustomOutlineColor )
+				if( dataCollector.UsingCustomOutlineColor || dataCollector.CustomOutlineSelectedAlpha > 0 )
 				{
 					body.Add( "\t" + Instructions.Trim( '\t', '\n' ) );
 				}
@@ -421,6 +451,14 @@ namespace AmplifyShaderEditor
 			return bodyArr;
 		}
 
+
+		public void Destroy()
+		{
+			m_inputList = null;
+			m_uniformList = null;
+			m_localFunctions = null;
+		}
+
 		public bool EnableOutline { get { return m_enabled; } }
 
 		public string Inputs { get { return m_inputs; } set { m_inputs = value; } }
@@ -432,6 +470,7 @@ namespace AmplifyShaderEditor
 		public string VertexData { get { return m_vertexData; } set { m_vertexData = value; } }
 		public List<PropertyDataCollector> InputList { get { return m_inputList; } set { m_inputList = value; } }
 		public List<PropertyDataCollector> UniformList { get { return m_uniformList; } set { m_uniformList = value; } }
+		public Dictionary<string, string> LocalFunctions { get { return m_localFunctions; } set { m_localFunctions = value; } }
 		public bool DirtyInput { get { return m_dirtyInput; } set { m_dirtyInput = value; } }
 
 		//public OutlineMode CustomMode { get { return m_customMode; } set { m_customMode = value; } }
