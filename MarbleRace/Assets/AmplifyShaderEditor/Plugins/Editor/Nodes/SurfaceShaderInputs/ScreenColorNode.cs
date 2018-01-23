@@ -67,6 +67,7 @@ namespace AmplifyShaderEditor
 			m_drawAttributes = false;
 			m_showTitleWhenNotEditing = false;
 			m_textLabelWidth = 125;
+			m_showAutoRegisterUI = false;
 		}
 
 		protected override void OnUniqueIDAssigned()

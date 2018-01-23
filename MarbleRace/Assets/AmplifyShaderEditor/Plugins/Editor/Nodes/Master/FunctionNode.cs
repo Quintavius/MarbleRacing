@@ -30,6 +30,14 @@ namespace AmplifyShaderEditor
 		private Dictionary<int, FunctionOutput> m_allFunctionOutputsDict = new Dictionary<int, FunctionOutput>();
 
 		[SerializeField]
+		private List<FunctionSwitch> m_allFunctionSwitches;
+		private Dictionary<int, FunctionSwitch> m_allFunctionSwitchesDict = new Dictionary<int, FunctionSwitch>();
+
+		[SerializeField]
+		private List<FunctionSwitch> m_allFunctionSwitchesCopies;
+		private Dictionary<int, FunctionSwitch> m_allFunctionSwitchesCopiesDict = new Dictionary<int, FunctionSwitch>();
+
+		[SerializeField]
 		private ReordenatorNode m_reordenator;
 
 		[SerializeField]
@@ -59,10 +67,13 @@ namespace AmplifyShaderEditor
 		[SerializeField]
 		private FunctionOutput m_mainPreviewNode;
 
-		[SerializeField]
+		bool m_portsChanged = false;
+		//[SerializeField]
 		bool m_initialGraphDraw = false;
 
 		private bool m_refreshIdsRequired = false;
+
+		public string[] ReadOptionsHelper = new string[] { };
 
 		string LastLine( string text )
 		{
@@ -127,11 +138,15 @@ namespace AmplifyShaderEditor
 			List<PropertyNode> propertyList = UIUtils.PropertyNodesList();
 			m_allFunctionInputs = UIUtils.FunctionInputList();
 			m_allFunctionOutputs = UIUtils.FunctionOutputList();
+			m_allFunctionSwitches = UIUtils.FunctionSwitchList();
+			m_allFunctionSwitchesCopies = UIUtils.FunctionSwitchCopyList();
 
 			ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
 
 			m_allFunctionInputs.Sort( ( x, y ) => { return x.OrderIndex.CompareTo( y.OrderIndex ); } );
 			m_allFunctionOutputs.Sort( ( x, y ) => { return x.OrderIndex.CompareTo( y.OrderIndex ); } );
+			m_allFunctionSwitches.Sort( ( x, y ) => { return x.OrderIndex.CompareTo( y.OrderIndex ); } );
+			m_allFunctionSwitchesCopies.Sort( ( x, y ) => { return x.OrderIndex.CompareTo( y.OrderIndex ); } );
 
 			int inputCount = m_allFunctionInputs.Count;
 			for( int i = 0; i < inputCount; i++ )
@@ -178,6 +193,9 @@ namespace AmplifyShaderEditor
 				PortSwitchRestriction( m_outputPorts[ i ] );
 			}
 
+			// make sure to hide the ports properly
+			CheckPortVisibility();
+
 			if( m_mainPreviewNode == null )
 				m_mainPreviewNode = first;
 
@@ -203,12 +221,13 @@ namespace AmplifyShaderEditor
 				ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
 			}
 
-			m_textLabelWidth = 100;
+			m_textLabelWidth = 120;
 
 			UIUtils.RegisterFunctionNode( this );
 
 			m_previewShaderGUID = "aca70c900c50c004e8ef0b47c4fac4d4";
-			m_useInternalPortData = true;
+			m_useInternalPortData = false;
+			m_selectedLocation = function.PreviewPosition;
 		}
 
 		public override void SetPreviewInputs()
@@ -315,6 +334,30 @@ namespace AmplifyShaderEditor
 					m_outputPorts[ i ].ChangePortId( m_allFunctionOutputs[ i ].UniqueId );
 				}
 			}
+
+			ParentGraph cachedGraph = ContainerGraph.ParentWindow.CustomGraph;
+			ContainerGraph.ParentWindow.CustomGraph = m_functionGraph;
+
+			if( ReadOptionsHelper.Length > 2 )
+			{
+				for( int i = 1; i < ReadOptionsHelper.Length; i += 2 )
+				{
+					int optionId = Convert.ToInt32( ReadOptionsHelper[ i ] );
+					int optionValue = Convert.ToInt32( ReadOptionsHelper[ i + 1 ] );
+					for( int j = 0; j < m_allFunctionSwitches.Count; j++ )
+					{
+						if( m_allFunctionSwitches[ j ].UniqueId == optionId )
+						{
+							m_allFunctionSwitches[ j ].SetCurrentSelectedInput( optionValue, m_allFunctionSwitches[ j ].GetCurrentSelectedInput() );
+							break;
+						}
+					}
+				}
+			}
+
+			ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
+
+			m_portsChanged = true;
 		}
 
 		public void PortSwitchRestriction( WirePort port )
@@ -431,13 +474,27 @@ namespace AmplifyShaderEditor
 			if( Function == null )
 				return;
 
-			if( Function.Description.Length > 0 )
+			if( Function.Description.Length > 0 || m_allFunctionSwitches.Count > 0 )
 				NodeUtils.DrawPropertyGroup( ref m_parametersFoldout, "Parameters", DrawDescription );
+
+			DrawInternalDataGroup();
 		}
 
 		private void DrawDescription()
 		{
-			EditorGUILayout.HelpBox( Function.Description, MessageType.Info );
+			if( Function.Description.Length > 0 )
+				EditorGUILayout.HelpBox( Function.Description, MessageType.Info );
+
+			ParentGraph cachedGraph = ContainerGraph.ParentWindow.CustomGraph;
+			ContainerGraph.ParentWindow.CustomGraph = m_functionGraph;
+			for( int i = 0; i < m_allFunctionSwitches.Count; i++ )
+			{
+				if( m_allFunctionSwitches[ i ].DrawOption( this ) )
+				{
+					m_portsChanged = true;
+				}
+			}
+			ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
 		}
 
 		public override void Destroy()
@@ -499,15 +556,43 @@ namespace AmplifyShaderEditor
 			m_allFunctionOutputsDict.Clear();
 			m_allFunctionOutputsDict = null;
 
+			m_allFunctionSwitchesDict.Clear();
+			m_allFunctionSwitchesDict = null;
+
+			m_allFunctionSwitchesCopiesDict.Clear();
+			m_allFunctionSwitchesCopiesDict = null;
+
 			m_allFunctionInputsDict.Clear();
 			m_allFunctionInputsDict = null;
 		}
 
+		public override void OnNodeLogicUpdate( DrawInfo drawInfo )
+		{
+			base.OnNodeLogicUpdate( drawInfo );
+			ParentGraph cachedGraph = ContainerGraph.ParentWindow.CustomGraph;
+			ContainerGraph.ParentWindow.CustomGraph = m_functionGraph;
 
+			int nodeCount = m_functionGraph.AllNodes.Count;
+			for( int i = 0; i < nodeCount; i++ )
+			{
+				m_functionGraph.AllNodes[ i ].OnNodeLogicUpdate( drawInfo );
+			}
+
+			ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
+			if( m_portsChanged )
+			{
+				m_portsChanged = false;
+				for( int i = 0; i < m_allFunctionOutputs.Count; i++ )
+				{
+					m_outputPorts[ i ].ChangeType( m_allFunctionOutputs[ i ].InputPorts[ 0 ].DataType, false );
+				}
+
+				CheckPortVisibility();
+			}
+		}
 
 		public override void Draw( DrawInfo drawInfo )
 		{
-			//CheckForChanges();
 			CheckForChangesRecursively();
 
 			if( !m_initialGraphDraw && drawInfo.CurrentEventType == EventType.Repaint )
@@ -568,6 +653,15 @@ namespace AmplifyShaderEditor
 		public void DuplicateMe()
 		{
 			bool previewOpen = m_showPreview;
+
+			string allOptions = m_allFunctionSwitches.Count.ToString();
+			for( int i = 0; i < m_allFunctionSwitches.Count; i++ )
+			{
+				allOptions += "," + m_allFunctionSwitches[ i ].UniqueId + "," + m_allFunctionSwitches[ i ].GetCurrentSelectedInput();
+			}
+
+			ReadOptionsHelper = allOptions.Split( ',' );
+
 			ParentGraph cachedGraph = ContainerGraph.ParentWindow.CustomGraph;
 			ContainerGraph.ParentWindow.CustomGraph = null;
 			if( ContainerGraph.ParentWindow.CurrentGraph.CurrentStandardSurface != null )
@@ -575,8 +669,9 @@ namespace AmplifyShaderEditor
 			ContainerGraph.ParentWindow.CustomGraph = cachedGraph;
 
 			ParentNode newNode = ContainerGraph.CreateNode( m_function, false, Vec2Position );
-			newNode.RefreshExternalReferences();
 			newNode.ShowPreview = previewOpen;
+			( newNode as FunctionNode ).ReadOptionsHelper = ReadOptionsHelper;
+			newNode.RefreshExternalReferences();
 			if( ( newNode as FunctionNode ).m_reordenator && m_reordenator )
 				( newNode as FunctionNode ).m_reordenator.OrderIndex = m_reordenator.OrderIndex;
 
@@ -723,6 +818,13 @@ namespace AmplifyShaderEditor
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_headerTitle );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_functionGraphId );
 			IOUtils.AddFieldValueToString( ref nodeInfo, m_functionGUID );
+
+			string allOptions = m_allFunctionSwitches.Count.ToString();
+			for( int i = 0; i < m_allFunctionSwitches.Count; i++ )
+			{
+				allOptions += "," + m_allFunctionSwitches[ i ].UniqueId + "," + m_allFunctionSwitches[ i ].GetCurrentSelectedInput();
+			}
+			IOUtils.AddFieldValueToString( ref nodeInfo, allOptions );
 		}
 
 		public override void ReadFromString( ref string[] nodeParams )
@@ -766,6 +868,10 @@ namespace AmplifyShaderEditor
 				{
 					SetTitleText( "Missing Function" );
 				}
+			}
+			if( UIUtils.CurrentShaderVersion() > 14203 )
+			{
+				ReadOptionsHelper = GetCurrentParam( ref nodeParams ).Split( ',' );
 			}
 		}
 
@@ -811,6 +917,25 @@ namespace AmplifyShaderEditor
 					OutputPorts[ i ].ChangeProperties( m_allFunctionOutputs[ i ].OutputName, m_allFunctionOutputs[ i ].AutoOutputType, false );
 				}
 			}
+		}
+
+		private void CheckPortVisibility()
+		{
+			bool changes = false;
+			if( InputPorts != null )
+			{
+				for( int i = 0; i < m_allFunctionInputs.Count; i++ )
+				{
+					if( m_inputPorts[ i ].Visible != m_allFunctionInputs[ i ].IsConnected )
+					{
+						m_inputPorts[ i ].Visible = m_allFunctionInputs[ i ].IsConnected;
+						changes = true;
+					}
+				}
+			}
+
+			if( changes )
+				m_sizeIsDirty = true;
 		}
 
 		public bool HasProperties { get { return m_reordenator != null; } }
