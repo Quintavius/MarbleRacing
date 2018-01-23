@@ -49,6 +49,7 @@ namespace AmplifyShaderEditor
             AddInputPort( WirePortDataType.FLOAT3, false, "Position" );
             AddOutputPort( WirePortDataType.FLOAT3, Constants.EmptyPortValue );
             m_useInternalPortData = true;
+			m_autoWrapProperties = true;
         }
 
         public override void DrawProperties()

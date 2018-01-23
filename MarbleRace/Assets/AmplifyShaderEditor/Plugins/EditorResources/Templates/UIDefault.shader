@@ -52,7 +52,7 @@ Shader /*ase_name*/"ASETemplateShaders/UIDefault"/*end*/
 		CGPROGRAM
 			#pragma vertex vert
 			#pragma fragment frag
-			#pragma target 2.0
+			#pragma target 3.0
 
 			#include "UnityCG.cginc"
 			#include "UnityUI.cginc"
@@ -77,7 +77,7 @@ Shader /*ase_name*/"ASETemplateShaders/UIDefault"/*end*/
 				half2 texcoord  : TEXCOORD0;
 				float4 worldPosition : TEXCOORD1;
 				UNITY_VERTEX_OUTPUT_STEREO
-				/*ase_interp(2,7):sp=sp.xyzw;uv0=tc0.xy;c=c*/
+				/*ase_interp(2,7):sp=sp.xyzw;uv0=tc0.xy;c=c;uv1=tc1.xyzw*/
 			};
 			
 			uniform fixed4 _Color;

@@ -11,18 +11,32 @@ namespace AmplifyShaderEditor
 	[NodeAttributes( "Color", "Constants And Properties", "Color property", null, KeyCode.Alpha5 )]
 	public sealed class ColorNode : PropertyNode
 	{
+		private const string ColorSpaceStr = "Color Space";
+
 		[SerializeField]
+#if UNITY_2018_1_OR_NEWER
+		[ColorUsage( true, true )]
+#else
 		[ColorUsage( true, true, float.MinValue, float.MinValue, float.MinValue, float.MaxValue )]
+#endif
 		private Color m_defaultValue = new Color( 0, 0, 0, 0 );
 
 		[SerializeField]
+#if UNITY_2018_1_OR_NEWER
+		[ColorUsage( true, true )]
+#else
 		[ColorUsage( true, true, float.MinValue, float.MinValue, float.MinValue, float.MaxValue )]
+#endif
 		private Color m_materialValue = new Color( 0, 0, 0, 0 );
 
 		[SerializeField]
 		private bool m_isHDR = false;
 
+		//[SerializeField]
+		//private ASEColorSpace m_colorSpace = ASEColorSpace.Auto;
+#if !UNITY_2018_1_OR_NEWER
 		private ColorPickerHDRConfig m_hdrConfig = new ColorPickerHDRConfig( 0, float.MaxValue, 0, float.MaxValue );
+#endif
 		private GUIContent m_dummyContent;
 
 		private int m_cachedPropertyId = -1;
@@ -67,16 +81,68 @@ namespace AmplifyShaderEditor
 
 		public override void DrawSubProperties()
 		{
+#if UNITY_2018_1_OR_NEWER
+			m_defaultValue = EditorGUILayoutColorField( Constants.DefaultValueLabelContent, m_defaultValue, false, true, m_isHDR );
+#else
 			m_defaultValue = EditorGUILayoutColorField( Constants.DefaultValueLabelContent, m_defaultValue, false, true, m_isHDR, m_hdrConfig );
+#endif
 		}
+
+		//public override void DrawMainPropertyBlock()
+		//{
+		//	EditorGUILayout.BeginVertical();
+		//	{
+
+		//		PropertyType parameterType = (PropertyType)EditorGUILayoutEnumPopup( ParameterTypeStr, m_currentParameterType );
+		//		if( parameterType != m_currentParameterType )
+		//		{
+		//			ChangeParameterType( parameterType );
+		//			BeginPropertyFromInspectorCheck();
+		//		}
+
+		//		switch( m_currentParameterType )
+		//		{
+		//			case PropertyType.Property:
+		//			case PropertyType.InstancedProperty:
+		//			{
+		//				ShowPropertyInspectorNameGUI();
+		//				ShowPropertyNameGUI( true );
+		//				ShowVariableMode();
+		//				ShowPrecision();
+		//				ShowToolbar();
+		//			}
+		//			break;
+		//			case PropertyType.Global:
+		//			{
+		//				ShowPropertyInspectorNameGUI();
+		//				ShowPropertyNameGUI( false );
+		//				ShowVariableMode();
+		//				ShowPrecision();
+		//				ShowDefaults();
+		//			}
+		//			break;
+		//			case PropertyType.Constant:
+		//			{
+		//				ShowPropertyInspectorNameGUI();
+		//				ShowPrecision();
+		//				m_colorSpace = (ASEColorSpace)EditorGUILayoutEnumPopup( ColorSpaceStr, m_colorSpace );
+		//				ShowDefaults();
+		//			}
+		//			break;
+		//		}
+		//	}
+		//	EditorGUILayout.EndVertical();
+		//}
 
 		public override void DrawMaterialProperties()
 		{
 			if( m_materialMode )
 				EditorGUI.BeginChangeCheck();
-
+#if UNITY_2018_1_OR_NEWER
+			m_materialValue = EditorGUILayoutColorField( Constants.MaterialValueLabelContent, m_materialValue, false, true, m_isHDR );
+#else
 			m_materialValue = EditorGUILayoutColorField( Constants.MaterialValueLabelContent, m_materialValue, false, true, m_isHDR, m_hdrConfig );
-
+#endif
 			if( m_materialMode && EditorGUI.EndChangeCheck() )
 				m_requireMaterialUpdate = true;
 		}
@@ -126,7 +192,11 @@ namespace AmplifyShaderEditor
 				if( m_materialMode && m_currentParameterType != PropertyType.Constant )
 				{
 					EditorGUI.BeginChangeCheck();
+#if UNITY_2018_1_OR_NEWER
+					m_materialValue = EditorGUIColorField( m_propertyDrawPos, m_dummyContent, m_materialValue, false, true, m_isHDR );
+#else
 					m_materialValue = EditorGUIColorField( m_propertyDrawPos, m_dummyContent, m_materialValue, false, true, m_isHDR, m_hdrConfig );
+#endif
 					if( EditorGUI.EndChangeCheck() )
 					{
 						m_requireMaterialUpdate = true;
@@ -139,8 +209,11 @@ namespace AmplifyShaderEditor
 				else
 				{
 					EditorGUI.BeginChangeCheck();
-
+#if UNITY_2018_1_OR_NEWER
+					m_defaultValue = EditorGUIColorField( m_propertyDrawPos, m_dummyContent, m_defaultValue, false, true, m_isHDR );
+#else
 					m_defaultValue = EditorGUIColorField( m_propertyDrawPos, m_dummyContent, m_defaultValue, false, true, m_isHDR, m_hdrConfig );
+#endif
 					if( EditorGUI.EndChangeCheck() )
 					{
 						BeginDelayedDirtyProperty();
@@ -161,6 +234,14 @@ namespace AmplifyShaderEditor
 		public override void ConfigureLocalVariable( ref MasterNodeDataCollector dataCollector )
 		{
 			Color color = m_defaultValue;
+			//switch( m_colorSpace )
+			//{
+			//	default:
+			//	case ASEColorSpace.Auto: color = m_defaultValue; break;
+			//	case ASEColorSpace.Gamma: color = m_defaultValue.gamma; break;
+			//	case ASEColorSpace.Linear: color = m_defaultValue.linear; break;
+			//}
+
 			dataCollector.AddLocalVariable( UniqueId, CreateLocalVarDec( color.r + "," + color.g + "," + color.b + "," + color.a ) );
 
 			m_outputPorts[ 0 ].SetLocalValue( m_propertyName );
@@ -189,6 +270,13 @@ namespace AmplifyShaderEditor
 			}
 
 			Color color = m_defaultValue;
+			//switch( m_colorSpace )
+			//{
+			//	default:
+			//	case ASEColorSpace.Auto: color = m_defaultValue; break;
+			//	case ASEColorSpace.Gamma: color = m_defaultValue.gamma; break;
+			//	case ASEColorSpace.Linear: color = m_defaultValue.linear; break;
+			//}
 			string result = string.Empty;
 
 			switch( outputId )
@@ -313,7 +401,14 @@ namespace AmplifyShaderEditor
 			base.ReadFromString( ref nodeParams );
 			m_defaultValue = IOUtils.StringToColor( GetCurrentParam( ref nodeParams ) );
 			if( UIUtils.CurrentShaderVersion() > 14101 )
+			{
 				m_materialValue = IOUtils.StringToColor( GetCurrentParam( ref nodeParams ) );
+			}
+
+			//if( UIUtils.CurrentShaderVersion() > 14202 )
+			//{
+			//	m_colorSpace = (ASEColorSpace)Enum.Parse( typeof( ASEColorSpace ), GetCurrentParam( ref nodeParams ) );
+			//}
 		}
 
 		public override void WriteToString( ref string nodeInfo, ref string connectionsInfo )
@@ -321,8 +416,9 @@ namespace AmplifyShaderEditor
 			base.WriteToString( ref nodeInfo, ref connectionsInfo );
 			IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.ColorToString( m_defaultValue ) );
 			IOUtils.AddFieldValueToString( ref nodeInfo, IOUtils.ColorToString( m_materialValue ) );
+			//IOUtils.AddFieldValueToString( ref nodeInfo, m_colorSpace );
 		}
-		
+
 		public override string GetPropertyValStr()
 		{
 			return ( m_materialMode && m_currentParameterType != PropertyType.Constant ) ? m_materialValue.r.ToString( Constants.PropertyVectorFormatLabel ) + IOUtils.VECTOR_SEPARATOR +

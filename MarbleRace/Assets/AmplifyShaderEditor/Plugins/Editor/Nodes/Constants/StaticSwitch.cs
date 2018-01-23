@@ -63,8 +63,8 @@ namespace AmplifyShaderEditor
 		{
 			base.CommonInit( uniqueId );
 			AddOutputPort( WirePortDataType.FLOAT, Constants.EmptyPortValue );
-			AddInputPort( WirePortDataType.FLOAT, false, "True" );
-			AddInputPort( WirePortDataType.FLOAT, false, "False" );
+			AddInputPort( WirePortDataType.FLOAT, false, "False", - 1, MasterNodePortCategory.Fragment, 1 );
+			AddInputPort( WirePortDataType.FLOAT, false, "True", - 1, MasterNodePortCategory.Fragment, 0 );
 			m_headerColor = new Color( 0.0f, 0.55f, 0.45f, 1f );
 			m_customPrefix = "Keyword ";
 			m_autoWrapProperties = false;
@@ -74,7 +74,9 @@ namespace AmplifyShaderEditor
 			m_showTitleWhenNotEditing = false;
 			m_currentParameterType = PropertyType.Property;
 			m_dummyContent = new GUIContent();
+			m_dummyContent.image = UIUtils.CheckmarkIcon;
 			m_previewShaderGUID = "0b708c11c68e6a9478ac97fe3643eab1";
+			m_showAutoRegisterUI = false;
 		}
 
 		public override void SetPreviewInputs()
@@ -237,7 +239,10 @@ namespace AmplifyShaderEditor
 			m_createToggle = EditorGUILayoutToggle( MaterialToggleStr, m_createToggle );
 			if( m_createToggle )
 			{
+				EditorGUILayout.BeginHorizontal();
+				GUILayout.Space( 20 );
 				m_propertyTab = GUILayout.Toolbar( m_propertyTab, LabelToolbarTitle );
+				EditorGUILayout.EndHorizontal();
 				m_toggleType = (ToggleType)EditorGUILayoutEnumPopup( ToggleTypeStr, m_toggleType );
 				switch( m_propertyTab )
 				{
@@ -295,7 +300,7 @@ namespace AmplifyShaderEditor
 
 			if( m_editing )
 			{
-				if( GUI.Button( m_varRect, GUIContent.none ) )
+				if( GUI.Button( m_varRect, GUIContent.none, UIUtils.GraphButton ) )
 				{
 					if( m_materialMode )
 					{
@@ -308,6 +313,21 @@ namespace AmplifyShaderEditor
 					}
 					m_editing = false;
 				}
+
+				if( m_materialMode )
+				{
+					if( m_materialValue )
+					{
+						GUI.Label( m_varRect, m_dummyContent, UIUtils.GraphButtonIcon );
+					}
+				}
+				else
+				{
+					if( m_defaultValue )
+					{
+						GUI.Label( m_varRect, m_dummyContent, UIUtils.GraphButtonIcon );
+					}
+				}
 			}
 		}
 
@@ -318,25 +338,25 @@ namespace AmplifyShaderEditor
 			if( !m_isVisible )
 				return;
 
-			if( m_createToggle )
+			if( m_createToggle && ContainerGraph.LodLevel <= ParentGraph.NodeLOD.LOD2 )
 			{
 				if( !m_editing )
-					GUI.Label( m_varRect, GUIContent.none, UIUtils.Button );
+				{
+					GUI.Label( m_varRect, GUIContent.none, UIUtils.GraphButton );
 
-				if( m_materialMode )
-				{
-					if( m_materialValue )
+					if( m_materialMode )
 					{
-						m_dummyContent.image = UIUtils.CheckmarkIcon;
-						GUI.Label( m_varRect, m_dummyContent );
+						if( m_materialValue )
+						{
+							GUI.Label( m_varRect, m_dummyContent, UIUtils.GraphButtonIcon );
+						}
 					}
-				}
-				else
-				{
-					if( m_defaultValue )
+					else
 					{
-						m_dummyContent.image = UIUtils.CheckmarkIcon;
-						GUI.Label( m_varRect, m_dummyContent );
+						if( m_defaultValue )
+						{
+							GUI.Label( m_varRect, m_dummyContent, UIUtils.GraphButtonIcon );
+						}
 					}
 				}
 			}
@@ -350,8 +370,8 @@ namespace AmplifyShaderEditor
 				return m_outputPorts[ 0 ].LocalValue;
 
 			base.GenerateShaderForOutput( outputId, ref dataCollector, ignoreLocalvar );
-			string trueCode = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
-			string falseCode = m_inputPorts[ 1 ].GeneratePortInstructions( ref dataCollector );
+			string falseCode = m_inputPorts[ 0 ].GeneratePortInstructions( ref dataCollector );
+			string trueCode = m_inputPorts[ 1 ].GeneratePortInstructions( ref dataCollector );
 			if( m_multiCompile == 1 )
 				dataCollector.AddToPragmas( UniqueId, "multi_compile __ " + PropertyName + OnOffStr );
 			else if( m_multiCompile == 0 )
@@ -393,7 +413,7 @@ namespace AmplifyShaderEditor
 			base.UpdateMaterial( mat );
 			if( UIUtils.IsProperty( m_currentParameterType ) && !InsideShaderFunction )
 			{
-				mat.SetInt( m_propertyName, m_materialValue ? 1 : 0 );
+				mat.SetFloat( m_propertyName, m_materialValue ? 1 : 0 );
 				if( m_materialValue )
 					mat.EnableKeyword( PropertyName + "_ON" );
 				else
@@ -413,7 +433,7 @@ namespace AmplifyShaderEditor
 		public override void ForceUpdateFromMaterial( Material material )
 		{
 			if( UIUtils.IsProperty( m_currentParameterType ) && material.HasProperty( m_propertyName ) )
-				m_materialValue = material.GetInt( m_propertyName ) == 1;
+				m_materialValue = material.GetFloat( m_propertyName ) == 1;
 		}
 
 		public override void ReadFromString( ref string[] nodeParams )

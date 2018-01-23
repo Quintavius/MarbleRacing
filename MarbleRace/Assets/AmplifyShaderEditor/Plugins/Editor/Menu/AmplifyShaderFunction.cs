@@ -79,6 +79,14 @@ public class AmplifyShaderFunction : ScriptableObject
 			}
 		}
 	}
+
+	[SerializeField]
+	private PreviewLocation m_previewPosition = PreviewLocation.Auto;
+	public PreviewLocation PreviewPosition
+	{
+		get { return m_previewPosition; }
+		set { m_previewPosition = value; }
+	}
 }
 
 public class ShaderFunctionDetector : AssetPostprocessor

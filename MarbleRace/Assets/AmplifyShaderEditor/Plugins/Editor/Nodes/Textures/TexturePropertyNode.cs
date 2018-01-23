@@ -305,11 +305,17 @@ namespace AmplifyShaderEditor
 					m_textureType = typeof( Cubemap );
 				}
 				break;
+#if !UNITY_2018_1_OR_NEWER
+// Disabling Substance Deprecated warning
+#pragma warning disable 0618
 				case TextureType.ProceduralTexture:
 				{
 					m_textureType = typeof( ProceduralTexture );
 				}
 				break;
+#pragma warning restore 0618
+#endif
+
 			}
 		}
 
@@ -508,10 +514,15 @@ namespace AmplifyShaderEditor
 			{
 				ConfigTextureData( TextureType.Cube );
 			}
+#if !UNITY_2018_1_OR_NEWER
+// Disabling Substance Deprecated warning
+#pragma warning disable 0618
 			else if( ( texture as ProceduralTexture ) != null )
 			{
 				ConfigTextureData( TextureType.ProceduralTexture );
 			}
+#pragma warning restore 0618
+#endif
 		}
 
 		public override void OnObjectDropped( UnityEngine.Object obj )
@@ -557,19 +568,19 @@ namespace AmplifyShaderEditor
 			{
 				closePicker = true;
 			}
-			
-			if( m_isEditingPicker && drawInfo.CurrentEventType == EventType.ExecuteCommand && 
+
+			if( m_isEditingPicker && drawInfo.CurrentEventType == EventType.ExecuteCommand &&
 				Event.current.commandName.Equals( ObjectSelectorCmdStr ) )
 			{
 				closePicker = true;
 			}
-			
+
 			if( closePicker )
 			{
 				GUI.FocusControl( null );
 				m_isEditingPicker = false;
 			}
-			
+
 		}
 
 		public override void OnNodeLayout( DrawInfo drawInfo )
@@ -581,7 +592,7 @@ namespace AmplifyShaderEditor
 		public override void Draw( DrawInfo drawInfo )
 		{
 			base.Draw( drawInfo );
-			
+
 			if( m_isEditingPicker && m_drawPicker )
 			{
 				Rect hitRect = m_previewRect;
@@ -590,10 +601,10 @@ namespace AmplifyShaderEditor
 				hitRect.width = 4 * 14 * drawInfo.InvertedZoom;
 
 				bool restoreMouse = false;
-				if( Event.current.type == EventType.mouseDown && hitRect.Contains( drawInfo.MousePosition ) )
+				if( Event.current.type == EventType.MouseDown && hitRect.Contains( drawInfo.MousePosition ) )
 				{
 					restoreMouse = true;
-					Event.current.type = EventType.ignore;
+					Event.current.type = EventType.Ignore;
 				}
 
 				EditorGUI.BeginChangeCheck();
@@ -624,7 +635,7 @@ namespace AmplifyShaderEditor
 
 				if( restoreMouse )
 				{
-					Event.current.type = EventType.mouseDown;
+					Event.current.type = EventType.MouseDown;
 				}
 
 				if( ( drawInfo.CurrentEventType == EventType.MouseDown || drawInfo.CurrentEventType == EventType.MouseUp ) )
@@ -788,7 +799,7 @@ namespace AmplifyShaderEditor
 			}
 			else
 			{
-				CheckTextureImporter(true,true);
+				CheckTextureImporter( true, true );
 			}
 			ConfigureInputPorts();
 			ConfigureOutputPorts();
