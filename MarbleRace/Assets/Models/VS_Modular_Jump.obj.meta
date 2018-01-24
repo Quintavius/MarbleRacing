@@ -1,21 +1,23 @@
 fileFormatVersion: 2
-guid: 73297a0083f0a6e4eac830e9a8eb230d
-timeCreated: 1515294335
+guid: 1062066a8283aa040acf8e58a1f86280
+timeCreated: 1516777798
 licenseType: Free
 ModelImporter:
   serializedVersion: 22
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: TestRock
+    100000: surface
+    100002: //RootNode
+    400000: surface
+    400002: //RootNode
+    2300000: surface
+    3300000: surface
+    4300000: surface
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: No Name
-    second: {fileID: 2100000, guid: 0bcce2eb4f488554a941388677921edd, type: 2}
+      name: surfaceMat
+    second: {fileID: 2100000, guid: 6804e74cda470e54ba5f130a50192b49, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
