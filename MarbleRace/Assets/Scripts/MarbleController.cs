@@ -12,6 +12,7 @@ public class MarbleController : MonoBehaviour {
     public float acceleration;
     public float maximumSpeed;
     public float slopeSpeed;
+    public float waterDrag;
 
     //Shorthands
     [HideInInspector]
@@ -33,6 +34,7 @@ public class MarbleController : MonoBehaviour {
     [HideInInspector]
     public bool playDropSound;
     int colCount;
+    float originalDrag;
 
     //Mobile specifics
     float xCalibrate;
@@ -47,6 +49,7 @@ public class MarbleController : MonoBehaviour {
         cam = Camera.main;
         col = GetComponent<Collider>();
         soundManager = GetComponent<MarbleSoundManager>();
+        originalDrag = rb.drag;
         //Mobile
         CalibrateGyro();
 
@@ -142,6 +145,20 @@ public class MarbleController : MonoBehaviour {
     private void OnCollisionExit(Collision collision)
     {
         colCount--;
+    }
+    // Deal with being underwater, set drag
+    private void OnTriggerEnter(Collider other){
+        if (other.tag == "Water"){
+            rb.drag = waterDrag;
+            rb.angularDrag = waterDrag;
+            rb.velocity = Vector3.zero;
+        }
+    }
+    private void OnTriggerExit(Collider other){
+        if (other.tag == "Water"){
+            rb.drag = originalDrag;
+            rb.angularDrag = originalDrag;
+        }
     }
     public void CalibrateGyro() {
         xCalibrate = Input.acceleration.x;
