@@ -68,7 +68,7 @@ Material:
     - _OcclusionStrength: 1
     - _Opacity: 0.108
     - _Parallax: 0.02
-    - _Refraction: 1.5
+    - _Refraction: 0.9
     - _Smoothness: 0.543
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
