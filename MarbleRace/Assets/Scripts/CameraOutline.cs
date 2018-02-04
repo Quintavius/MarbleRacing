@@ -11,6 +11,7 @@ public class CameraOutline : MonoBehaviour
     Camera cam;
     public RectTransform outlinePanel;
     public Color playerColor;
+    public GameObject cornerRank;
     // Use this for initialization
     void Start()
     {
@@ -20,6 +21,7 @@ public class CameraOutline : MonoBehaviour
     {
         if (showOutline)
         {
+            cornerRank.SetActive(true);
 			outlinePanel.gameObject.SetActive(true);
             var x = cam.rect.position.x;
             var y = cam.rect.position.y;
@@ -32,6 +34,7 @@ public class CameraOutline : MonoBehaviour
         else
         {
 			outlinePanel.gameObject.SetActive(false);
+            cornerRank.SetActive(false);
         }
     }
 }

@@ -14,7 +14,7 @@ public class RankDisplay : MonoBehaviour {
 	void Update(){
 		rankText.text = playerRank.currentRank.ToString();
 	}
-	void FixedUpdate () {
+	void LateUpdate () {
 		transform.position = playerToFollow.position;
 		transform.LookAt(Camera.main.transform.position);
 	}
