@@ -16,6 +16,8 @@ public class UpdateTarget : MonoBehaviour
     CinemachineTransposer transposer;
     float followOffsetYDefault;
     private float vel;
+    private Vector3 trackerVel;
+    Vector3 trackerOffset;
     void Start()
     {
         transposer = FindObjectOfType<CinemachineVirtualCamera>().GetCinemachineComponent<CinemachineTransposer>();
@@ -24,15 +26,28 @@ public class UpdateTarget : MonoBehaviour
         followOffsetYDefault = transposer.m_FollowOffset.y;
     }
 
+    //iterate through every human marble by rank, as soon as one is found, set camera and kill the process
     void WritePlayerToFollow()
     {
         for (int i = 0; i <= ranks.players.Count; i++)
         {
             if (ranks.players[i].isPlayer && ranks.players[i].isActiveAndEnabled)
             {
-                playerToFollow = ranks.players[i].transform;
-                tracker.SetParent(ranks.players[i].transform);
-                tracker.localPosition = Vector3.zero;
+                if (ranks.players[i].transform != playerToFollow){
+                    playerToFollow = ranks.players[i].transform;
+                    trackerOffset = tracker.position - playerToFollow.position;
+                }
+
+                var dist = Vector3.Distance(tracker.position, playerToFollow.position);
+                if (Mathf.Abs(dist) > 0.01f){
+                    //Need to get closer to target
+                    tracker.position = playerToFollow.position + trackerOffset;
+                    tracker.position = Vector3.SmoothDamp(tracker.position, playerToFollow.position, ref trackerVel,2);
+                    trackerOffset = tracker.position - playerToFollow.position;
+                }else{
+                    //This is fine, just keep up
+                    tracker.position = playerToFollow.position;
+                }
                 break;
             }
         }
