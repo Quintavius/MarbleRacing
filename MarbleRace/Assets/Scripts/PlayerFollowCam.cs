@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This one sits on the static player camers, it does not touch cinemachine and only handles the corner cams!!
 public class PlayerFollowCam : MonoBehaviour
 {
     public Transform followPlayer;
-
     Camera cam;
     Camera mainCam;
     CameraOutline camOutline;
