@@ -56,7 +56,7 @@ public class PlayerSelectManager : MonoBehaviour {
 			LevelSettings.player2Name = p2.gameObject.name;
 			LevelSettings.player3Name = p3.gameObject.name;
 			LevelSettings.player4Name = p4.gameObject.name;
-			SceneManager.LoadScene("MultiplayerTestingRange");
+			SceneManager.LoadScene("LevelSelect");
 		}
 	}
 
