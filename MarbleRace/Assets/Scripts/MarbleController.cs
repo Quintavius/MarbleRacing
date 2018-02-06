@@ -21,6 +21,7 @@ public class MarbleController : MonoBehaviour {
     Camera cam;
     public GameObject stabilizer;
     MarbleSoundManager soundManager;
+    MarbleRank marbleRank;
 
     //Variables
     float hmove;
@@ -40,9 +41,6 @@ public class MarbleController : MonoBehaviour {
     float xCalibrate;
     float yCalibrate;
 
-    //public Text xText;
-    //public Text yText;
-
 	void Start () {
         //initialize
         rb = GetComponent<Rigidbody>();
@@ -50,6 +48,7 @@ public class MarbleController : MonoBehaviour {
         col = GetComponent<Collider>();
         soundManager = GetComponent<MarbleSoundManager>();
         originalDrag = rb.drag;
+        marbleRank = GetComponent<MarbleRank>();
         //Mobile
         CalibrateGyro();
 
@@ -60,25 +59,21 @@ public class MarbleController : MonoBehaviour {
         else if (playerId == 3) { axisH = "Horizontal_Player4"; axisV = "Vertical_Player4"; }
     }
 	
-	void Update () {
-        hmove = Input.GetAxis(axisH);
-        vmove = Input.GetAxis(axisV);
-
-        if (hmove == 1 && vmove == 1) //fix keyboard input
+    void KeyboardInput(){
+        //Balance out Keyboard input
+        if (hmove == 1 && vmove == 1)
         {
             hmove = 0.5f;
             vmove = 0.5f;
         }
-        
-        //Mobile Input
-        //hmove = Mathf.Clamp((Input.acceleration.x - xCalibrate) * 5,-1f, 1f);
-        //vmove = Mathf.Clamp((Input.acceleration.y - yCalibrate) * 5, -1f, 1f);
+    }
 
-        //xText.text = "hmove: " + hmove;
-        //yText.text = "vmove: " + vmove;
-        // //////////////////////////////
-            
-        //Check for input
+    void MobileInput(){
+        hmove = Mathf.Clamp((Input.acceleration.x - xCalibrate) * 5,-1f, 1f);
+        vmove = Mathf.Clamp((Input.acceleration.y - yCalibrate) * 5, -1f, 1f);
+    }
+
+    void ControllerInput(){
         if (hmove != 0 || vmove != 0) {
             if (rb.velocity.magnitude < maximumSpeed * 1.5f)
             {
@@ -88,6 +83,16 @@ public class MarbleController : MonoBehaviour {
                 //LET THE FORCE FLOW THROUGH YOU
                 rb.AddForce(steerDir * acceleration * Time.deltaTime);
             }
+        }
+    }
+
+	void Update () {
+        hmove = Input.GetAxis(axisH);
+        vmove = Input.GetAxis(axisV);
+        if (!marbleRank.isFinished){
+            KeyboardInput();
+            //MobileInput();
+            ControllerInput();
         }
 	}
 
