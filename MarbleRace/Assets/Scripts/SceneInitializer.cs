@@ -30,10 +30,10 @@ public class SceneInitializer : MonoBehaviour
         p1.GetComponent<MarbleSkin>().SetSkin(LevelSettings.player1Skin);
         p1.name = LevelSettings.player1Name;
         //Delete players as necessary, name and skin remainders
-        if (!LevelSettings.player4active){ p4.SetActive(false); GameObject.Find("P4Cam").SetActive(false);}
-        if (!LevelSettings.player3active){ p3.SetActive(false); GameObject.Find("P3Cam").SetActive(false);}
-        if (!LevelSettings.player2active){ p2.SetActive(false); GameObject.Find("P2Cam").SetActive(false);}
-        if (!LevelSettings.player1active){ p1.SetActive(false); GameObject.Find("P1Cam").SetActive(false);}
+        if (!LevelSettings.player4active){ p4.SetActive(false); GameObject.Find("P4Cam").SetActive(false); GameObject.Find("P4RankCanvas").SetActive(false);}
+        if (!LevelSettings.player3active){ p3.SetActive(false); GameObject.Find("P3Cam").SetActive(false); GameObject.Find("P3RankCanvas").SetActive(false);}
+        if (!LevelSettings.player2active){ p2.SetActive(false); GameObject.Find("P2Cam").SetActive(false); GameObject.Find("P2RankCanvas").SetActive(false);}
+        if (!LevelSettings.player1active){ p1.SetActive(false); GameObject.Find("P1Cam").SetActive(false); GameObject.Find("P1RankCanvas").SetActive(false);}
     }
 
     // Update is called once per frame

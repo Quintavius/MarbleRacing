@@ -86,10 +86,10 @@ MonoBehaviour:
     value: 3
   toneCurveToeStrength:
     overrideState: 1
-    value: 0.057
+    value: 0.076
   toneCurveToeLength:
     overrideState: 1
-    value: 0.518
+    value: 0.461
   toneCurveShoulderStrength:
     overrideState: 1
     value: 0.375
@@ -98,7 +98,7 @@ MonoBehaviour:
     value: 0.42
   toneCurveShoulderAngle:
     overrideState: 1
-    value: 0.789
+    value: 0.657
   toneCurveGamma:
     overrideState: 1
     value: 1
@@ -109,8 +109,8 @@ MonoBehaviour:
     overrideState: 0
     value: {fileID: 0}
   temperature:
-    overrideState: 0
-    value: 0
+    overrideState: 1
+    value: 35.9
   tint:
     overrideState: 0
     value: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
     value: 0
   saturation:
     overrideState: 1
-    value: 4
+    value: 4.4
   brightness:
     overrideState: 0
     value: 0
@@ -131,7 +131,7 @@ MonoBehaviour:
     value: 0.36
   contrast:
     overrideState: 1
-    value: 29
+    value: 21.5
   mixerRedOutRedIn:
     overrideState: 0
     value: 100
@@ -161,7 +161,7 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.77639884, y: 1, z: 0.74350864, w: -0.047393467}
+    value: {x: 0.7947171, y: 1, z: 0.79628086, w: -0.047393467}
   gamma:
     overrideState: 0
     value: {x: 0.26907864, y: 0.14464706, z: 1, w: -0.33175352}
@@ -272,7 +272,7 @@ MonoBehaviour:
         m_Curve: []
         m_PreInfinity: 2
         m_PostInfinity: 2
-        m_RotationOrder: 4
+        m_RotationOrder: 0
       m_Loop: 1
       m_ZeroValue: 0.5
       m_Range: 1
@@ -452,7 +452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 556797029e73b2347956b6579e77e05b, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   enabled:
     overrideState: 1
     value: 1
@@ -461,7 +461,7 @@ MonoBehaviour:
     value: 10.8
   aperture:
     overrideState: 1
-    value: 0.8
+    value: 2.2
   focalLength:
     overrideState: 1
     value: 100

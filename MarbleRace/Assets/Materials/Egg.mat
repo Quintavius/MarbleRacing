@@ -156,7 +156,7 @@ Material:
     - _WavesAmount: 8.87
     - _WavesAmplitude: 0.1
     - _ZWrite: 1
-    - __dirty: 1
+    - __dirty: 0
     m_Colors:
     - _BaseColor: {r: 0.803, g: 0.6511302, b: 0.39909092, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}

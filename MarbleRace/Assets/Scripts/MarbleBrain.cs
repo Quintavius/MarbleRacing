@@ -7,6 +7,7 @@ public class MarbleBrain : MonoBehaviour {
     public float acceleration;
     public float maximumSpeed;
     public float slopeSpeed;
+    public float waterDrag = 1.5f;
 
     [Header("AI Settings")]
     public GameObject targetHolder;
@@ -25,6 +26,7 @@ public class MarbleBrain : MonoBehaviour {
     public Rigidbody rb;
     Collider col;
     AISoundManager soundManager;
+    float originalDrag;
 
     //Variables
     [HideInInspector]
@@ -91,16 +93,26 @@ public class MarbleBrain : MonoBehaviour {
 
     private void OnTriggerEnter(Collider collision)
     {
-        if (collision.gameObject.tag == "Waypoint")
-        {
+        if (collision.gameObject.tag == "Waypoint"){
             var index = collision.gameObject.GetComponent<WaypointIndex>().index;
             if (index >= targetIndex)
             {
                 targetIndex = index +1;
             }
         }
-    }
 
+        if (collision.tag == "Water"){
+            rb.drag = waterDrag;
+            rb.angularDrag = waterDrag;
+            rb.velocity = Vector3.zero;
+        }
+    }
+        private void OnTriggerExit(Collider other){
+        if (other.tag == "Water"){
+            rb.drag = originalDrag;
+            rb.angularDrag = originalDrag;
+        }
+    }
         void OnCollisionStay(Collision colInfo)
     {
         //Increase speed when rolling

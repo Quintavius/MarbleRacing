@@ -12,8 +12,17 @@ EditorBuildSettings:
     path: Assets/Scenes/LevelMenu.unity
     guid: 37fd17745ea75e846bd487d2e6fffb8e
   - enabled: 1
+    path: Assets/Scenes/LevelSelect.unity
+    guid: 2f7719a0a59048d44a873bfa760cd2af
+  - enabled: 1
     path: Assets/Scenes/TheMoneyMaker.unity
     guid: 2d1b89504eaa0f34981130431f71302d
   - enabled: 1
     path: Assets/Scenes/Marc Tracks/MultiplayerTestingRange.unity
     guid: 36f506c93fdd6194ab1f48532d2e280f
+  - enabled: 1
+    path: Assets/Scenes/Marc Tracks/VS_Modular.unity
+    guid: 90cdc80958bbf054b888f039cc3e7551
+  - enabled: 1
+    path: Assets/Scenes/Marc Tracks/VS_Modular_AlternativeSplitscreen.unity
+    guid: 9d2ca29281bb65547849a680df91cc1a

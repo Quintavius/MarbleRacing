@@ -11,6 +11,8 @@ public class CameraOutline : MonoBehaviour
     Camera cam;
     public RectTransform outlinePanel;
     public Color playerColor;
+    public GameObject cornerRank;
+    public bool oldSchoolSplitscreen = false;
     // Use this for initialization
     void Start()
     {
@@ -18,8 +20,9 @@ public class CameraOutline : MonoBehaviour
     }
     void Update()
     {
-        if (showOutline)
+        if (showOutline || oldSchoolSplitscreen)
         {
+            cornerRank.SetActive(true);
 			outlinePanel.gameObject.SetActive(true);
             var x = cam.rect.position.x;
             var y = cam.rect.position.y;
@@ -32,6 +35,7 @@ public class CameraOutline : MonoBehaviour
         else
         {
 			outlinePanel.gameObject.SetActive(false);
+            cornerRank.SetActive(false);
         }
     }
 }

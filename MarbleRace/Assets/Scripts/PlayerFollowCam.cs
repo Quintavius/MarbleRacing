@@ -2,17 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//This one sits on the static player camers, it does not touch cinemachine and only handles the corner cams!!
 public class PlayerFollowCam : MonoBehaviour
 {
     public Transform followPlayer;
-
     Camera cam;
     Camera mainCam;
     CameraOutline camOutline;
     Vector3 screenPoint;
     Vector3 offset;
+    public bool oldSchoolSplitscreen = false;
 
-
+    [Range(0,10)]
+    public float ZoomSmoothing = 2;
+    [Range(0,1)]
+    public float ZoomScale = 0.2f;
+    float followOffsetYDefault;
+    private float vel;
     // Use this for initialization
     void Start()
     {
@@ -20,36 +26,61 @@ public class PlayerFollowCam : MonoBehaviour
         offset = transform.position - followPlayer.transform.position;
         mainCam = Camera.main;
         camOutline = GetComponent<CameraOutline>();
+        followOffsetYDefault = offset.y;
     }
-    void Update()
-    {
+
+    void ToggleCameraDynamic(){
         var xBorder = Screen.width / 10;
         var yBorder = Screen.height / 10;
-        screenPoint = mainCam.WorldToScreenPoint(followPlayer.position); //We're checking if I'm visible to the main cam
-        if ((screenPoint.x > 0 + xBorder && screenPoint.x < Screen.width - xBorder) //Am I within X
-        && (screenPoint.y > 0 + yBorder && screenPoint.y < Screen.height - yBorder)) //Am I within Y
+        screenPoint = mainCam.WorldToScreenPoint(followPlayer.position);                //We're checking if I'm visible to the main cam
+        if ((screenPoint.x > 0 + xBorder && screenPoint.x < Screen.width - xBorder)     //Am I within X
+        && (screenPoint.y > 0 + yBorder && screenPoint.y < Screen.height - yBorder))    //Am I within Y
         {
-            if (screenPoint.z > 0) //Am i in front of the camera? Just checking
+            if (screenPoint.z > 0)                                                      //Am i in front of the camera? Just checking
             {
-                cam.enabled = false; //Main cam can see me, no need for follow cam
+                cam.enabled = false;                                                    //Main cam can see me, no need for follow cam
                 camOutline.showOutline = false;
             }
             else
             {
-                cam.enabled = true; //Fuck i'm somehow behind the main cam
+                cam.enabled = true;                                                     //Fuck i'm somehow behind the main cam
                 camOutline.showOutline = true;
             }
         }
         else
         {
-            cam.enabled = true; //shit i'm out of bounds
+            cam.enabled = true;                                                         //shit i'm out of bounds
             camOutline.showOutline = true;
         }
+    }
 
+    void AdjustCameraDistance(){
+        var playerSpeed = followPlayer.GetComponent<Rigidbody>().velocity.magnitude * ZoomScale;
+
+        if (Mathf.Abs(playerSpeed) >= 1 ){
+            var newOffset = Mathf.SmoothDamp(offset.y, followOffsetYDefault * playerSpeed, ref vel,ZoomSmoothing);
+            offset = new Vector3(offset.x, newOffset, offset.z);
+        }else{
+            var newOffset = Mathf.SmoothDamp(offset.y, followOffsetYDefault, ref vel,ZoomSmoothing);
+            offset = new Vector3(offset.x, newOffset, offset.z);
+        }
+        transform.position = followPlayer.transform.position + offset;        
+    }
+
+    void LookAtPlayer(){
+        transform.LookAt(followPlayer);
+    }
+
+    void Update()
+    {
+        if (!oldSchoolSplitscreen){
+            ToggleCameraDynamic();
+        }
     }
     void FixedUpdate()
     {
-        transform.position = followPlayer.transform.position + offset;
+        AdjustCameraDistance();
+        LookAtPlayer();
     }
    
 }
