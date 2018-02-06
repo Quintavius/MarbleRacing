@@ -5,13 +5,14 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuManager : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
 	public void LoadScene (string scene) {
+		Time.timeScale = 1;
 		SceneManager.LoadScene(scene);
+	}
+
+	public void RestartScene(){
+		Time.timeScale = 1;
+		Scene current = SceneManager.GetActiveScene();
+		SceneManager.LoadScene(current.name);
 	}
 }

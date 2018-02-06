@@ -2,20 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class RankManager : MonoBehaviour
 {  
   public GameObject rankingCanvas;
+  public GameObject firstSelectedButton;
   public Text rankingText;
   bool raceOver;
   bool raceOverCheck;
+  bool rankCanvasEnabled;
   public List<MarbleRank> winners;
   [HideInInspector]
   public List<MarbleRank> players; //this is ALL marbles not just humans
   int marblesFinished;
   SceneInitializer initializer;
+  EventSystem eventSystem;
   void Start()
   {
+    eventSystem = FindObjectOfType<EventSystem>();
     initializer = GameObject.FindObjectOfType<SceneInitializer>();
     marblesFinished = 0;
     raceOverCheck = true;
@@ -28,6 +33,13 @@ public class RankManager : MonoBehaviour
       }
     }
   }
+
+  void EnableRankCanvas(){
+      rankingCanvas.SetActive(true);
+      eventSystem.SetSelectedGameObject(firstSelectedButton);
+      rankCanvasEnabled = true;
+  }
+
   void Update()
   {
     players.Sort(delegate (MarbleRank x, MarbleRank y)
@@ -75,7 +87,9 @@ public class RankManager : MonoBehaviour
     else if (raceOverCheck == true){raceOver = true;}
 
     if (raceOver){
-      rankingCanvas.SetActive(true);
+      if (!rankCanvasEnabled){
+        EnableRankCanvas();
+      }
       foreach (MarbleRank marble in winners){
         var marbleName = marble.gameObject.name;
         if (marble.isPlayer){
