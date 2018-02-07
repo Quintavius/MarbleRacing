@@ -4857,7 +4857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 3
   AIMarble: 0
-  acceleration: 150
+  acceleration: 220
   maximumSpeed: 6
   slopeSpeed: 1
   waterDrag: 5
@@ -6193,7 +6193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 0
   AIMarble: 0
-  acceleration: 150
+  acceleration: 220
   maximumSpeed: 6
   slopeSpeed: 1
   waterDrag: 5
@@ -11258,7 +11258,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 2
   AIMarble: 0
-  acceleration: 150
+  acceleration: 220
   maximumSpeed: 6
   slopeSpeed: 1
   waterDrag: 5
@@ -13663,7 +13663,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerId: 1
   AIMarble: 0
-  acceleration: 150
+  acceleration: 220
   maximumSpeed: 6
   slopeSpeed: 1
   waterDrag: 5
