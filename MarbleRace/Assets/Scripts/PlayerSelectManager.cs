@@ -24,7 +24,14 @@ public class PlayerSelectManager : MonoBehaviour {
 	bool p3x;
 	bool p4x;
 	void Start () {
+		//Reset active players
 		LevelSettings.numberOfPlayers = 0;
+		LevelSettings.player1active = false;
+		LevelSettings.player2active = false;
+		LevelSettings.player3active = false;
+		LevelSettings.player4active = false;
+
+		//Initialize
 		p1sel = p1.GetComponent<MarbleSelector>();
 		p2sel = p2.GetComponent<MarbleSelector>();
 		p3sel = p3.GetComponent<MarbleSelector>();
@@ -35,21 +42,23 @@ public class PlayerSelectManager : MonoBehaviour {
 		p3skin = p3.GetComponent<MarbleSkin>();
 		p4skin = p4.GetComponent<MarbleSkin>();
 
+		//Set default skins
 		p1skin.SetSkin(LevelSettings.player1Skin);
 		p2skin.SetSkin(LevelSettings.player2Skin);
 		p3skin.SetSkin(LevelSettings.player3Skin);
 		p4skin.SetSkin(LevelSettings.player4Skin);
 	}
 	
-	// Update is called once per frame
 	void Update () {
-		if (LevelSettings.numberOfPlayers == 0 && Input.GetButtonDown("Cancel")){
-			SceneManager.LoadScene("MainMenu");
-		}
+		//Back to main menu
+		if (LevelSettings.numberOfPlayers == 0 && Input.GetButtonDown("Cancel")) {SceneManager.LoadScene("MainMenu");}
+
 		CheckInput();
+
+		//Handle ready text
 		if (LevelSettings.numberOfPlayers != 0) {CheckIfReady();} else {readyText.enabled = false;}
 
-		//Start game if ready, this is testing only
+		//Start game if ready
 		if (Input.GetButtonDown("Pause") && readyText.enabled){
 			//Save names and let's go
 			LevelSettings.player1Name = p1.gameObject.name;
@@ -104,6 +113,7 @@ public class PlayerSelectManager : MonoBehaviour {
 			else if (Input.GetAxis("Horizontal_Player4") < -0.5f && !p4x) {p4skin.SelectSkin(Marble.Selection.Down, 4); p4x = true;}
 			else if (Input.GetAxis("Horizontal_Player4") == 0) {p4x = false;}}
 	}
+
 	void CheckIfReady(){
 		if ((p1sel.ready || !p1sel.selected)
 		&& (p2sel.ready || !p2sel.selected)
