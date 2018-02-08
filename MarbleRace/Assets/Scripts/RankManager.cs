@@ -78,7 +78,9 @@ public class RankManager : MonoBehaviour
           raceOverCheck = false;
         }
       }
-      players[i].currentRank = i+1;
+      if (!players[i].isFinished){
+        players[i].currentRank = i+1;
+      }
     }
 
     //if the snare has been triggered, reset snare
