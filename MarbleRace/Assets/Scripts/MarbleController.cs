@@ -49,6 +49,7 @@ public class MarbleController : MonoBehaviour {
         soundManager = GetComponent<MarbleSoundManager>();
         originalDrag = rb.drag;
         marbleRank = GetComponent<MarbleRank>();
+        colCount = 0;
         //Mobile
         CalibrateGyro();
 
