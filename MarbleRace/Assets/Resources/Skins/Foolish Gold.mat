@@ -95,7 +95,7 @@ Material:
     - _EdgeMultiplier: 1
     - _Gloss: 0.8
     - _GlossMapScale: 1
-    - _Glossiness: 0.67
+    - _Glossiness: 0.906
     - _GlossyReflections: 1
     - _GradientHeight: 6.4
     - _Metallic: 1
@@ -121,4 +121,4 @@ Material:
     - _Top: {r: 1, g: 0.8482759, b: 0, a: 0}
     - _Top_XZ: {r: 0.25692037, g: 0.5525265, b: 0.7279412, a: 0}
     - _Top_Y: {r: 0.7259277, g: 0.7647059, b: 0.061851203, a: 0}
-    - _Transmission: {r: 0, g: 0, b: 0, a: 0}
+    - _Transmission: {r: 0.60294116, g: 0.404631, b: 0.29703718, a: 0}
