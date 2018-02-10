@@ -49,6 +49,7 @@ public class MarbleController : MonoBehaviour {
         soundManager = GetComponent<MarbleSoundManager>();
         originalDrag = rb.drag;
         marbleRank = GetComponent<MarbleRank>();
+        colCount = 0;
         //Mobile
         CalibrateGyro();
 
@@ -81,7 +82,7 @@ public class MarbleController : MonoBehaviour {
                 Vector3 dir = new Vector3(hmove, 0, vmove);
                 Vector3 steerDir = stabilizer.transform.TransformDirection(dir);
                 //LET THE FORCE FLOW THROUGH YOU
-                rb.AddForce(steerDir * acceleration * Time.deltaTime);
+                rb.AddForce(steerDir * acceleration * Time.deltaTime * 2);          //Double to compensate for halved fixedtimestep
             }
         }
     }

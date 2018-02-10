@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: Spirit
-  m_Shader: {fileID: 4800000, guid: 67fd57f591ea3554494173cb2f22ef07, type: 3}
+  m_Shader: {fileID: 4800000, guid: 48b281f7e0024a44c8b00e4cdcd370e4, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
@@ -68,7 +68,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 0.5
+    - _Glossiness: 0.48
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -84,5 +84,7 @@ Material:
     - __dirty: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission: {r: 0, g: 1.8501649, b: 8.654, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Transmission: {r: 0, g: 0, b: 0, a: 0}

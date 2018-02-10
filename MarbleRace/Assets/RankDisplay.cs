@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class RankDisplay : MonoBehaviour {
 	public Transform playerToFollow;
 	MarbleRank playerRank;
+	public Transform cameraToLookAt;
 	Text rankText;
 	void Start(){
 		rankText = GetComponentInChildren<Text>();
@@ -16,6 +17,6 @@ public class RankDisplay : MonoBehaviour {
 	}
 	void LateUpdate () {
 		transform.position = playerToFollow.position;
-		transform.LookAt(Camera.main.transform.position);
+		transform.LookAt(cameraToLookAt.position);
 	}
 }

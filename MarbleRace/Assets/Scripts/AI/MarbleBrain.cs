@@ -76,7 +76,7 @@ public class MarbleBrain : MonoBehaviour {
                 Vector3 dir = targets[targetIndex].transform.position - transform.position;
                 dir = new Vector3(Mathf.Clamp(dir.x, -1, 1), 0, Mathf.Clamp(dir.z, -1, 1));
                 //LET THE FORCE FLOW THROUGH YOU
-                rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime);
+                rb.AddForce(dir * acceleration * difficultyMod * Time.deltaTime * 2);       //Double physics hack
             }
         }
     }
