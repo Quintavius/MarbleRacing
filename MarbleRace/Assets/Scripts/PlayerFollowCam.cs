@@ -19,7 +19,12 @@ public class PlayerFollowCam : MonoBehaviour
     public float ZoomScale = 0.2f;
     float followOffsetYDefault;
     private float vel;
-    // Use this for initialization
+    [Range(0,1)]
+    public float lookAheadDist;
+    [Range(0,3)]
+    public float lookAheadSmoothing;
+    Vector3 lookAheadDir;
+    private Vector3 lookAheadRef;
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -27,6 +32,11 @@ public class PlayerFollowCam : MonoBehaviour
         mainCam = Camera.main;
         camOutline = GetComponent<CameraOutline>();
         followOffsetYDefault = offset.y;
+    }
+
+    void LookAhead(){
+        Vector3 rawLookAhead = followPlayer.position + (followPlayer.GetComponent<Rigidbody>().velocity * lookAheadDist);
+        lookAheadDir = Vector3.SmoothDamp(lookAheadDir, rawLookAhead, ref lookAheadRef, lookAheadSmoothing);
     }
 
     void ToggleCameraDynamic(){
@@ -68,7 +78,7 @@ public class PlayerFollowCam : MonoBehaviour
     }
 
     void LookAtPlayer(){
-        transform.LookAt(followPlayer);
+        transform.LookAt(lookAheadDir);
     }
 
     void Update()
@@ -80,6 +90,7 @@ public class PlayerFollowCam : MonoBehaviour
     void FixedUpdate()
     {
         AdjustCameraDistance();
+        LookAhead();
         LookAtPlayer();
     }
    
