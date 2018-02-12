@@ -2640,6 +2640,8 @@ MonoBehaviour:
   oldSchoolSplitscreen: 1
   ZoomSmoothing: 2
   ZoomScale: 0.2
+  lookAheadDist: 0.3
+  lookAheadSmoothing: 0.2
 --- !u!114 &601262204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8304,6 +8306,8 @@ MonoBehaviour:
   oldSchoolSplitscreen: 1
   ZoomSmoothing: 2
   ZoomScale: 0.2
+  lookAheadDist: 0.3
+  lookAheadSmoothing: 0.2
 --- !u!114 &925356544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13990,6 +13994,8 @@ MonoBehaviour:
   oldSchoolSplitscreen: 1
   ZoomSmoothing: 2
   ZoomScale: 0.2
+  lookAheadDist: 0.3
+  lookAheadSmoothing: 0.2
 --- !u!114 &1556112454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17784,6 +17790,8 @@ MonoBehaviour:
   oldSchoolSplitscreen: 1
   ZoomSmoothing: 2
   ZoomScale: 0.2
+  lookAheadDist: 0.3
+  lookAheadSmoothing: 0.2
 --- !u!114 &2145141803
 MonoBehaviour:
   m_ObjectHideFlags: 0
