@@ -174,7 +174,11 @@ namespace UnityEngine.Rendering.PostProcessing
         public override void Render(PostProcessRenderContext context)
         {
             var gradingMode = settings.gradingMode.value;
-            var supportComputeTex3D = SystemInfo.supports3DRenderTextures && SystemInfo.supportsComputeShaders;
+            var supportComputeTex3D = SystemInfo.supports3DRenderTextures
+                && SystemInfo.supportsComputeShaders
+                && context.resources.computeShaders.lut3DBaker != null
+                && SystemInfo.graphicsDeviceType != GraphicsDeviceType.OpenGLCore
+                && SystemInfo.graphicsDeviceType != GraphicsDeviceType.OpenGLES3;
 
             if (gradingMode == GradingMode.External)
                 RenderExternalPipeline3D(context);
@@ -338,7 +342,7 @@ namespace UnityEngine.Rendering.PostProcessing
                 lutSheet.properties.SetVector(ShaderIDs.InvGamma, invgamma);
                 lutSheet.properties.SetVector(ShaderIDs.Gain, gain);
 
-                lutSheet.properties.SetTexture(ShaderIDs.Curves, GetCurveTexture(false));
+                lutSheet.properties.SetTexture(ShaderIDs.Curves, GetCurveTexture(true));
 
                 var tonemapper = settings.tonemapper.value;
                 if (tonemapper == Tonemapper.Custom)
@@ -448,13 +452,13 @@ namespace UnityEngine.Rendering.PostProcessing
                 m_InternalLogLut = new RenderTexture(k_Lut3DSize, k_Lut3DSize, 0, format, RenderTextureReadWrite.Linear)
                 {
                     name = "Color Grading Log Lut",
+                    dimension = TextureDimension.Tex3D,
                     hideFlags = HideFlags.DontSave,
                     filterMode = FilterMode.Bilinear,
                     wrapMode = TextureWrapMode.Clamp,
                     anisoLevel = 0,
                     enableRandomWrite = true,
                     volumeDepth = k_Lut3DSize,
-                    dimension = TextureDimension.Tex3D,
                     autoGenerateMips = false,
                     useMipMap = false
                 };
@@ -541,14 +545,14 @@ namespace UnityEngine.Rendering.PostProcessing
             // Use ARGBHalf if possible, fallback on ARGB2101010 and ARGB32 otherwise
             var format = RenderTextureFormat.ARGBHalf;
 
-            if (!SystemInfo.SupportsRenderTextureFormat(format))
+            if (!format.IsSupported())
             {
                 format = RenderTextureFormat.ARGB2101010;
 
                 // Note that using a log lut in ARGB32 is a *very* bad idea but we need it for
                 // compatibility reasons (else if a platform doesn't support one of the previous
                 // format it'll output a black screen, or worse will segfault on the user).
-                if (!SystemInfo.SupportsRenderTextureFormat(format))
+                if (!format.IsSupported())
                     format = RenderTextureFormat.ARGB32;
             }
 

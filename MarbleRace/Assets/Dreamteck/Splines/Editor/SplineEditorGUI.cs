@@ -365,7 +365,7 @@ namespace Dreamteck.Splines
                     Event.current.Use();
                 }
             }
-            if (Event.current.type == EventType.mouseUp) controlStates[controlIndex] = false;
+            if (Event.current.type == EventType.MouseUp) controlStates[controlIndex] = false;
             if (controlStates[controlIndex])
             {
                 float delta = Event.current.delta.x;
@@ -574,7 +574,7 @@ namespace Dreamteck.Splines
                 else
                 {
                     GUI.Label(nameRect, triggers[i].name);
-                    if(nameRect.Contains(Event.current.mousePosition) && Event.current.type == EventType.mouseDown)
+                    if(nameRect.Contains(Event.current.mousePosition) && Event.current.type == EventType.MouseDown)
                     {
                         open = i;
                         GUI.EndGroup();

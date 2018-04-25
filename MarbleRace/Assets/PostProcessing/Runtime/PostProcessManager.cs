@@ -23,9 +23,9 @@ namespace UnityEngine.Rendering.PostProcessing
         }
 
         const int k_MaxLayerCount = 32; // Max amount of layers available in Unity
-        readonly Dictionary<LayerMask, List<PostProcessVolume>> m_SortedVolumes;
+        readonly Dictionary<int, List<PostProcessVolume>> m_SortedVolumes;
         readonly List<PostProcessVolume> m_Volumes;
-        readonly Dictionary<LayerMask, bool> m_SortNeeded;
+        readonly Dictionary<int, bool> m_SortNeeded;
         readonly List<PostProcessEffectSettings> m_BaseSettings;
         readonly List<Collider> m_TempColliders;
 
@@ -33,9 +33,9 @@ namespace UnityEngine.Rendering.PostProcessing
 
         PostProcessManager()
         {
-            m_SortedVolumes = new Dictionary<LayerMask, List<PostProcessVolume>>();
+            m_SortedVolumes = new Dictionary<int, List<PostProcessVolume>>();
             m_Volumes = new List<PostProcessVolume>();
-            m_SortNeeded = new Dictionary<LayerMask, bool>();
+            m_SortNeeded = new Dictionary<int, bool>();
             m_BaseSettings = new List<PostProcessEffectSettings>();
             m_TempColliders = new List<Collider>(5);
 
@@ -91,7 +91,7 @@ namespace UnityEngine.Rendering.PostProcessing
 
         // Gets a list of all volumes currently affecting the given layer. Results aren't sorted.
         // Volume with weight of 0 or no profile set will be skipped. Results list won't be cleared.
-        public void GetActiveVolumes(PostProcessLayer layer, List<PostProcessVolume> results)
+        public void GetActiveVolumes(PostProcessLayer layer, List<PostProcessVolume> results, bool skipDisabled = true, bool skipZeroWeight = true)
         {
             // If no trigger is set, only global volumes will have influence
             int mask = layer.volumeLayer.value;
@@ -106,7 +106,7 @@ namespace UnityEngine.Rendering.PostProcessing
             foreach (var volume in volumes)
             {
                 // Skip disabled volumes and volumes without any data or weight
-                if (!volume.enabled || volume.profileRef == null || volume.weight <= 0f)
+                if ((skipDisabled && !volume.enabled) || volume.profileRef == null || (skipZeroWeight && volume.weight <= 0f))
                     continue;
 
                 // Global volume always have influence
@@ -265,10 +265,23 @@ namespace UnityEngine.Rendering.PostProcessing
             Unregister(volume, layer);
         }
 
-        internal void UpdateSettings(PostProcessLayer postProcessLayer)
+        // Faster version of OverrideSettings to force replace values in the global state
+        void ReplaceData(PostProcessLayer postProcessLayer)
+        {
+            foreach (var settings in m_BaseSettings)
+            {
+                var target = postProcessLayer.GetBundle(settings.GetType()).settings;
+                int count = settings.parameters.Count;
+
+                for (int i = 0; i < count; i++)
+                    target.parameters[i].SetValue(settings.parameters[i]);
+            }
+        }
+
+        internal void UpdateSettings(PostProcessLayer postProcessLayer, Camera camera)
         {
             // Reset to base state
-            postProcessLayer.OverrideSettings(m_BaseSettings, 1f);
+            ReplaceData(postProcessLayer);
 
             // If no trigger is set, only global volumes will have influence
             int mask = postProcessLayer.volumeLayer.value;
@@ -282,6 +295,12 @@ namespace UnityEngine.Rendering.PostProcessing
             // Traverse all volumes
             foreach (var volume in volumes)
             {
+#if UNITY_EDITOR
+                // Skip volumes that aren't in the scene currently displayed in the scene view
+                if (!IsVolumeRenderedByCamera(volume, camera))
+                    continue;
+#endif
+
                 // Skip disabled volumes and volumes without any data or weight
                 if (!volume.enabled || volume.profileRef == null || volume.weight <= 0f)
                     continue;
@@ -393,6 +412,20 @@ namespace UnityEngine.Rendering.PostProcessing
 
                 volumes[j + 1] = temp;
             }
+        }
+
+        static bool IsVolumeRenderedByCamera(PostProcessVolume volume, Camera camera)
+        {
+#if UNITY_2018_3_OR_NEWER && UNITY_EDITOR
+            // If the current camera have a custom scene then the camera is rendering that scene,
+            // otherwise the camera is rendering the scenes in the SceneManager.
+            var customScene = camera.scene;
+            return customScene.IsValid()
+                ? UnityEditor.SceneManagement.EditorSceneManager.IsGameObjectInScene(volume.gameObject, customScene)
+                : UnityEditor.SceneManagement.EditorSceneManager.IsGameObjectInMainScenes(volume.gameObject);
+#else
+            return true;
+#endif
         }
     }
 }

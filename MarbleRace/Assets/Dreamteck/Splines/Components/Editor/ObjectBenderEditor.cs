@@ -152,7 +152,7 @@ namespace Dreamteck.Splines
                         else GUI.color = Color.white;
                     }
                     GUILayout.Box(bender.bendProperties[i].transform.transform.name, GUILayout.Height(18), GUILayout.Width(EditorGUIUtility.currentViewWidth - 60));
-                    if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && Event.current.type == EventType.mouseDown)
+                    if (GUILayoutUtility.GetLastRect().Contains(Event.current.mousePosition) && Event.current.type == EventType.MouseDown)
                     {
                         if (Event.current.control)
                         {
@@ -190,7 +190,7 @@ namespace Dreamteck.Splines
 
                 if (selected.Count > 0)
                 {
-                    if (Event.current.type == EventType.keyDown)
+                    if (Event.current.type == EventType.KeyDown)
                     {
                         if (Event.current.keyCode == KeyCode.DownArrow)
                         {

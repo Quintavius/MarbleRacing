@@ -1998,7 +1998,7 @@ namespace Dreamteck.Splines
                         mouseRight = false;
                     }
                     break;
-                case EventType.layout:
+                case EventType.Layout:
                     HandleUtility.AddDefaultControl(controlID); 
                     break;
             }
@@ -2007,7 +2007,7 @@ namespace Dreamteck.Splines
             if (movePivot)
             {
                 SceneView.lastActiveSceneView.pivot = Vector3.Lerp(SceneView.lastActiveSceneView.pivot, idealPivot, 0.02f);
-                if (Event.current.type == EventType.mouseDown || Event.current.type == EventType.mouseUp) movePivot = false;
+                if (Event.current.type == EventType.MouseDown || Event.current.type == EventType.MouseUp) movePivot = false;
                 if (Vector3.Distance(SceneView.lastActiveSceneView.pivot, idealPivot) <= 0.05f)
                 {
                     SceneView.lastActiveSceneView.pivot = idealPivot;
@@ -2031,7 +2031,7 @@ namespace Dreamteck.Splines
                     ToggleMoveTool();
                     e.Use();
                 }
-                if (e.type != EventType.layout && e.commandName == "FrameSelected" && Tools.current == Tool.None)
+                if (e.type != EventType.Layout && e.commandName == "FrameSelected" && Tools.current == Tool.None)
                 {
                     if (points.Length > 0)
                     {
