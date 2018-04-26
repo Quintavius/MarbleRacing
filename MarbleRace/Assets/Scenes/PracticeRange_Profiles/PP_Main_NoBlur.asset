@@ -119,7 +119,7 @@ MonoBehaviour:
     value: 100
   lift:
     overrideState: 1
-    value: {x: 0.77639884, y: 1, z: 0.74350864, w: -0.047393467}
+    value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     overrideState: 0
     value: {x: 0.26907864, y: 0.14464706, z: 1, w: -0.33175352}
@@ -308,7 +308,7 @@ MonoBehaviour:
     value: 0
   color:
     overrideState: 1
-    value: {r: 0.644788, g: 0.9852941, b: 0.73167574, a: 1}
+    value: {r: 0.045415238, g: 0.08823532, b: 0.056341726, a: 1}
   center:
     overrideState: 1
     value: {x: 0.5, y: 0.5}
@@ -353,7 +353,7 @@ MonoBehaviour:
     value: 1.2
   color:
     overrideState: 1
-    value: {r: 0.4666667, g: 0.21960786, b: 1, a: 1}
+    value: {r: 0, g: 0, b: 0, a: 1}
   ambientOnly:
     overrideState: 1
     value: 1
@@ -459,7 +459,7 @@ MonoBehaviour:
   color:
     overrideState: 1
     value: {r: 1, g: 1, b: 1, a: 1}
-  mobileOptimized:
+  fastMode:
     overrideState: 1
     value: 0
   dirtTexture:

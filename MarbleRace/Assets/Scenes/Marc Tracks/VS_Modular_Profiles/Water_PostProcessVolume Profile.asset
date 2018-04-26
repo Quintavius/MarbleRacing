@@ -76,7 +76,7 @@ MonoBehaviour:
   color:
     overrideState: 1
     value: {r: 0.875, g: 0.9637931, b: 1, a: 1}
-  mobileOptimized:
+  fastMode:
     overrideState: 0
     value: 0
   dirtTexture:
@@ -186,13 +186,13 @@ MonoBehaviour:
     value: 143
   lift:
     overrideState: 1
-    value: {x: 0.51146144, y: 1, z: 0.45243728, w: 0}
+    value: {x: 1, y: 1, z: 1, w: 0}
   gamma:
     overrideState: 0
     value: {x: 1, y: 1, z: 1, w: 0}
   gain:
     overrideState: 1
-    value: {x: 0.87827307, y: 1, z: 0.992262, w: 0}
+    value: {x: 1, y: 1, z: 1, w: 0}
   masterCurve:
     overrideState: 0
     value:
@@ -376,6 +376,6 @@ MonoBehaviour:
   intensity:
     overrideState: 1
     value: 1
-  mobileOptimized:
+  fastMode:
     overrideState: 0
     value: 0
